@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Theme variables (RGB channels for opacity modifier support) ─── */
+:root {
+  --color-base:       13  17  23;          /* #0D1117 */
+  --color-surface:    19  25  32;          /* #131920 */
+  --color-sidebar:    10  14  21;          /* #0A0E15 */
+  --color-border:     26  34  53;          /* #1A2235 */
+  --color-secondary:  155 170 192;         /* #9BAAC0 */
+  --color-foreground: 232 237 245;         /* #E8EDF5 */
+}
+
+[data-theme="light"] {
+  --color-base:       241 245 249;         /* #F1F5F9 */
+  --color-surface:    255 255 255;         /* #FFFFFF */
+  --color-sidebar:    248 250 252;         /* #F8FAFC */
+  --color-border:     226 232 240;         /* #E2E8F0 */
+  --color-secondary:  100 116 139;         /* #64748B */
+  --color-foreground: 15  23  42;          /* #0F172A */
+}
+
+/* ── Light mode overrides for hardcoded Tailwind classes ─────────── */
+
+/* hover:bg-white/5 and hover:bg-white/10 → subtle dark tint on light bg */
+[data-theme="light"] .hover\:bg-white\/5:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+[data-theme="light"] .hover\:bg-white\/10:hover {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Mobile drawer backdrop — keep dark even in light mode */
+[data-theme="light"] .bg-black\/60 {
+  background-color: rgba(0, 0, 0, 0.35) !important;
+}
+
+/* ── Responsive utilities ────────────────────────────────────────── */
+
+/* Scrollable tables on small screens */
+.table-scroll {
+  @apply overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0;
+}
+
+/* Card grid: 1 col mobile → 2 col tablet → 3 col desktop */
+.card-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4;
+}
+
+/* Stats grid: 2 col mobile → 4 col desktop */
+.stats-grid {
+  @apply grid grid-cols-2 lg:grid-cols-4 gap-4;
+}
