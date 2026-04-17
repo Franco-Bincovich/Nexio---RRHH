@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { getLiderScope } from "@/lib/lider-scope";
 import { AlertCircle } from "lucide-react";
 import ForoLiderClient from "./ForoLiderClient";
 
@@ -23,13 +24,15 @@ export default async function ForoPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: lider } = await supabase
+  const scope = await getLiderScope(user.id);
+
+  const { data: liderInfo } = await supabase
     .from("empleados")
-    .select("id, nombre, empresa_id, area_id, areas!empleados_area_id_fkey(nombre)")
+    .select("nombre")
     .eq("user_id", user.id)
     .single();
 
-  if (!lider) {
+  if (!scope || !liderInfo) {
     return (
       <div className="p-4 md:p-8 max-w-3xl">
         <h1 className="text-2xl font-bold mb-1">Comunicaciones</h1>
@@ -41,40 +44,46 @@ export default async function ForoPage() {
     );
   }
 
-  const areaNombre = (lider.areas as { nombre: string } | null)?.nombre ?? null;
-  const areaId = lider.area_id ?? null;
+  const areaNombre = scope.area_nombre;
+  const areaId = scope.area_id;
 
   const admin = createAdminClient();
 
+  // En modo demo, traer foros de todas las áreas de la empresa (sin filtrar area_id)
+  const gerenciaBase = admin
+    .from("foros_mensajes")
+    .select("id, mensaje, created_at, autor:autor_id(nombre, rol)")
+    .eq("empresa_id", scope.empresa_id)
+    .eq("foro_tipo", "gerencia")
+    .order("created_at", { ascending: false })
+    .limit(100);
+  const areaBase = admin
+    .from("foros_mensajes")
+    .select("id, mensaje, created_at, autor:autor_id(nombre, rol)")
+    .eq("empresa_id", scope.empresa_id)
+    .eq("foro_tipo", "area")
+    .order("created_at", { ascending: false })
+    .limit(100);
+
   const [{ data: rawGerencia }, { data: rawRrhh }, { data: rawArea }] = await Promise.all([
-    admin
-      .from("foros_mensajes")
-      .select("id, mensaje, created_at, autor:autor_id(nombre, rol)")
-      .eq("empresa_id", lider.empresa_id)
-      .eq("foro_tipo", "gerencia")
-      .eq("area_id", areaId ?? "")
-      .order("created_at", { ascending: false })
-      .limit(100),
+    scope.es_demo
+      ? gerenciaBase
+      : gerenciaBase.eq("area_id", areaId ?? ""),
 
     admin
       .from("foros_mensajes")
       .select("id, mensaje, created_at, autor:autor_id(nombre, rol)")
-      .eq("empresa_id", lider.empresa_id)
+      .eq("empresa_id", scope.empresa_id)
       .eq("foro_tipo", "rrhh")
       .is("area_id", null)
       .order("created_at", { ascending: false })
       .limit(100),
 
-    areaId
-      ? admin
-          .from("foros_mensajes")
-          .select("id, mensaje, created_at, autor:autor_id(nombre, rol)")
-          .eq("empresa_id", lider.empresa_id)
-          .eq("foro_tipo", "area")
-          .eq("area_id", areaId)
-          .order("created_at", { ascending: false })
-          .limit(100)
-      : Promise.resolve({ data: [] }),
+    scope.es_demo
+      ? areaBase
+      : areaId
+        ? areaBase.eq("area_id", areaId)
+        : Promise.resolve({ data: [] }),
   ]);
 
   return (
@@ -89,7 +98,7 @@ export default async function ForoPage() {
         mensajesArea={normalizarMensajes(rawArea as MensajeRaw[])}
         areaNombre={areaNombre}
         areaId={areaId}
-        liderNombre={lider.nombre}
+        liderNombre={liderInfo.nombre}
       />
     </div>
   );

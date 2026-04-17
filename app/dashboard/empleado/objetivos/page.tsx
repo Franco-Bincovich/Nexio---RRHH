@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
+import { getEmpleadoScope } from "@/lib/lider-scope";
 import { CheckCircle2, Clock, Circle, Target } from "lucide-react";
 
 const ESTADO_CONFIG = {
@@ -15,19 +16,16 @@ export default async function ObjetivosPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: empleado } = await supabase
-    .from("empleados")
-    .select("id")
-    .eq("user_id", user.id)
-    .single();
+  const scope = await getEmpleadoScope(user.id);
+  if (!scope) redirect("/login");
 
-  if (!empleado) redirect("/login");
-
-  const { data: objetivos } = await supabase
+  const objetivosBase = supabase
     .from("objetivos")
     .select("id, titulo, descripcion, estado, progreso, fecha_vencimiento, categoria")
-    .eq("empleado_id", empleado.id)
     .order("created_at", { ascending: false });
+  const { data: objetivos } = scope.es_demo
+    ? await objetivosBase.eq("empresa_id", scope.empresa_id)
+    : await objetivosBase.eq("empleado_id", scope.id);
 
   const lista = objetivos ?? [];
   const completados = lista.filter((o) => o.estado === "completado").length;

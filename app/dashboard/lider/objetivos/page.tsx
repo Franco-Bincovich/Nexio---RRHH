@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { getLiderScope } from "@/lib/lider-scope";
 import ObjetivosClient from "./ObjetivosClient";
 
 export default async function ObjetivosPage() {
@@ -8,13 +9,9 @@ export default async function ObjetivosPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: lider } = await supabase
-    .from("empleados")
-    .select("id, empresa_id, area_id")
-    .eq("user_id", user.id)
-    .single();
+  const scope = await getLiderScope(user.id);
 
-  if (!lider) {
+  if (!scope) {
     return (
       <div className="p-4 md:p-8 max-w-4xl">
         <h1 className="text-2xl font-bold mb-4">Objetivos</h1>
@@ -25,13 +22,15 @@ export default async function ObjetivosPage() {
     );
   }
 
-  // Empleados del área
-  const { data: empleados } = await supabase
+  // Empleados del área (o de toda la empresa si es demo)
+  const empleadosBase = supabase
     .from("empleados")
     .select("id, nombre")
-    .eq("area_id", lider.area_id ?? "")
     .eq("activo", true)
     .order("nombre");
+  const { data: empleados } = scope.es_demo
+    ? await empleadosBase.eq("empresa_id", scope.empresa_id)
+    : await empleadosBase.eq("area_id", scope.area_id ?? "");
 
   const empleadoIds = empleados?.map((e) => e.id) ?? [];
   const empleadoMap = Object.fromEntries((empleados ?? []).map((e) => [e.id, e.nombre]));
@@ -55,7 +54,7 @@ export default async function ObjetivosPage() {
   const { data: historialArea } = await admin
     .from("objetivos_historial")
     .select("id, objetivo_id, lider_nombre, campo_modificado, valor_anterior, valor_nuevo, fecha")
-    .eq("empresa_id", lider.empresa_id)
+    .eq("empresa_id", scope.empresa_id)
     .order("fecha", { ascending: false })
     .limit(50);
 
@@ -63,8 +62,8 @@ export default async function ObjetivosPage() {
     <ObjetivosClient
       objetivos={objetivos}
       empleados={empleados ?? []}
-      empresaId={lider.empresa_id}
-      liderEmpleadoId={lider.id}
+      empresaId={scope.empresa_id}
+      liderEmpleadoId={scope.id}
       historialArea={historialArea ?? []}
       objetivoTituloMap={objetivoTituloMap}
     />

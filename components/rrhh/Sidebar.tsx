@@ -60,6 +60,7 @@ const grupos: NavGroup[] = [
       { href: "/dashboard/rrhh/areas",          label: "Áreas",          icon: Building2       },
       { href: "/dashboard/rrhh/asistencia",     label: "Asistencia",     icon: CalendarClock   },
       { href: "/dashboard/rrhh/solicitudes",    label: "Solicitudes",    icon: Inbox           },
+      { href: "/dashboard/rrhh/vacaciones",     label: "Vacaciones",     icon: Umbrella        },
       { href: "/dashboard/rrhh/foros",          label: "Foros",          icon: MessageSquare   },
       { href: "/dashboard/rrhh/temperatura",    label: "Temperatura",    icon: Thermometer     },
       { href: "/dashboard/rrhh/evaluaciones",   label: "Evaluaciones",   icon: ClipboardList   },

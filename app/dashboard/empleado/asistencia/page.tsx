@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
+import { getEmpleadoScope } from "@/lib/lider-scope";
 import { Wifi, Home, ClipboardEdit, ArrowDownCircle, ArrowUpCircle } from "lucide-react";
 import type { MetodoRegistro, AsistenciaTipo } from "@/types/database";
 import RegistrarHomeButton from "@/components/empleado/RegistrarHomeButton";
@@ -22,13 +23,9 @@ export default async function AsistenciaPage() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: empleado } = await supabase
-    .from("empleados")
-    .select("id")
-    .eq("user_id", user.id)
-    .single();
+  const scope = await getEmpleadoScope(user.id);
 
-  if (!empleado) {
+  if (!scope) {
     return (
       <div className="p-4 md:p-8 max-w-4xl">
         <h1 className="text-2xl font-bold mb-1">Mi asistencia</h1>
@@ -39,13 +36,24 @@ export default async function AsistenciaPage() {
     );
   }
 
-  const { data: registros } = await supabase
+  let empresaEmpleadoIds: string[] | null = null;
+  if (scope.es_demo) {
+    const { data: empleadosEmpresa } = await supabase
+      .from("empleados")
+      .select("id")
+      .eq("empresa_id", scope.empresa_id);
+    empresaEmpleadoIds = (empleadosEmpresa ?? []).map((e) => e.id);
+  }
+
+  const registrosBase = supabase
     .from("registros_asistencia")
     .select("*")
-    .eq("empleado_id", empleado.id)
     .order("fecha", { ascending: false })
     .order("created_at", { ascending: false })
     .limit(50);
+  const { data: registros } = empresaEmpleadoIds !== null
+    ? await registrosBase.in("empleado_id", empresaEmpleadoIds.length > 0 ? empresaEmpleadoIds : [""])
+    : await registrosBase.eq("empleado_id", scope.id);
 
   const hoy = new Date().toISOString().split("T")[0];
   // Entrada HOME de hoy sin salida registrada
@@ -64,7 +72,7 @@ export default async function AsistenciaPage() {
           <h1 className="text-2xl font-bold mb-1">Mi asistencia</h1>
           <p className="text-secondary text-sm">Últimos 50 registros</p>
         </div>
-        <RegistrarHomeButton empleadoId={empleado.id} entradaHoyId={entradaHoy?.id ?? null} />
+        <RegistrarHomeButton empleadoId={scope.id} entradaHoyId={entradaHoy?.id ?? null} />
       </div>
 
       {/* Resumen */}

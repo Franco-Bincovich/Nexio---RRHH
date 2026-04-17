@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect, useTransition } from "react";
-import { Bell, X, CheckCheck, Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Bell, X, CheckCheck, Loader2, Settings2 } from "lucide-react";
+import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
 
 export type Notif = {
   id: string;
@@ -34,6 +35,10 @@ export default function NotifBell({ notifs: initial, onMarcarLeida, onMarcarToda
   const [isPending, startTransition] = useTransition();
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const pathname = usePathname();
+
+  const rolSegment = pathname?.split("/")[2] ?? "empleado";
+  const notifPath = `/dashboard/${rolSegment}/notificaciones`;
 
   const noLeidas = notifs.filter((n) => !n.leida).length;
 
@@ -133,6 +138,16 @@ export default function NotifBell({ notifs: initial, onMarcarLeida, onMarcarToda
               </ul>
             )}
           </div>
+
+          {/* Footer con link a panel de notificaciones */}
+          <Link
+            href={notifPath}
+            onClick={() => setOpen(false)}
+            className="flex items-center justify-center gap-1.5 px-4 py-2.5 border-t border-border text-xs text-secondary hover:text-accent hover:bg-border/10 transition-colors"
+          >
+            <Settings2 size={12} />
+            Ver todas y preferencias
+          </Link>
         </div>
       )}
     </div>

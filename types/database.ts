@@ -127,6 +127,8 @@ export type Database = {
           modalidad: ModalidadTipo;
           horas_laborables: number;
           activo: boolean;
+          es_demo: boolean;
+          notif_preferencias: Record<string, boolean> | null;
           created_at: string;
         };
         Insert: {
@@ -139,6 +141,8 @@ export type Database = {
           rol?: RolSistema;
           modalidad?: ModalidadTipo;
           activo?: boolean;
+          es_demo?: boolean;
+          notif_preferencias?: Record<string, boolean> | null;
           created_at?: string;
         };
         Update: {
@@ -148,6 +152,8 @@ export type Database = {
           rol?: RolSistema;
           modalidad?: ModalidadTipo;
           activo?: boolean;
+          es_demo?: boolean;
+          notif_preferencias?: Record<string, boolean> | null;
         };
         Relationships: [
           {

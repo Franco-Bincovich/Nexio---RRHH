@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { getEmpleadoScope } from "@/lib/lider-scope";
 import { AlertCircle } from "lucide-react";
 import TemperaturaClient from "./TemperaturaClient";
 
@@ -9,13 +10,9 @@ export default async function TemperaturaPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: empleado } = await supabase
-    .from("empleados")
-    .select("id")
-    .eq("user_id", user.id)
-    .single();
+  const scope = await getEmpleadoScope(user.id);
 
-  if (!empleado) {
+  if (!scope) {
     return (
       <div className="p-4 md:p-8 max-w-2xl">
         <h1 className="text-2xl font-bold mb-1">Temperatura del equipo</h1>
@@ -27,14 +24,16 @@ export default async function TemperaturaPage() {
     );
   }
 
-  // Todas las respuestas del empleado, ordenadas por fecha desc (admin para bypassear RLS)
+  // Histórico de respuestas (todas de la empresa si es demo, sino solo del empleado)
   const admin = createAdminClient();
-  const { data: historial } = await admin
+  const historialBase = admin
     .from("respuestas_temperatura")
     .select("id, puntuacion, comentario, semana, created_at")
-    .eq("empleado_id", empleado.id)
     .order("created_at", { ascending: false })
     .limit(200);
+  const { data: historial } = scope.es_demo
+    ? await historialBase.eq("empresa_id", scope.empresa_id)
+    : await historialBase.eq("empleado_id", scope.id);
 
   return (
     <div className="p-4 md:p-8">

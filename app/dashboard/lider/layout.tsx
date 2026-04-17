@@ -15,27 +15,34 @@ export default async function LiderLayout({ children }: { children: React.ReactN
 
   const { data: empleado } = await supabase
     .from("empleados")
-    .select("id, nombre, email, rol, area_id, areas!empleados_area_id_fkey(nombre)")
+    .select("id, nombre, email, rol, es_demo, area_id, empresa_id, areas!empleados_area_id_fkey(nombre)")
     .eq("user_id", user.id)
     .single();
 
-  if (!empleado || empleado.rol !== "lider") {
-    if (empleado?.rol) redirect(`/dashboard/${empleado.rol}`);
-    redirect("/login");
+  if (!empleado) redirect("/login");
+
+  if (!empleado.es_demo && empleado.rol !== "lider") {
+    redirect(`/dashboard/${empleado.rol}`);
   }
 
   const areaData = empleado.areas as { nombre: string } | null;
 
-  // Contar solicitudes pendientes del equipo
+  // Contar solicitudes pendientes del equipo (o de toda la empresa si es demo)
   let pendingSolicitudes = 0;
-  if (empleado.area_id) {
-    const admin = createAdminClient();
+  const admin = createAdminClient();
+  const scopeFilter: { col: "empresa_id" | "area_id"; val: string } | null = empleado.es_demo
+    ? { col: "empresa_id", val: empleado.empresa_id }
+    : empleado.area_id
+      ? { col: "area_id", val: empleado.area_id }
+      : null;
+
+  if (scopeFilter) {
     const { data: equipo } = await admin
       .from("empleados")
       .select("id")
-      .eq("area_id", empleado.area_id)
       .eq("activo", true)
-      .neq("id", empleado.id);
+      .neq("id", empleado.id)
+      .eq(scopeFilter.col, scopeFilter.val);
 
     const empleadoIds = equipo?.map((e) => e.id) ?? [];
     if (empleadoIds.length > 0) {

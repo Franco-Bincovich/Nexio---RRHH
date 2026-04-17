@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase-server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { insertNotificacionesFiltradas } from "@/lib/notif-prefs";
 import { revalidatePath } from "next/cache";
 
 async function getEmpleado() {
@@ -68,7 +69,7 @@ export async function crearVacaciones(data: {
       }));
 
     if (notifs.length > 0) {
-      await admin.from("notificaciones").insert(notifs);
+      await insertNotificacionesFiltradas(admin, notifs);
     }
 
     revalidatePath("/dashboard/empleado/vacaciones");

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { getLiderScope } from "@/lib/lider-scope";
 import SolicitudesLiderClient, { SolicitudNorm } from "./SolicitudesLiderClient";
 
 export default async function SolicitudesLiderPage() {
@@ -8,13 +9,9 @@ export default async function SolicitudesLiderPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: lider } = await supabase
-    .from("empleados")
-    .select("id, area_id, empresa_id")
-    .eq("user_id", user.id)
-    .single();
+  const scope = await getLiderScope(user.id);
 
-  if (!lider?.area_id) {
+  if (!scope || (!scope.es_demo && !scope.area_id)) {
     return (
       <div className="p-4 md:p-8 max-w-4xl">
         <h1 className="text-2xl font-bold mb-4">Solicitudes del área</h1>
@@ -27,13 +24,15 @@ export default async function SolicitudesLiderPage() {
 
   const admin = createAdminClient();
 
-  // Empleados del área (sin incluir al líder)
-  const { data: equipo } = await admin
+  // Empleados del área (o de toda la empresa si es demo), sin incluir al líder
+  const equipoBase = admin
     .from("empleados")
     .select("id, nombre")
-    .eq("area_id", lider.area_id)
     .eq("activo", true)
-    .neq("id", lider.id);
+    .neq("id", scope.id);
+  const { data: equipo } = scope.es_demo
+    ? await equipoBase.eq("empresa_id", scope.empresa_id)
+    : await equipoBase.eq("area_id", scope.area_id!);
 
   const empleadoIds = equipo?.map((e) => e.id) ?? [];
   const empleadoNombreMap: Record<string, string> = {};

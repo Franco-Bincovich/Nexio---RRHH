@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { getLiderScope } from "@/lib/lider-scope";
 import Link from "next/link";
 import { Users, CheckCircle2, Home, Target, TrendingUp, UsersRound } from "lucide-react";
 
@@ -11,13 +12,9 @@ export default async function LiderDashboardPage() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: lider } = await supabase
-    .from("empleados")
-    .select("id, nombre, area_id")
-    .eq("user_id", user.id)
-    .single();
+  const scope = await getLiderScope(user.id);
 
-  if (!lider?.area_id) {
+  if (!scope || (!scope.es_demo && !scope.area_id)) {
     return (
       <div className="p-4 md:p-8 max-w-5xl">
         <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
@@ -28,12 +25,14 @@ export default async function LiderDashboardPage() {
     );
   }
 
-  // Empleados del área
-  const { data: equipo } = await supabase
+  // Empleados del área (o de toda la empresa si es demo)
+  const equipoBase = supabase
     .from("empleados")
     .select("id, nombre, modalidad, activo")
-    .eq("area_id", lider.area_id)
     .eq("activo", true);
+  const { data: equipo } = scope.es_demo
+    ? await equipoBase.eq("empresa_id", scope.empresa_id)
+    : await equipoBase.eq("area_id", scope.area_id!);
 
   const totalEquipo = equipo?.length ?? 0;
   const remotos = equipo?.filter((e) => e.modalidad === "remoto" || e.modalidad === "hibrido").length ?? 0;
@@ -74,14 +73,16 @@ export default async function LiderDashboardPage() {
 
   const totalObjetivos = objetivosData.pendientes + objetivosData.en_progreso + objetivosData.completados;
 
-  // Grupos del área
+  // Grupos del área (o de toda la empresa si es demo)
   const admin = createAdminClient();
-  const { data: gruposRaw } = await admin
+  const gruposBase = admin
     .from("grupos")
     .select("id, nombre, descripcion, grupos_miembros(count)")
-    .eq("area_id", lider.area_id)
     .order("created_at", { ascending: false })
     .limit(4);
+  const { data: gruposRaw } = scope.es_demo
+    ? await gruposBase.eq("empresa_id", scope.empresa_id)
+    : await gruposBase.eq("area_id", scope.area_id!);
 
   type GrupoDash = {
     id: string;

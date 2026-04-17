@@ -6,7 +6,13 @@
       "Bash(npx tsc:*)",
       "Bash(npm run:*)",
       "Bash(taskkill:*)",
-      "Bash(cmd:*)"
+      "Bash(cmd:*)",
+      "Bash(grep -E '\\\\.\\(ts|tsx|js|json|md|env\\)$')",
+      "Bash(find app *)",
+      "Bash(awk '$1 < 30 {print $2 \": \" $1 \" líneas\"}')",
+      "Bash(find . -name \"*.tsx\" -type f -exec grep -l \"ProximamenteButton\\\\|próxima\\\\|coming\\\\|soon\" {} +)",
+      "Bash(grep -l \"xlsx\" app/dashboard/rrhh/asistencia/*.tsx app/dashboard/rrhh/temperatura/*.tsx app/dashboard/rrhh/capacitaciones/*.tsx app/dashboard/lider/asistencia/*.tsx app/dashboard/lider/objetivos/*.tsx app/dashboard/gerente/temperatura/*.tsx)",
+      "Bash(ls app/dashboard/rrhh/asistencia/ app/dashboard/rrhh/temperatura/ app/dashboard/rrhh/capacitaciones/ app/dashboard/lider/asistencia/ app/dashboard/lider/objetivos/ app/dashboard/gerente/temperatura/)"
     ]
   }
 }

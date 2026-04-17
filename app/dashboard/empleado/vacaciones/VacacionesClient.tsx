@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Plus, X, Loader2, CheckCircle2, AlertCircle, Clock, Sun } from "lucide-react";
 import { crearVacaciones } from "./actions";
 
-type Solicitud = {
+export type Solicitud = {
   id: string;
   fecha_desde: string;
   fecha_hasta: string;

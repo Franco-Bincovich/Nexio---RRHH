@@ -1,161 +1,145 @@
-import { FlaskConical, Star, CheckCircle2, Clock, Circle, ChevronRight } from "lucide-react";
-import ProximamenteButton from "@/components/ProximamenteButton";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase-server";
+import { createAdminClient } from "@/lib/supabase-admin";
+import { Star, CheckCircle2, Clock, AlertCircle, ClipboardCheck } from "lucide-react";
+import {
+  CRITERIOS, decodeComentario, getCicloConfig, score1_10A1_5,
+} from "@/lib/evaluaciones";
 
-const evaluaciones = [
-  {
-    tipo: "Evaluación 360°",
-    evaluador: "Equipo completo",
-    fecha: "15 dic 2025",
-    score: 4.2,
-    estado: "completada",
-  },
-  {
-    tipo: "Evaluación de desempeño",
-    evaluador: "Ana Torres (Líder)",
-    fecha: "30 jun 2025",
-    score: 3.8,
-    estado: "completada",
-  },
-  {
-    tipo: "Evaluación semestral",
-    evaluador: "RRHH",
-    fecha: "15 mar 2026",
-    score: null,
-    estado: "pendiente",
-  },
-  {
-    tipo: "Autoevaluación",
-    evaluador: "Tú mismo",
-    fecha: "01 abr 2026",
-    score: null,
-    estado: "pendiente",
-  },
-];
+export default async function EvaluacionesEmpleadoPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
 
-const proximas = [
-  { tipo: "Evaluación 360°", estimada: "jun 2026" },
-  { tipo: "Evaluación semestral", estimada: "jul 2026" },
-];
+  const { data: empleado } = await supabase
+    .from("empleados")
+    .select("id, empresa_id")
+    .eq("user_id", user.id)
+    .single();
+  if (!empleado) redirect("/login");
 
-const ESTADO_CONFIG: Record<string, { label: string; icon: typeof CheckCircle2; color: string; bg: string }> = {
-  completada: { label: "Completada", icon: CheckCircle2, color: "text-accent",    bg: "bg-accent/10 border-accent/20" },
-  pendiente:  { label: "Pendiente",  icon: Clock,       color: "text-yellow-400", bg: "bg-yellow-400/10 border-yellow-400/20" },
-  en_curso:   { label: "En curso",   icon: Circle,      color: "text-blue-400",   bg: "bg-blue-400/10 border-blue-400/20" },
-};
+  const admin = createAdminClient();
+  const ciclo = await getCicloConfig(admin, empleado.empresa_id);
 
-function Stars({ score }: { score: number }) {
-  return (
-    <div className="flex items-center gap-0.5">
-      {[1, 2, 3, 4, 5].map((n) => (
-        <Star
-          key={n}
-          size={12}
-          className={n <= Math.round(score) ? "text-yellow-400 fill-yellow-400" : "text-secondary/30"}
-        />
-      ))}
-      <span className="text-xs font-semibold ml-1">{score.toFixed(1)}</span>
-    </div>
-  );
-}
+  const { data: evsRaw } = await (admin as any)
+    .from("evaluaciones")
+    .select("id, puntuacion, comentario, estado, created_at, evaluador_id")
+    .eq("empleado_id", empleado.id)
+    .eq("tipo", "desempeño")
+    .eq("estado", "completada")
+    .order("created_at", { ascending: false });
 
-export default function EvaluacionesPage() {
-  const completadas = evaluaciones.filter((e) => e.estado === "completada").length;
-  const pendientes  = evaluaciones.filter((e) => e.estado === "pendiente").length;
-  const scores      = evaluaciones.filter((e) => e.score !== null).map((e) => e.score as number);
-  const promedio    = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : null;
+  const evaluadorIds = Array.from(new Set(((evsRaw ?? []) as any[]).map((e) => e.evaluador_id).filter(Boolean)));
+  const evaluadorMap: Record<string, string> = {};
+  if (evaluadorIds.length > 0) {
+    const { data: evs } = await admin
+      .from("empleados")
+      .select("id, nombre")
+      .in("id", evaluadorIds);
+    (evs ?? []).forEach((e) => { evaluadorMap[e.id] = e.nombre; });
+  }
+
+  const evaluaciones = ((evsRaw ?? []) as any[]).map((e) => {
+    const dec = decodeComentario(e.comentario);
+    return {
+      id: e.id as string,
+      promedio5: e.puntuacion != null ? score1_10A1_5(e.puntuacion) : null,
+      criterios: dec.criterios,
+      texto: dec.texto,
+      created_at: e.created_at as string,
+      evaluador: e.evaluador_id ? evaluadorMap[e.evaluador_id] ?? null : null,
+    };
+  });
+
+  const tienePeriodoActual = ciclo.evaluaciones_activas_desde
+    ? evaluaciones.some((e) => new Date(e.created_at) >= new Date(ciclo.evaluaciones_activas_desde!))
+    : evaluaciones.length > 0;
 
   return (
-    <div className="p-4 md:p-8 max-w-3xl">
-      {/* Header */}
-      <div className="flex items-start justify-between mb-6">
-        <div>
-          <div className="flex items-center gap-3 mb-1">
-            <h1 className="text-2xl font-bold">Evaluaciones</h1>
-            <span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.6px] text-yellow-400 bg-yellow-400/10 border border-yellow-400/20 px-2.5 py-1 rounded-full">
-              <FlaskConical size={10} />
-              Datos ilustrativos
-            </span>
-          </div>
-          <p className="text-secondary text-sm">Tu historial de evaluaciones de desempeño</p>
-        </div>
+    <div className="p-4 md:p-8 max-w-3xl space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold mb-1">Evaluaciones</h1>
+        <p className="text-secondary text-sm">Tu historial de evaluaciones de desempeño</p>
       </div>
 
-      {/* KPIs */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
-          <p className="text-[10px] uppercase tracking-[0.7px] text-secondary/60 mb-1">Completadas</p>
-          <p className="text-[22px] font-extrabold text-accent">{completadas}</p>
+      {/* Estado del ciclo */}
+      {ciclo.evaluaciones_activas && !tienePeriodoActual && (
+        <div className="flex items-center gap-3 text-yellow-400 bg-yellow-400/10 border border-yellow-400/20 rounded-xl px-4 py-3 text-sm">
+          <Clock size={15} />
+          Tu evaluación está pendiente
         </div>
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
-          <p className="text-[10px] uppercase tracking-[0.7px] text-secondary/60 mb-1">Pendientes</p>
-          <p className="text-[22px] font-extrabold text-yellow-400">{pendientes}</p>
+      )}
+      {!ciclo.evaluaciones_activas && evaluaciones.length === 0 && (
+        <div className="flex items-center gap-3 text-secondary/80 bg-white/[0.02] border border-[#1A2235] rounded-xl px-4 py-3 text-sm">
+          <AlertCircle size={15} />
+          No hay período de evaluación activo
         </div>
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
-          <p className="text-[10px] uppercase tracking-[0.7px] text-secondary/60 mb-1">Score promedio</p>
-          {promedio !== null ? (
-            <div className="mt-1"><Stars score={promedio} /></div>
-          ) : (
-            <p className="text-[22px] font-extrabold text-secondary">—</p>
-          )}
-        </div>
-      </div>
+      )}
 
-      {/* Lista evaluaciones */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden mb-6">
-        <div className="px-5 py-4 border-b border-[#1A2235]">
-          <h2 className="text-sm font-semibold">Historial</h2>
+      {/* Historial */}
+      {evaluaciones.length === 0 ? (
+        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-16 text-center">
+          <ClipboardCheck size={28} className="text-secondary/25 mx-auto mb-3" />
+          <p className="text-sm text-secondary/60">No tenés evaluaciones registradas.</p>
         </div>
-        <ul className="divide-y divide-[#1A2235]">
-          {evaluaciones.map((ev, i) => {
-            const est = ESTADO_CONFIG[ev.estado] ?? ESTADO_CONFIG.pendiente;
-            const EstIcon = est.icon;
-            return (
-              <li key={i} className="px-5 py-4 flex items-center gap-4 hover:bg-white/[0.02] transition-colors">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <p className="text-sm font-medium truncate">{ev.tipo}</p>
-                    <span className={`flex-shrink-0 flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.5px] px-2 py-0.5 rounded-full border ${est.bg} ${est.color}`}>
-                      <EstIcon size={9} />
-                      {est.label}
-                    </span>
+      ) : (
+        <div className="space-y-4">
+          {evaluaciones.map((ev) => (
+            <div key={ev.id} className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5">
+              <div className="flex items-start justify-between gap-3 mb-4">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={14} className="text-accent" />
+                    <p className="text-sm font-semibold">Evaluación de desempeño</p>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-secondary/60">
-                    <span>{ev.evaluador}</span>
-                    <span>·</span>
-                    <span>{ev.fecha}</span>
-                  </div>
-                  {ev.score !== null && (
-                    <div className="mt-1.5">
-                      <Stars score={ev.score} />
+                  <p className="text-xs text-secondary/70 mt-0.5">
+                    {new Date(ev.created_at).toLocaleDateString("es-AR", { day: "numeric", month: "long", year: "numeric" })}
+                    {ev.evaluador ? ` · Evaluada por ${ev.evaluador}` : ""}
+                  </p>
+                </div>
+                {ev.promedio5 !== null && (
+                  <div className="text-right">
+                    <div className="flex items-center gap-1 text-accent">
+                      <Star size={14} className="fill-accent" />
+                      <span className="text-lg font-bold">{ev.promedio5.toFixed(2)}</span>
+                      <span className="text-xs text-secondary/60">/ 5</span>
                     </div>
-                  )}
-                </div>
-                <ProximamenteButton label="Ver detalle" className="text-xs py-1 px-3 flex-shrink-0" />
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-
-      {/* Próximas evaluaciones */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-        <div className="px-5 py-4 border-b border-[#1A2235]">
-          <h2 className="text-sm font-semibold">Próximas evaluaciones</h2>
-        </div>
-        <ul className="divide-y divide-[#1A2235]">
-          {proximas.map((p, i) => (
-            <li key={i} className="px-5 py-3.5 flex items-center justify-between gap-4 hover:bg-white/[0.02] transition-colors">
-              <div className="flex items-center gap-3">
-                <div className="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center">
-                  <ChevronRight size={13} className="text-accent" />
-                </div>
-                <p className="text-sm">{p.tipo}</p>
+                    <p className="text-[10px] uppercase tracking-wide text-secondary/50">Promedio</p>
+                  </div>
+                )}
               </div>
-              <span className="text-xs text-secondary/60 bg-white/5 px-2.5 py-1 rounded-full">Est. {p.estimada}</span>
-            </li>
+
+              {ev.criterios && (
+                <div className="grid sm:grid-cols-2 gap-2 mb-3">
+                  {CRITERIOS.map((c) => {
+                    const v = ev.criterios?.[c.key] ?? 0;
+                    return (
+                      <div
+                        key={c.key}
+                        className="flex items-center justify-between bg-white/[0.02] border border-[#1A2235] rounded-lg px-3 py-2"
+                      >
+                        <span className="text-xs text-secondary">{c.label}</span>
+                        <span className="flex items-center gap-1 text-xs font-semibold">
+                          <Star size={11} className="text-yellow-400 fill-yellow-400" />
+                          {v}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {ev.texto && (
+                <div className="bg-white/[0.02] border border-[#1A2235] rounded-lg px-4 py-3">
+                  <p className="text-[10px] uppercase tracking-wide text-secondary/60 mb-1">Comentario</p>
+                  <p className="text-xs text-secondary">{ev.texto}</p>
+                </div>
+              )}
+            </div>
           ))}
-        </ul>
-      </div>
+        </div>
+      )}
     </div>
   );
 }

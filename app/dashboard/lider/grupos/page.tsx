@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { getLiderScope } from "@/lib/lider-scope";
 import GruposClient from "./GruposClient";
 
 export default async function GruposPage() {
@@ -8,31 +9,30 @@ export default async function GruposPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: lider } = await supabase
-    .from("empleados")
-    .select("id, empresa_id, area_id")
-    .eq("user_id", user.id)
-    .single();
-
-  if (!lider) redirect("/login");
+  const scope = await getLiderScope(user.id);
+  if (!scope) redirect("/login");
 
   const admin = createAdminClient();
 
-  // Empleados del área (para agregar como miembros)
-  const { data: empleados } = await admin
+  // Empleados disponibles como miembros (área o empresa completa si es demo)
+  const empleadosBase = admin
     .from("empleados")
     .select("id, nombre")
-    .eq("area_id", lider.area_id ?? "")
     .eq("activo", true)
     .order("nombre");
+  const { data: empleados } = scope.es_demo
+    ? await empleadosBase.eq("empresa_id", scope.empresa_id)
+    : await empleadosBase.eq("area_id", scope.area_id ?? "");
 
-  // Grupos del área
-  const { data: gruposRaw } = await admin
+  // Grupos del área (o de toda la empresa si es demo)
+  const gruposBase = admin
     .from("grupos")
     .select("id, nombre, descripcion")
-    .eq("empresa_id", lider.empresa_id)
-    .eq("area_id", lider.area_id ?? "")
+    .eq("empresa_id", scope.empresa_id)
     .order("created_at", { ascending: false });
+  const { data: gruposRaw } = scope.es_demo
+    ? await gruposBase
+    : await gruposBase.eq("area_id", scope.area_id ?? "");
 
   const grupoIds = (gruposRaw ?? []).map((g) => g.id);
 

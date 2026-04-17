@@ -11,10 +11,11 @@ async function getRrhhEmpleado() {
   if (!user) return null;
   const { data } = await supabase
     .from("empleados")
-    .select("id, empresa_id, rol")
+    .select("id, empresa_id, rol, es_demo")
     .eq("user_id", user.id)
     .single();
-  if (!data || data.rol !== "rrhh") return null;
+  if (!data) return null;
+  if (!data.es_demo && data.rol !== "rrhh") return null;
   return data;
 }
 

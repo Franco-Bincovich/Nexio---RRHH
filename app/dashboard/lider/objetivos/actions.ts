@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase-server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { logAuditoria } from "@/lib/auditoria";
 import { revalidatePath } from "next/cache";
 
 function fmt(val: string | number | null | undefined): string {
@@ -60,6 +61,20 @@ export async function asignarObjetivo(data: {
         valor_nuevo:      data.titulo,
       });
       if (histError) console.error("[asignarObjetivo] Error historial:", histError.message);
+
+      await logAuditoria({
+        empresa_id: lider.empresa_id,
+        empleado_id: lider.id,
+        accion: "crear_objetivo",
+        entidad: "objetivos",
+        entidad_id: nuevo.id,
+        detalle: {
+          empleado_id: empleadoId,
+          titulo: data.titulo,
+          vencimiento: data.vencimiento,
+          categoria: data.categoria,
+        },
+      });
     }
 
     revalidatePath("/dashboard/lider/objetivos");
@@ -133,6 +148,19 @@ export async function editarObjetivo(data: {
       }
     }
 
+    if (cambios.length > 0) {
+      await logAuditoria({
+        empresa_id: lider.empresa_id,
+        empleado_id: lider.id,
+        accion: "editar_objetivo",
+        entidad: "objetivos",
+        entidad_id: data.objetivoId,
+        detalle: {
+          cambios: cambios.map((c) => ({ campo: c.campo, antes: fmt(c.antes), despues: fmt(c.despues) })),
+        },
+      });
+    }
+
     revalidatePath("/dashboard/lider/objetivos");
     return { ok: true };
   } catch (e: unknown) {
@@ -159,6 +187,15 @@ export async function eliminarObjetivo(objetivoId: string, tituloObjetivo: strin
 
     const { error } = await admin.from("objetivos").delete().eq("id", objetivoId);
     if (error) return { error: error.message };
+
+    await logAuditoria({
+      empresa_id: lider.empresa_id,
+      empleado_id: lider.id,
+      accion: "eliminar_objetivo",
+      entidad: "objetivos",
+      entidad_id: objetivoId,
+      detalle: { titulo: tituloObjetivo },
+    });
 
     revalidatePath("/dashboard/lider/objetivos");
     return { ok: true };

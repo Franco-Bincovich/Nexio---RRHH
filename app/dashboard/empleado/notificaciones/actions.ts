@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase-server";
+import { createAdminClient } from "@/lib/supabase-admin";
 import { revalidatePath } from "next/cache";
 
 async function getEmpleadoId() {
@@ -50,13 +51,14 @@ export async function marcarLeida(id: string) {
 
 export async function guardarPreferenciasNotif(prefs: Record<string, boolean>) {
   try {
-    const { supabase, empleadoId } = await getEmpleadoId();
-    const { error } = await supabase
+    const { empleadoId } = await getEmpleadoId();
+    const admin = createAdminClient();
+    const { error } = await admin
       .from("empleados")
       .update({ notif_preferencias: prefs })
       .eq("id", empleadoId);
     if (error) return { error: error.message };
-    revalidatePath("/dashboard/empleado/perfil");
+    revalidatePath("/dashboard/empleado/notificaciones");
     return { ok: true };
   } catch (e: unknown) {
     return { error: e instanceof Error ? e.message : "Error desconocido" };

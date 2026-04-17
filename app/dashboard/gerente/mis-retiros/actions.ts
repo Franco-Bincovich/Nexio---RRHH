@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase-server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { insertNotificacionesFiltradas } from "@/lib/notif-prefs";
 import { revalidatePath } from "next/cache";
 
 async function getGerente() {
@@ -26,13 +27,14 @@ async function notificarOwner(empresaId: string, mensaje: string) {
     .eq("rol", "owner")
     .eq("activo", true);
   if (!owners?.length) return;
-  await admin.from("notificaciones").insert(
+  await insertNotificacionesFiltradas(
+    admin,
     owners.map((o) => ({
       empresa_id:      empresaId,
       destinatario_id: o.id,
       tipo:            "solicitud",
       mensaje,
-    }))
+    })),
   );
 }
 

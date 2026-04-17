@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { Thermometer, Users, TrendingUp } from "lucide-react";
+import TemperaturaExportBtn, { type TemperaturaRow } from "@/app/dashboard/rrhh/temperatura/TemperaturaExportBtn";
 
 function puntajeBg(prom: number) {
   if (prom >= 8) return "text-accent";
@@ -37,7 +38,7 @@ export default async function TemperaturaGerentePage() {
       .order("semana", { ascending: false })
       .limit(200),
     admin.from("areas").select("id, nombre").eq("empresa_id", gerente.empresa_id),
-    admin.from("empleados").select("id, area_id").eq("empresa_id", gerente.empresa_id).eq("activo", true),
+    admin.from("empleados").select("id, nombre, area_id").eq("empresa_id", gerente.empresa_id),
   ]);
 
   const totalResp = respuestas?.length ?? 0;
@@ -45,9 +46,13 @@ export default async function TemperaturaGerentePage() {
     ? ((respuestas ?? []).reduce((acc, r) => acc + r.puntuacion, 0) / totalResp).toFixed(1)
     : null;
 
-  // Map empleado → area
+  // Map empleado → area + nombre
   const empAreaMap: Record<string, string> = {};
-  (empleados ?? []).forEach((e) => { if (e.area_id) empAreaMap[e.id] = e.area_id; });
+  const empNombreMap: Record<string, string> = {};
+  (empleados ?? []).forEach((e) => {
+    if (e.area_id) empAreaMap[e.id] = e.area_id;
+    empNombreMap[e.id] = e.nombre;
+  });
 
   // Área map
   const areaNombreMap: Record<string, string> = {};
@@ -85,10 +90,23 @@ export default async function TemperaturaGerentePage() {
   // Total participantes únicos
   const participantes = new Set((respuestas ?? []).map((r) => r.empleado_id)).size;
 
+  const exportRows: TemperaturaRow[] = (respuestas ?? []).map((r) => ({
+    empleado:   empNombreMap[r.empleado_id] ?? "—",
+    area:       areaNombreMap[empAreaMap[r.empleado_id] ?? ""] ?? "—",
+    semana:     r.semana,
+    puntuacion: r.puntuacion,
+    comentario: r.comentario ?? "",
+  }));
+
   return (
     <div className="p-4 md:p-8 max-w-4xl">
-      <h1 className="text-2xl font-bold mb-1">Temperatura del equipo</h1>
-      <p className="text-secondary text-sm mb-8">Bienestar laboral de toda la empresa</p>
+      <div className="flex items-start justify-between mb-8 flex-wrap gap-3">
+        <div>
+          <h1 className="text-2xl font-bold mb-1">Temperatura del equipo</h1>
+          <p className="text-secondary text-sm">Bienestar laboral de toda la empresa</p>
+        </div>
+        <TemperaturaExportBtn rows={exportRows} empresaLabel="empresa" />
+      </div>
 
       {/* KPIs */}
       <div className="grid grid-cols-3 gap-4 mb-8">

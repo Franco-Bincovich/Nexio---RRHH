@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
 import { Thermometer, TrendingUp, TrendingDown, Minus, MessageSquare } from "lucide-react";
+import TemperaturaExportBtn, { type TemperaturaRow } from "./TemperaturaExportBtn";
 
 function scoreColor(s: number) {
   if (s >= 8) return "text-accent";
@@ -52,9 +53,8 @@ export default async function TemperaturaRRHHPage() {
         .order("nombre"),
       supabase
         .from("empleados")
-        .select("id, area_id")
-        .eq("empresa_id", me.empresa_id)
-        .eq("activo", true),
+        .select("id, nombre, area_id")
+        .eq("empresa_id", me.empresa_id),
     ]);
 
   type RespTemp = {
@@ -74,10 +74,12 @@ export default async function TemperaturaRRHHPage() {
       ? (resp.reduce((acc, r) => acc + r.puntuacion, 0) / totalResp).toFixed(1)
       : null;
 
-  // Map empleado → area
+  // Map empleado → area + nombre
   const empAreaMap: Record<string, string> = {};
+  const empNombreMap: Record<string, string> = {};
   (empleados ?? []).forEach((e) => {
     if (e.area_id) empAreaMap[e.id] = e.area_id;
+    empNombreMap[e.id] = e.nombre;
   });
 
   const areaNombreMap: Record<string, string> = {};
@@ -156,15 +158,24 @@ export default async function TemperaturaRRHHPage() {
 
   const participantes = new Set(resp.map((r) => r.empleado_id)).size;
 
+  const exportRows: TemperaturaRow[] = resp.map((r) => ({
+    empleado:   empNombreMap[r.empleado_id] ?? "—",
+    area:       areaNombreMap[empAreaMap[r.empleado_id] ?? ""] ?? "—",
+    semana:     r.semana,
+    puntuacion: r.puntuacion,
+    comentario: r.comentario ?? "",
+  }));
+
   return (
     <div className="p-4 md:p-8 max-w-4xl">
-      <div className="flex items-start justify-between mb-8">
+      <div className="flex items-start justify-between mb-8 flex-wrap gap-3">
         <div>
           <h1 className="text-2xl font-bold mb-1">Temperatura del equipo</h1>
           <p className="text-secondary text-sm">
             Engagement y clima laboral · {totalResp} respuestas
           </p>
         </div>
+        <TemperaturaExportBtn rows={exportRows} empresaLabel="empresa" />
       </div>
 
       {/* Score global */}

@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
+import { getEmpleadoScope } from "@/lib/lider-scope";
 import { AlertCircle } from "lucide-react";
 import ForoClient from "./ForoClient";
 
@@ -8,13 +9,9 @@ export default async function ForoPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: empleado } = await supabase
-    .from("empleados")
-    .select("id, nombre, empresa_id, area_id, areas!empleados_area_id_fkey(nombre)")
-    .eq("user_id", user.id)
-    .single();
+  const scope = await getEmpleadoScope(user.id);
 
-  if (!empleado) {
+  if (!scope) {
     return (
       <div className="p-4 md:p-8 max-w-3xl">
         <h1 className="text-2xl font-bold mb-1">Foro del área</h1>
@@ -26,25 +23,27 @@ export default async function ForoPage() {
     );
   }
 
-  const areaNombre = (empleado.areas as { nombre: string } | null)?.nombre ?? null;
-  const areaId = empleado.area_id ?? null;
+  const areaNombre = scope.area_nombre;
+  const areaId = scope.area_id;
 
-  // Mensajes del área del empleado (últimos 100) — solo si tiene área asignada
-  const { data: mensajesArea } = areaId
-    ? await supabase
-        .from("foros_mensajes")
-        .select("id, mensaje, created_at, area_id, autor:autor_id(nombre, rol)")
-        .eq("empresa_id", empleado.empresa_id)
-        .eq("area_id", areaId)
-        .order("created_at", { ascending: false })
-        .limit(100)
-    : { data: [] };
+  // Mensajes del área (si demo → todas las áreas de la empresa)
+  const mensajesAreaBase = supabase
+    .from("foros_mensajes")
+    .select("id, mensaje, created_at, area_id, autor:autor_id(nombre, rol)")
+    .eq("empresa_id", scope.empresa_id)
+    .order("created_at", { ascending: false })
+    .limit(100);
+  const { data: mensajesArea } = scope.es_demo
+    ? await mensajesAreaBase.not("area_id", "is", null)
+    : areaId
+      ? await mensajesAreaBase.eq("area_id", areaId)
+      : { data: [] };
 
   // Mensajes del foro RRHH general (últimos 100)
   const { data: mensajesRrhh } = await supabase
     .from("foros_mensajes")
     .select("id, mensaje, created_at, area_id, autor:autor_id(nombre, rol)")
-    .eq("empresa_id", empleado.empresa_id)
+    .eq("empresa_id", scope.empresa_id)
     .is("area_id", null)
     .order("created_at", { ascending: false })
     .limit(100);
@@ -75,7 +74,7 @@ export default async function ForoPage() {
         mensajesRrhh={normalizarMensajes(mensajesRrhh as MensajeRaw[])}
         areaNombre={areaNombre}
         areaId={areaId}
-        empleadoNombre={empleado.nombre}
+        empleadoNombre={scope.nombre}
       />
     </div>
   );

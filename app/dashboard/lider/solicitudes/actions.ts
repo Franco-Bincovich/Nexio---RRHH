@@ -2,6 +2,8 @@
 
 import { createClient } from "@/lib/supabase-server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { insertNotificacionesFiltradas } from "@/lib/notif-prefs";
+import { logAuditoria } from "@/lib/auditoria";
 import { revalidatePath } from "next/cache";
 
 const TABLA: Record<string, string> = {
@@ -38,13 +40,14 @@ async function notificarGerentes(empresaId: string, mensaje: string) {
     .eq("rol", "gerente")
     .eq("activo", true);
   if (!gerentes?.length) return;
-  await admin.from("notificaciones").insert(
+  await insertNotificacionesFiltradas(
+    admin,
     gerentes.map((g) => ({
       empresa_id:      empresaId,
       destinatario_id: g.id,
       tipo:            "solicitud",
       mensaje,
-    }))
+    })),
   );
 }
 
@@ -81,7 +84,7 @@ export async function resolverSolicitud(data: {
     if (data.decision === "rechazada" && data.motivoRechazo) {
       msgEmpleado += ` Motivo: ${data.motivoRechazo}`;
     }
-    await admin.from("notificaciones").insert({
+    await insertNotificacionesFiltradas(admin, {
       empresa_id:      lider.empresa_id,
       destinatario_id: data.empleadoId,
       tipo:            "solicitud",
@@ -93,6 +96,20 @@ export async function resolverSolicitud(data: {
       lider.empresa_id,
       `El líder ${lider.nombre} ${decisionVerb} una solicitud de ${tipoLabel} de ${data.empleadoNombre}.`
     );
+
+    await logAuditoria({
+      empresa_id: lider.empresa_id,
+      empleado_id: lider.id,
+      accion: data.decision === "aprobada" ? "aprobar_solicitud" : "rechazar_solicitud",
+      entidad: TABLA[data.tipo],
+      entidad_id: data.solicitudId,
+      detalle: {
+        tipo: data.tipo,
+        empleado_id: data.empleadoId,
+        empleado_nombre: data.empleadoNombre,
+        motivo_rechazo: data.motivoRechazo ?? null,
+      },
+    });
 
     revalidatePath("/dashboard/lider/solicitudes");
     return { ok: true };

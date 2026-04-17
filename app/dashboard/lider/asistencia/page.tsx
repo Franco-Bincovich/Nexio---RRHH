@@ -1,7 +1,9 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
+import { getLiderScope } from "@/lib/lider-scope";
 import { Wifi, Home, ClipboardEdit, ArrowDownCircle, ArrowUpCircle } from "lucide-react";
 import type { MetodoRegistro, AsistenciaTipo } from "@/types/database";
+import AsistenciaExportBtn, { type AsistenciaRow } from "./AsistenciaExportBtn";
 
 const METODO_CONFIG: Record<MetodoRegistro, { label: string; icon: React.ElementType }> = {
   wifi:   { label: "Wi-Fi",  icon: Wifi },
@@ -21,13 +23,9 @@ export default async function LiderAsistenciaPage() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: lider } = await supabase
-    .from("empleados")
-    .select("area_id")
-    .eq("user_id", user.id)
-    .single();
+  const scope = await getLiderScope(user.id);
 
-  if (!lider?.area_id) {
+  if (!scope || (!scope.es_demo && !scope.area_id)) {
     return (
       <div className="p-4 md:p-8 max-w-5xl">
         <h1 className="text-2xl font-bold mb-4">Asistencia del área</h1>
@@ -38,12 +36,14 @@ export default async function LiderAsistenciaPage() {
     );
   }
 
-  // Empleados del área
-  const { data: empleados } = await supabase
+  // Empleados del área (o de toda la empresa si es demo)
+  const empleadosBase = supabase
     .from("empleados")
     .select("id, nombre")
-    .eq("area_id", lider.area_id)
     .eq("activo", true);
+  const { data: empleados } = scope.es_demo
+    ? await empleadosBase.eq("empresa_id", scope.empresa_id)
+    : await empleadosBase.eq("area_id", scope.area_id!);
 
   const empleadoIds = empleados?.map((e) => e.id) ?? [];
   const empleadoMap = Object.fromEntries((empleados ?? []).map((e) => [e.id, e.nombre]));
@@ -66,11 +66,37 @@ export default async function LiderAsistenciaPage() {
     registros?.filter((r) => r.fecha === hoy && r.tipo === "entrada").map((r) => r.empleado_id)
   ).size;
 
+  // Rows para export
+  function calcHoras(entrada: string | null, salida: string | null): string {
+    if (!entrada || !salida) return "";
+    const [h1, m1] = entrada.split(":").map(Number);
+    const [h2, m2] = salida.split(":").map(Number);
+    const min = (h2 * 60 + (m2 ?? 0)) - (h1 * 60 + (m1 ?? 0));
+    if (!Number.isFinite(min) || min <= 0) return "";
+    const h = Math.floor(min / 60);
+    const m = min % 60;
+    return m === 0 ? `${h}h` : `${h}h ${m}m`;
+  }
+  const areaNombre = scope.area_nombre ?? "—";
+  const exportRows: AsistenciaRow[] = (registros ?? []).map((r) => ({
+    empleado:     empleadoMap[r.empleado_id] ?? "—",
+    area:         areaNombre,
+    fecha:        r.fecha,
+    hora_entrada: r.hora_entrada ?? "",
+    hora_salida:  r.hora_salida ?? "",
+    metodo:       r.metodo,
+    horas:        calcHoras(r.hora_entrada, r.hora_salida),
+  }));
+  const scopeLabel = scope.es_demo ? "empresa" : (scope.area_nombre ?? "area");
+
   return (
     <div className="p-4 md:p-8 max-w-5xl">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold mb-1">Asistencia del área</h1>
-        <p className="text-secondary text-sm">Últimos 100 registros</p>
+      <div className="mb-8 flex items-start justify-between gap-3 flex-wrap">
+        <div>
+          <h1 className="text-2xl font-bold mb-1">Asistencia del área</h1>
+          <p className="text-secondary text-sm">Últimos 100 registros</p>
+        </div>
+        <AsistenciaExportBtn rows={exportRows} scopeLabel={scopeLabel} />
       </div>
 
       {/* Resumen */}

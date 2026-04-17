@@ -12,19 +12,22 @@ export default async function EmpleadoLayout({
   const supabase = await createClient();
   const {
     data: { user },
-    error: userError,
   } = await supabase.auth.getUser();
 
   if (!user) redirect("/login");
 
-  const { data: empleado, error: empleadoError } = await supabase
+  const { data: empleado } = await supabase
     .from("empleados")
-    .select("id, nombre, email, rol, areas!empleados_area_id_fkey(nombre)")
+    .select("id, nombre, email, rol, es_demo, areas!empleados_area_id_fkey(nombre)")
     .eq("user_id", user.id)
     .single();
 
   if (!empleado) redirect("/login");
-  if (empleado.rol !== "empleado") redirect(`/dashboard/${empleado.rol}`);
+
+  // Si es usuario demo, saltar validación de rol y permitir acceso.
+  if (!empleado.es_demo && empleado.rol !== "empleado") {
+    redirect(`/dashboard/${empleado.rol}`);
+  }
 
   const areaNombre = Array.isArray(empleado.areas)
     ? (empleado.areas[0] as { nombre: string } | undefined)?.nombre ?? null

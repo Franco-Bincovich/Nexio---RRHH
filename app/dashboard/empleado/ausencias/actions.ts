@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase-server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { insertNotificacionesFiltradas } from "@/lib/notif-prefs";
 import { revalidatePath } from "next/cache";
 
 async function getEmpleado() {
@@ -30,7 +31,7 @@ async function notificarLider(empresaId: string, areaId: string | null, mensaje:
     .single();
 
   if (lider) {
-    await admin.from("notificaciones").insert({
+    await insertNotificacionesFiltradas(admin, {
       empresa_id: empresaId,
       destinatario_id: lider.id,
       tipo,

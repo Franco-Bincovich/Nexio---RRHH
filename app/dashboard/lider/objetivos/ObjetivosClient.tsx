@@ -2,7 +2,8 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, Target, Circle, Loader, CheckCircle2, Calendar, Pencil, Trash2, History, XCircle, AlertCircle, Loader2, ArrowRight, Clock } from "lucide-react";
+import { Plus, Target, Circle, Loader, CheckCircle2, Calendar, Pencil, Trash2, History, XCircle, AlertCircle, Loader2, ArrowRight, Clock, Download } from "lucide-react";
+import { exportarExcel, makeFilename } from "@/lib/export-xlsx";
 import type { ObjetivoEstado } from "@/types/database";
 import AsignarObjetivoModal from "@/components/lider/AsignarObjetivoModal";
 import EditarObjetivoModal from "@/components/lider/EditarObjetivoModal";
@@ -75,21 +76,65 @@ export default function ObjetivosClient({ objetivos, empleados, empresaId, lider
     });
   }
 
+  function handleExport() {
+    const completados = objetivos.filter((o) => o.estado === "completado").length;
+    const progresoProm =
+      objetivos.length > 0
+        ? (objetivos.reduce((a, o) => a + (o.progreso ?? 0), 0) / objetivos.length).toFixed(1)
+        : "—";
+    type Row = { empleado: string; titulo: string; progreso: number; estado: string; vencimiento: string; categoria: string };
+    const rows: Row[] = objetivos.map((o) => ({
+      empleado:    o.empleado_nombre,
+      titulo:      o.titulo,
+      progreso:    o.progreso ?? 0,
+      estado:      ESTADO_CONFIG[o.estado]?.label ?? o.estado,
+      vencimiento: o.vencimiento ? (() => { const [y, m, d] = o.vencimiento!.split("-"); return `${d}/${m}/${y}`; })() : "",
+      categoria:   o.categoria ?? "",
+    }));
+    exportarExcel<Row>({
+      filename: makeFilename("objetivos", "equipo"),
+      sheetName: "Objetivos",
+      columns: [
+        { header: "Empleado",    accessor: (r) => r.empleado,    width: 28 },
+        { header: "Título",      accessor: (r) => r.titulo,      width: 32 },
+        { header: "Progreso (%)",accessor: (r) => r.progreso,    width: 12 },
+        { header: "Estado",      accessor: (r) => r.estado,      width: 14 },
+        { header: "Vencimiento", accessor: (r) => r.vencimiento, width: 12 },
+        { header: "Categoría",   accessor: (r) => r.categoria,   width: 16 },
+      ],
+      rows,
+      footerRows: [
+        ["", "", "", "Completados:", completados, ""],
+        ["", "", "", "Progreso promedio (%):", progresoProm, ""],
+      ],
+    });
+  }
+
   return (
     <>
       <div className="p-4 md:p-8 max-w-4xl">
-        <div className="flex items-start justify-between mb-8">
+        <div className="flex items-start justify-between mb-8 flex-wrap gap-3">
           <div>
             <h1 className="text-2xl font-bold mb-1">Objetivos del área</h1>
             <p className="text-secondary text-sm">{objetivos.length} objetivo{objetivos.length !== 1 ? "s" : ""} asignado{objetivos.length !== 1 ? "s" : ""}</p>
           </div>
-          <button
-            onClick={() => setModalAsignar(true)}
-            className="flex items-center gap-2 bg-accent text-base text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-accent/90 transition-colors"
-          >
-            <Plus size={16} />
-            Asignar objetivo
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleExport}
+              disabled={objetivos.length === 0}
+              className="flex items-center gap-1.5 text-xs py-2 px-3 bg-accent/10 text-accent border border-accent/20 rounded-lg hover:bg-accent/20 transition-colors disabled:opacity-40"
+            >
+              <Download size={13} />
+              Exportar Excel
+            </button>
+            <button
+              onClick={() => setModalAsignar(true)}
+              className="flex items-center gap-2 bg-accent text-base text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-accent/90 transition-colors"
+            >
+              <Plus size={16} />
+              Asignar objetivo
+            </button>
+          </div>
         </div>
 
         {objetivos.length === 0 ? (

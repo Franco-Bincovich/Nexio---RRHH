@@ -2,6 +2,8 @@
 
 import { createClient } from "@/lib/supabase-server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { insertNotificacionesFiltradas } from "@/lib/notif-prefs";
+import { logAuditoria } from "@/lib/auditoria";
 import { revalidatePath } from "next/cache";
 
 async function getGerente() {
@@ -26,8 +28,9 @@ async function notificarOwner(empresaId: string, mensaje: string) {
     .eq("rol", "owner")
     .eq("activo", true);
   if (!owners?.length) return;
-  await admin.from("notificaciones").insert(
-    owners.map((o) => ({ empresa_id: empresaId, destinatario_id: o.id, tipo: "solicitud", mensaje }))
+  await insertNotificacionesFiltradas(
+    admin,
+    owners.map((o) => ({ empresa_id: empresaId, destinatario_id: o.id, tipo: "solicitud", mensaje })),
   );
 }
 
@@ -67,7 +70,7 @@ export async function resolverSolicitudLider(data: {
     const accion    = data.decision === "aprobada" ? "aprobada" : "rechazada";
 
     // Notif al líder
-    await admin.from("notificaciones").insert({
+    await insertNotificacionesFiltradas(admin, {
       empresa_id:      gerente.empresa_id,
       destinatario_id: data.liderEmpleadoId,
       tipo:            "solicitud",
@@ -81,6 +84,20 @@ export async function resolverSolicitudLider(data: {
       gerente.empresa_id,
       `El Gerente ${gerente.nombre} ${accion} una solicitud de ${tipoLabel} del líder ${data.liderNombre}.`
     );
+
+    await logAuditoria({
+      empresa_id: gerente.empresa_id,
+      empleado_id: gerente.id,
+      accion: data.decision === "aprobada" ? "aprobar_solicitud" : "rechazar_solicitud",
+      entidad: tabla,
+      entidad_id: data.solicitudId,
+      detalle: {
+        tipo: data.tipo,
+        lider_id: data.liderEmpleadoId,
+        lider_nombre: data.liderNombre,
+        motivo_rechazo: data.motivoRechazo ?? null,
+      },
+    });
 
     revalidatePath("/dashboard/gerente/solicitudes");
     return { ok: true };

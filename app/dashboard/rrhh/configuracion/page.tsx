@@ -36,10 +36,11 @@ export default async function ConfiguracionPage() {
 
   const { data: me } = await supabase
     .from("empleados")
-    .select("empresa_id, rol")
+    .select("empresa_id, rol, es_demo")
     .eq("user_id", user.id)
     .single();
-  if (!me || me.rol !== "rrhh") redirect("/login");
+  if (!me) redirect("/login");
+  if (!me.es_demo && me.rol !== "rrhh") redirect("/login");
 
   const admin = createAdminClient();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

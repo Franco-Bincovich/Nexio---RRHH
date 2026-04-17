@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
+import { getLiderScope } from "@/lib/lider-scope";
 import { UserCheck, Home, Building2, Wifi } from "lucide-react";
 import type { ModalidadTipo } from "@/types/database";
 
@@ -16,13 +17,9 @@ export default async function EquipoPage() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: lider } = await supabase
-    .from("empleados")
-    .select("area_id")
-    .eq("user_id", user.id)
-    .single();
+  const scope = await getLiderScope(user.id);
 
-  if (!lider?.area_id) {
+  if (!scope || (!scope.es_demo && !scope.area_id)) {
     return (
       <div className="p-4 md:p-8 max-w-4xl">
         <h1 className="text-2xl font-bold mb-4">Mi equipo</h1>
@@ -33,11 +30,13 @@ export default async function EquipoPage() {
     );
   }
 
-  const { data: equipo } = await supabase
+  const equipoBase = supabase
     .from("empleados")
     .select("id, nombre, email, rol, modalidad, activo")
-    .eq("area_id", lider.area_id)
     .order("nombre");
+  const { data: equipo } = scope.es_demo
+    ? await equipoBase.eq("empresa_id", scope.empresa_id)
+    : await equipoBase.eq("area_id", scope.area_id!);
 
   const activos  = equipo?.filter((e) => e.activo).length  ?? 0;
   const inactivos = equipo?.filter((e) => !e.activo).length ?? 0;

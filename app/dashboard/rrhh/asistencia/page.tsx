@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import { createClient } from "@/lib/supabase";
+import { exportarExcel, makeFilename } from "@/lib/export-xlsx";
 import {
   CalendarClock,
   ArrowDownCircle,
@@ -180,35 +181,46 @@ export default function AsistenciaPage() {
     if (!empresaId) return;
     setExporting(true);
     try {
-      const { utils, writeFile } = await import("xlsx");
+      const empNombreMap = Object.fromEntries(empleados.map((e) => [e.id, e.nombre]));
+      const empAreaMap = Object.fromEntries(empleados.map((e) => [e.id, e.area_id]));
+      const areaNombreMap = Object.fromEntries(areas.map((a) => [a.id, a.nombre]));
 
-      const empNombreMap = Object.fromEntries(
-        empleados.map((e) => [e.id, e.nombre])
-      );
+      function calcHoras(entrada: string | null, salida: string | null): string {
+        if (!entrada || !salida) return "";
+        const [h1, m1] = entrada.split(":").map(Number);
+        const [h2, m2] = salida.split(":").map(Number);
+        const min = (h2 * 60 + (m2 ?? 0)) - (h1 * 60 + (m1 ?? 0));
+        if (!Number.isFinite(min) || min <= 0) return "";
+        const h = Math.floor(min / 60);
+        const m = min % 60;
+        return m === 0 ? `${h}h` : `${h}h ${m}m`;
+      }
 
       const rows = registros.map((r) => ({
-        Empleado: empNombreMap[r.empleado_id] ?? r.empleado_id,
-        Fecha: r.fecha,
-        Tipo: r.tipo,
-        "Hora entrada": r.hora_entrada ?? "",
-        "Hora salida": r.hora_salida ?? "",
-        Método: r.metodo,
+        empleado: empNombreMap[r.empleado_id] ?? r.empleado_id,
+        area:     areaNombreMap[empAreaMap[r.empleado_id] ?? ""] ?? "—",
+        fecha:    r.fecha,
+        entrada:  r.hora_entrada ?? "",
+        salida:   r.hora_salida ?? "",
+        metodo:   r.metodo,
+        horas:    calcHoras(r.hora_entrada, r.hora_salida),
       }));
 
-      const ws = utils.json_to_sheet(rows);
-      ws["!cols"] = [
-        { wch: 30 },
-        { wch: 12 },
-        { wch: 10 },
-        { wch: 14 },
-        { wch: 14 },
-        { wch: 10 },
-      ];
-      const wb = utils.book_new();
-      utils.book_append_sheet(wb, ws, "Asistencia");
-
-      const wEndFmt = toDateStr(weekDates[4]);
-      writeFile(wb, `asistencia_${toDateStr(weekStart)}_${wEndFmt}.xlsx`);
+      exportarExcel({
+        filename: makeFilename("asistencia", `${toDateStr(weekStart)}_${toDateStr(weekDates[4])}`),
+        sheetName: "Asistencia",
+        columns: [
+          { header: "Empleado",     accessor: (r) => r.empleado, width: 28 },
+          { header: "Área",         accessor: (r) => r.area,     width: 18 },
+          { header: "Fecha",        accessor: (r) => r.fecha,    width: 12 },
+          { header: "Hora entrada", accessor: (r) => r.entrada,  width: 12 },
+          { header: "Hora salida",  accessor: (r) => r.salida,   width: 12 },
+          { header: "Método",       accessor: (r) => r.metodo,   width: 10 },
+          { header: "Horas",        accessor: (r) => r.horas,    width: 10 },
+        ],
+        rows,
+        footerRows: [["", "", "", "", "Total registros:", rows.length]],
+      });
     } finally {
       setExporting(false);
     }

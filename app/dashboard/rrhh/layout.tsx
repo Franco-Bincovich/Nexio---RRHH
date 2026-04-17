@@ -14,13 +14,14 @@ export default async function RrhhLayout({ children }: { children: React.ReactNo
 
   const { data: empleado } = await supabase
     .from("empleados")
-    .select("id, nombre, email, rol, empresa_id")
+    .select("id, nombre, email, rol, es_demo, empresa_id")
     .eq("user_id", user.id)
     .single();
 
-  if (!empleado || empleado.rol !== "rrhh") {
-    if (empleado?.rol) redirect(`/dashboard/${empleado.rol}`);
-    redirect("/login");
+  if (!empleado) redirect("/login");
+
+  if (!empleado.es_demo && empleado.rol !== "rrhh") {
+    redirect(`/dashboard/${empleado.rol}`);
   }
 
   const { data: empresa } = await supabase

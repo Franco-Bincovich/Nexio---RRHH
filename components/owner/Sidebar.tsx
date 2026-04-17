@@ -6,7 +6,6 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Building2,
-  CreditCard,
   LogOut,
   Menu,
   X,
@@ -47,7 +46,6 @@ export default function Sidebar({ ownerNombre, ownerEmail, holdingNombre, empres
   }
 
   const isDashboard = pathname === "/dashboard/owner/dashboard" || pathname === "/dashboard/owner";
-  const isPlan      = pathname.startsWith("/dashboard/owner/plan");
   const activeEmpresaId = pathname.startsWith("/dashboard/owner/empresa/")
     ? pathname.split("/")[4]
     : null;
@@ -118,18 +116,6 @@ export default function Sidebar({ ownerNombre, ownerEmail, holdingNombre, empres
           </div>
         )}
 
-        {/* Sección Cuenta */}
-        <div>
-          <p className="text-[9px] uppercase tracking-[0.9px] text-secondary/50 px-3 mb-1.5">Cuenta</p>
-          <Link
-            href="/dashboard/owner/plan"
-            onClick={() => setMobileOpen(false)}
-            className={navLinkCls(isPlan)}
-          >
-            <CreditCard size={15} strokeWidth={isPlan ? 2.5 : 2} />
-            Mi plan
-          </Link>
-        </div>
       </nav>
 
       {/* Usuario */}

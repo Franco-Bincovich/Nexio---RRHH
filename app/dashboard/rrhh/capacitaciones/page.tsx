@@ -14,7 +14,9 @@ import {
   ChevronUp,
   UserPlus,
   Archive,
+  Download,
 } from "lucide-react";
+import { exportarExcel, makeFilename } from "@/lib/export-xlsx";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -607,23 +609,68 @@ export default function CapacitacionesPage() {
 
   const asignarCap = capacitaciones.find((c) => c.id === asignandoId);
 
+  function handleExport() {
+    const empMap = Object.fromEntries(empleados.map((e) => [e.id, e.nombre]));
+    const capMap = Object.fromEntries(capacitaciones.map((c) => [c.id, c]));
+    type Row = { empleado: string; capacitacion: string; categoria: string; estado: string; fecha_inicio: string; fecha_fin: string };
+    const rows: Row[] = asignaciones.map((a) => {
+      const cap = capMap[a.capacitacion_id];
+      return {
+        empleado:     empMap[a.empleado_id] ?? "—",
+        capacitacion: cap?.titulo ?? "—",
+        categoria:    cap?.categoria ?? "—",
+        estado:       ASIG_CONFIG[a.estado].label,
+        fecha_inicio: cap?.fecha_inicio ? (fmtDate(cap.fecha_inicio) ?? "") : "",
+        fecha_fin:    cap?.fecha_fin ? (fmtDate(cap.fecha_fin) ?? "") : "",
+      };
+    });
+    const completados = asignaciones.filter((a) => a.estado === "completado").length;
+    exportarExcel<Row>({
+      filename: makeFilename("capacitaciones", "empresa"),
+      sheetName: "Capacitaciones",
+      columns: [
+        { header: "Empleado",     accessor: (r) => r.empleado,     width: 28 },
+        { header: "Capacitación", accessor: (r) => r.capacitacion, width: 30 },
+        { header: "Categoría",    accessor: (r) => r.categoria,    width: 16 },
+        { header: "Estado",       accessor: (r) => r.estado,       width: 12 },
+        { header: "Fecha inicio", accessor: (r) => r.fecha_inicio, width: 12 },
+        { header: "Fecha fin",    accessor: (r) => r.fecha_fin,    width: 12 },
+      ],
+      rows,
+      footerRows: [
+        ["", "", "", "Total asignaciones:", rows.length, ""],
+        ["", "", "", "Completadas:",         completados, ""],
+      ],
+    });
+  }
+
   return (
     <div className="p-4 md:p-8 max-w-5xl">
       {/* Header */}
-      <div className="flex items-start justify-between mb-6">
+      <div className="flex items-start justify-between mb-6 flex-wrap gap-3">
         <div>
           <h1 className="text-2xl font-bold mb-1">Capacitaciones</h1>
           <p className="text-secondary text-sm">
             Gestión de programas · {capacitaciones.filter((c) => c.estado === "activa").length} activos
           </p>
         </div>
-        <button
-          onClick={() => setShowNueva(true)}
-          className="flex items-center gap-2 text-sm bg-accent text-[#0A0F1C] font-semibold px-4 py-2 rounded-lg hover:bg-accent/90 transition-colors"
-        >
-          <Plus size={16} />
-          Nueva capacitación
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleExport}
+            disabled={asignaciones.length === 0}
+            className="flex items-center gap-1.5 text-xs py-2 px-3 bg-accent/10 text-accent border border-accent/20 rounded-lg hover:bg-accent/20 transition-colors disabled:opacity-40"
+          >
+            <Download size={13} />
+            Exportar Excel
+          </button>
+          <button
+            onClick={() => setShowNueva(true)}
+            className="flex items-center gap-2 text-sm bg-accent text-[#0A0F1C] font-semibold px-4 py-2 rounded-lg hover:bg-accent/90 transition-colors"
+          >
+            <Plus size={16} />
+            Nueva capacitación
+          </button>
+        </div>
       </div>
 
       {/* Stats */}

@@ -23,6 +23,7 @@ import {
   Umbrella,
   ClipboardList,
   Thermometer,
+  ClipboardCheck,
   ChevronDown,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase";
@@ -83,10 +84,12 @@ export default function Sidebar({ nombre, email, empresaNombre, pendingSolicitud
         { href: "/dashboard/gerente/areas",       label: "Áreas",        icon: Building2 },
         { href: "/dashboard/gerente/empleados",   label: "Empleados",    icon: Users },
         { href: "/dashboard/gerente/organigrama", label: "Organigrama",  icon: Network },
-        { href: "/dashboard/gerente/objetivos",   label: "Objetivos",    icon: Target },
-        { href: "/dashboard/gerente/reportes",    label: "Reportes",     icon: BarChart3 },
+        { href: "/dashboard/gerente/objetivos",    label: "Objetivos",    icon: Target },
+        { href: "/dashboard/gerente/evaluaciones", label: "Evaluaciones", icon: ClipboardCheck },
+        { href: "/dashboard/gerente/reportes",     label: "Reportes",     icon: BarChart3 },
         { href: "/dashboard/gerente/temperatura", label: "Temperatura",  icon: Thermometer },
         { href: "/dashboard/gerente/solicitudes", label: "Solicitudes",  icon: ClipboardList, badge: pendingSolicitudes },
+        { href: "/dashboard/gerente/vacaciones",  label: "Vacaciones",   icon: Umbrella },
         { href: "/dashboard/gerente/foros",       label: "Foros",        icon: MessageSquare },
         { href: "/dashboard/gerente/ai",          label: "Nexio AI",     icon: Sparkles, beta: true },
       ],

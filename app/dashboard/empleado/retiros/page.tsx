@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
+import { getEmpleadoScope } from "@/lib/lider-scope";
 import { AlertCircle } from "lucide-react";
 import RetirosClient from "./RetirosClient";
 
@@ -8,13 +9,9 @@ export default async function RetirosPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: empleado } = await supabase
-    .from("empleados")
-    .select("id")
-    .eq("user_id", user.id)
-    .single();
+  const scope = await getEmpleadoScope(user.id);
 
-  if (!empleado) {
+  if (!scope) {
     return (
       <div className="p-4 md:p-8 max-w-3xl">
         <h1 className="text-2xl font-bold mb-1">Retiros anticipados</h1>
@@ -26,11 +23,22 @@ export default async function RetirosPage() {
     );
   }
 
-  const { data: solicitudes } = await supabase
+  let empresaEmpleadoIds: string[] | null = null;
+  if (scope.es_demo) {
+    const { data: empEmpresa } = await supabase
+      .from("empleados")
+      .select("id")
+      .eq("empresa_id", scope.empresa_id);
+    empresaEmpleadoIds = (empEmpresa ?? []).map((e) => e.id);
+  }
+
+  const solicitudesBase = supabase
     .from("solicitudes_retiro")
     .select("*")
-    .eq("empleado_id", empleado.id)
     .order("created_at", { ascending: false });
+  const { data: solicitudes } = empresaEmpleadoIds !== null
+    ? await solicitudesBase.in("empleado_id", empresaEmpleadoIds.length > 0 ? empresaEmpleadoIds : [""])
+    : await solicitudesBase.eq("empleado_id", scope.id);
 
   const hoy = new Date().toISOString().split("T")[0];
 

@@ -23,10 +23,11 @@ export default async function ForosPage() {
 
   const { data: me } = await supabase
     .from("empleados")
-    .select("id, empresa_id, rol")
+    .select("id, empresa_id, rol, es_demo")
     .eq("user_id", user.id)
     .single();
-  if (!me || me.rol !== "rrhh") redirect("/login");
+  if (!me) redirect("/login");
+  if (!me.es_demo && me.rol !== "rrhh") redirect("/login");
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const admin = createAdminClient() as any;
