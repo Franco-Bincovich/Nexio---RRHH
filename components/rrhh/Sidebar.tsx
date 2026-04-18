@@ -24,6 +24,11 @@ import {
   UserX,
   DoorOpen,
   Umbrella,
+  UserPlus,
+  UserMinus,
+  Megaphone,
+  GitBranch,
+  Wallet,
   ChevronDown,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase";
@@ -61,6 +66,11 @@ const grupos: NavGroup[] = [
       { href: "/dashboard/rrhh/asistencia",     label: "Asistencia",     icon: CalendarClock   },
       { href: "/dashboard/rrhh/solicitudes",    label: "Solicitudes",    icon: Inbox           },
       { href: "/dashboard/rrhh/vacaciones",     label: "Vacaciones",     icon: Umbrella        },
+      { href: "/dashboard/rrhh/onboarding",     label: "Onboarding",     icon: UserPlus        },
+      { href: "/dashboard/rrhh/offboarding",    label: "Offboarding",    icon: UserMinus       },
+      { href: "/dashboard/rrhh/vacantes",       label: "Vacantes",       icon: Megaphone       },
+      { href: "/dashboard/rrhh/sucesion",       label: "Sucesión",       icon: GitBranch       },
+      { href: "/dashboard/rrhh/costos",         label: "Costos",         icon: Wallet          },
       { href: "/dashboard/rrhh/foros",          label: "Foros",          icon: MessageSquare   },
       { href: "/dashboard/rrhh/temperatura",    label: "Temperatura",    icon: Thermometer     },
       { href: "/dashboard/rrhh/evaluaciones",   label: "Evaluaciones",   icon: ClipboardList   },

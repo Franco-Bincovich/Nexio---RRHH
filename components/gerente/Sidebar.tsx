@@ -24,6 +24,8 @@ import {
   ClipboardList,
   Thermometer,
   ClipboardCheck,
+  Wallet,
+  GitBranch,
   ChevronDown,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase";
@@ -86,6 +88,8 @@ export default function Sidebar({ nombre, email, empresaNombre, pendingSolicitud
         { href: "/dashboard/gerente/organigrama", label: "Organigrama",  icon: Network },
         { href: "/dashboard/gerente/objetivos",    label: "Objetivos",    icon: Target },
         { href: "/dashboard/gerente/evaluaciones", label: "Evaluaciones", icon: ClipboardCheck },
+        { href: "/dashboard/gerente/sucesion",     label: "Sucesión",     icon: GitBranch },
+        { href: "/dashboard/gerente/costos",       label: "Costos",       icon: Wallet },
         { href: "/dashboard/gerente/reportes",     label: "Reportes",     icon: BarChart3 },
         { href: "/dashboard/gerente/temperatura", label: "Temperatura",  icon: Thermometer },
         { href: "/dashboard/gerente/solicitudes", label: "Solicitudes",  icon: ClipboardList, badge: pendingSolicitudes },

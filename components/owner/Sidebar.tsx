@@ -10,6 +10,7 @@ import {
   Menu,
   X,
   ChevronRight,
+  Wallet,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -46,6 +47,7 @@ export default function Sidebar({ ownerNombre, ownerEmail, holdingNombre, empres
   }
 
   const isDashboard = pathname === "/dashboard/owner/dashboard" || pathname === "/dashboard/owner";
+  const isCostos    = pathname.startsWith("/dashboard/owner/costos");
   const activeEmpresaId = pathname.startsWith("/dashboard/owner/empresa/")
     ? pathname.split("/")[4]
     : null;
@@ -89,6 +91,19 @@ export default function Sidebar({ ownerNombre, ownerEmail, holdingNombre, empres
           >
             <LayoutDashboard size={15} strokeWidth={isDashboard ? 2.5 : 2} />
             <span className="truncate">{holdingNombre || "Mi holding"}</span>
+          </Link>
+        </div>
+
+        {/* Sección Finanzas */}
+        <div>
+          <p className="text-[9px] uppercase tracking-[0.9px] text-secondary/50 px-3 mb-1.5">Finanzas</p>
+          <Link
+            href="/dashboard/owner/costos"
+            onClick={() => setMobileOpen(false)}
+            className={navLinkCls(isCostos)}
+          >
+            <Wallet size={15} strokeWidth={isCostos ? 2.5 : 2} />
+            <span className="truncate">Costos</span>
           </Link>
         </div>
 
