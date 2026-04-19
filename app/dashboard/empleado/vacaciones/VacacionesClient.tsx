@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, X, Loader2, CheckCircle2, AlertCircle, Clock, Sun } from "lucide-react";
 import { crearVacaciones } from "./actions";
+import { Badge } from "@/components/ui";
 
 export type Solicitud = {
   id: string;
@@ -13,12 +14,6 @@ export type Solicitud = {
   comentario: string | null;
   estado: string;
   created_at: string;
-};
-
-const ESTADO_CONFIG: Record<string, { label: string; color: string }> = {
-  pendiente:  { label: "Pendiente",  color: "text-yellow-400 bg-yellow-400/10 border-yellow-400/20" },
-  aprobada:   { label: "Aprobada",   color: "text-accent bg-accent/10 border-accent/20" },
-  rechazada:  { label: "Rechazada",  color: "text-red-400 bg-red-400/10 border-red-400/20" },
 };
 
 function calcularDias(desde: string, hasta: string): number {
@@ -79,8 +74,8 @@ export default function VacacionesClient({ solicitudes, hoy }: { solicitudes: So
       )}
 
       {showForm && (
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-[#1A2235]">
+        <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-border">
             <h2 className="text-sm font-semibold">Solicitar vacaciones</h2>
             <button onClick={() => setShowForm(false)} className="text-secondary hover:text-white transition-colors">
               <X size={16} />
@@ -95,7 +90,7 @@ export default function VacacionesClient({ solicitudes, hoy }: { solicitudes: So
                   value={fechaDesde}
                   onChange={(e) => setFechaDesde(e.target.value)}
                   required
-                  className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
+                  className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
                 />
               </div>
               <div>
@@ -106,13 +101,13 @@ export default function VacacionesClient({ solicitudes, hoy }: { solicitudes: So
                   min={fechaDesde}
                   onChange={(e) => setFechaHasta(e.target.value)}
                   required
-                  className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
+                  className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
                 />
               </div>
             </div>
 
             {/* Días calculados */}
-            <div className={`flex items-center gap-2 px-4 py-3 rounded-lg border ${dias > 0 ? "bg-accent/5 border-accent/20 text-accent" : "bg-white/[0.02] border-[#1A2235] text-secondary"}`}>
+            <div className={`flex items-center gap-2 px-4 py-3 rounded-lg border ${dias > 0 ? "bg-accent/5 border-accent/20 text-accent" : "bg-white/[0.02] border-border text-secondary"}`}>
               <Sun size={14} />
               <span className="text-sm font-medium">
                 {dias > 0 ? `${dias} día${dias !== 1 ? "s" : ""} de vacaciones` : "Seleccioná las fechas"}
@@ -128,7 +123,7 @@ export default function VacacionesClient({ solicitudes, hoy }: { solicitudes: So
                 onChange={(e) => setComentario(e.target.value)}
                 rows={2}
                 placeholder="Algún comentario o aclaración..."
-                className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2 text-sm text-white placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition resize-none"
+                className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-white placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition resize-none"
               />
             </div>
 
@@ -144,7 +139,7 @@ export default function VacacionesClient({ solicitudes, hoy }: { solicitudes: So
               <button
                 type="submit"
                 disabled={isPending || dias < 1}
-                className="flex items-center gap-2 bg-accent hover:bg-accent/90 disabled:opacity-50 text-base text-sm font-semibold px-5 py-2 rounded-lg transition-colors"
+                className="flex items-center gap-2 bg-accent hover:bg-accent/90 disabled:opacity-50 text-sm font-semibold px-5 py-2 rounded-lg transition-colors"
               >
                 {isPending ? <Loader2 size={14} className="animate-spin" /> : <CheckCircle2 size={14} />}
                 Enviar solicitud
@@ -155,8 +150,8 @@ export default function VacacionesClient({ solicitudes, hoy }: { solicitudes: So
       )}
 
       {/* Historial */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-        <div className="flex items-center gap-2 px-5 py-4 border-b border-[#1A2235]">
+      <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
           <Clock size={15} className="text-accent" />
           <h2 className="text-sm font-semibold">Historial</h2>
           <span className="ml-auto text-[10px] text-secondary/50">{solicitudes.length} solicitud{solicitudes.length !== 1 ? "es" : ""}</span>
@@ -166,13 +161,12 @@ export default function VacacionesClient({ solicitudes, hoy }: { solicitudes: So
             <p className="text-sm text-secondary/60">No hay vacaciones registradas.</p>
           </div>
         ) : (
-          <ul className="divide-y divide-[#1A2235]">
+          <ul className="divide-y divide-border">
             {solicitudes.map((s) => {
-              const estado = ESTADO_CONFIG[s.estado] ?? ESTADO_CONFIG.pendiente;
               const desde = new Date(s.fecha_desde + "T00:00:00").toLocaleDateString("es-AR", { day: "numeric", month: "short" });
               const hasta = new Date(s.fecha_hasta + "T00:00:00").toLocaleDateString("es-AR", { day: "numeric", month: "short", year: "numeric" });
               return (
-                <li key={s.id} className="px-5 py-4 hover:bg-white/[0.02] transition-colors">
+                <li key={s.id} className="px-5 py-4 hover:bg-border/20 transition-colors">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 mb-1">
@@ -189,9 +183,7 @@ export default function VacacionesClient({ solicitudes, hoy }: { solicitudes: So
                         Enviada el {new Date(s.created_at).toLocaleDateString("es-AR", { day: "numeric", month: "short" })}
                       </p>
                     </div>
-                    <span className={`flex-shrink-0 text-[10px] font-bold uppercase tracking-[0.5px] px-2.5 py-1 rounded-full border ${estado.color}`}>
-                      {estado.label}
-                    </span>
+                    <Badge estado={s.estado} showIcon={false} className="flex-shrink-0" />
                   </div>
                 </li>
               );

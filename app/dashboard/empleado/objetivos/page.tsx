@@ -1,15 +1,8 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
 import { getEmpleadoScope } from "@/lib/lider-scope";
-import { CheckCircle2, Clock, Circle, Target } from "lucide-react";
-
-const ESTADO_CONFIG = {
-  completado:  { label: "Completado",  icon: CheckCircle2, color: "text-accent",     bg: "bg-accent/10 border-accent/20" },
-  en_progreso: { label: "En progreso", icon: Clock,        color: "text-yellow-400", bg: "bg-yellow-400/10 border-yellow-400/20" },
-  pendiente:   { label: "Pendiente",   icon: Circle,       color: "text-secondary",  bg: "bg-white/5 border-white/10" },
-} as const;
-
-type EstadoKey = keyof typeof ESTADO_CONFIG;
+import { Target } from "lucide-react";
+import { Badge, Card, EmptyState } from "@/components/ui";
 
 export default async function ObjetivosPage() {
   const supabase = await createClient();
@@ -47,27 +40,21 @@ export default async function ObjetivosPage() {
       </div>
 
       {lista.length === 0 ? (
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-16 text-center">
-          <Target size={28} className="text-secondary/30 mx-auto mb-3" />
-          <p className="text-sm text-secondary/60">No tenés objetivos asignados todavía.</p>
-          <p className="text-xs text-secondary/40 mt-1">Tu líder o RRHH los asignará desde el panel de gestión.</p>
-        </div>
+        <EmptyState
+          icon={Target}
+          titulo="No tenés objetivos asignados todavía"
+          descripcion="Tu líder o RRHH los asignará desde el panel de gestión."
+        />
       ) : (
         <div className="space-y-3">
           {lista.map((obj) => {
-            const estadoKey = (obj.estado as EstadoKey) in ESTADO_CONFIG ? obj.estado as EstadoKey : "pendiente";
-            const estado = ESTADO_CONFIG[estadoKey];
-            const EstadoIcon = estado.icon;
             const progreso = obj.progreso ?? 0;
 
             return (
-              <div key={obj.id} className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5 space-y-3">
+              <Card key={obj.id} className="space-y-3">
                 <div className="flex items-start justify-between gap-4">
                   <p className="text-sm font-medium leading-snug">{obj.titulo}</p>
-                  <span className={`flex items-center gap-1 text-xs px-2.5 py-1 rounded-full font-medium border flex-shrink-0 ${estado.bg} ${estado.color}`}>
-                    <EstadoIcon size={11} />
-                    {estado.label}
-                  </span>
+                  <Badge estado={obj.estado} size="md" className="flex-shrink-0" />
                 </div>
 
                 {obj.descripcion && (
@@ -100,7 +87,7 @@ export default async function ObjetivosPage() {
                     </span>
                   )}
                 </div>
-              </div>
+              </Card>
             );
           })}
         </div>
@@ -111,9 +98,9 @@ export default async function ObjetivosPage() {
 
 function MiniStat({ label, value, color }: { label: string; value: number; color: string }) {
   return (
-    <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+    <Card className="px-5 py-4" noPadding>
       <p className="text-[10px] uppercase tracking-[0.7px] text-secondary/60 mb-1">{label}</p>
       <p className={`text-[22px] font-extrabold ${color}`}>{value}</p>
-    </div>
+    </Card>
   );
 }

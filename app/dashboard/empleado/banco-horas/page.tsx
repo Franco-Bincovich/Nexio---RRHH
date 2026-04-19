@@ -92,7 +92,7 @@ export default async function BancoHorasPage() {
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {/* Saldo total */}
-        <div className="lg:col-span-2 bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4 flex items-center gap-4">
+        <div className="lg:col-span-2 bg-surface rounded-xl border border-border shadow-sm px-5 py-4 flex items-center gap-4">
           <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${saldoTotal >= 0 ? "bg-accent/10" : "bg-red-400/10"}`}>
             {saldoTotal > 0 ? <TrendingUp size={20} className="text-accent" /> : saldoTotal < 0 ? <TrendingDown size={20} className="text-red-400" /> : <Minus size={20} className="text-secondary" />}
           </div>
@@ -109,20 +109,20 @@ export default async function BancoHorasPage() {
           </div>
         </div>
 
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+        <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
           <p className="text-[10px] uppercase tracking-[0.7px] text-secondary/60 mb-1">Días con extra</p>
           <p className="text-[22px] font-extrabold text-accent">{diasPositivos}</p>
         </div>
 
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+        <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
           <p className="text-[10px] uppercase tracking-[0.7px] text-secondary/60 mb-1">Días con déficit</p>
           <p className="text-[22px] font-extrabold text-red-400">{diasNegativos}</p>
         </div>
       </div>
 
       {/* Tabla historial */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-        <div className="flex items-center gap-2 px-5 py-4 border-b border-[#1A2235]">
+      <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
           <Clock size={15} className="text-accent" />
           <h2 className="text-sm font-semibold">Historial (últimos 90 días)</h2>
           <span className="ml-auto text-[10px] text-secondary/50">{filas.length} registros</span>
@@ -141,7 +141,7 @@ export default async function BancoHorasPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[#1A2235] text-[10px] uppercase tracking-[0.7px] text-secondary">
+                <tr className="border-b border-border text-[10px] uppercase tracking-[0.7px] text-secondary">
                   <th className="text-left px-5 py-2.5 font-medium">Fecha</th>
                   <th className="text-right px-5 py-2.5 font-medium">Entrada</th>
                   <th className="text-right px-5 py-2.5 font-medium">Salida</th>
@@ -152,7 +152,7 @@ export default async function BancoHorasPage() {
               </thead>
               <tbody>
                 {filas.map((f) => (
-                  <tr key={f.id} className="border-b border-[#1A2235] last:border-0 hover:bg-white/[0.02] transition-colors">
+                  <tr key={f.id} className="border-b border-border last:border-0 hover:bg-border/20 transition-colors">
                     <td className="px-5 py-3 font-medium text-sm">
                       {new Date(f.fecha + "T00:00:00").toLocaleDateString("es-AR", {
                         weekday: "short", day: "numeric", month: "short",

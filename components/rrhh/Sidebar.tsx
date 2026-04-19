@@ -29,6 +29,7 @@ import {
   Megaphone,
   GitBranch,
   Wallet,
+  LineChart,
   ChevronDown,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase";
@@ -58,25 +59,41 @@ const grupos: NavGroup[] = [
     ],
   },
   {
-    label: "Gestión RRHH",
+    label: "Personas",
+    items: [
+      { href: "/dashboard/rrhh/empleados",    label: "Empleados",    icon: Users      },
+      { href: "/dashboard/rrhh/onboarding",   label: "Onboarding",   icon: UserPlus   },
+      { href: "/dashboard/rrhh/offboarding",  label: "Offboarding",  icon: UserMinus  },
+      { href: "/dashboard/rrhh/sucesion",     label: "Sucesión",     icon: GitBranch  },
+      { href: "/dashboard/rrhh/areas",        label: "Áreas",        icon: Building2  },
+    ],
+  },
+  {
+    label: "Solicitudes",
+    items: [
+      { href: "/dashboard/rrhh/solicitudes",  label: "Solicitudes",  icon: Inbox         },
+      { href: "/dashboard/rrhh/vacaciones",   label: "Vacaciones",   icon: Umbrella      },
+      { href: "/dashboard/rrhh/asistencia",   label: "Asistencia",   icon: CalendarClock },
+    ],
+  },
+  {
+    label: "Análisis",
     items: [
       { href: "/dashboard/rrhh/dashboard",      label: "Dashboard",      icon: LayoutDashboard },
-      { href: "/dashboard/rrhh/empleados",      label: "Empleados",      icon: Users           },
-      { href: "/dashboard/rrhh/areas",          label: "Áreas",          icon: Building2       },
-      { href: "/dashboard/rrhh/asistencia",     label: "Asistencia",     icon: CalendarClock   },
-      { href: "/dashboard/rrhh/solicitudes",    label: "Solicitudes",    icon: Inbox           },
-      { href: "/dashboard/rrhh/vacaciones",     label: "Vacaciones",     icon: Umbrella        },
-      { href: "/dashboard/rrhh/onboarding",     label: "Onboarding",     icon: UserPlus        },
-      { href: "/dashboard/rrhh/offboarding",    label: "Offboarding",    icon: UserMinus       },
-      { href: "/dashboard/rrhh/vacantes",       label: "Vacantes",       icon: Megaphone       },
-      { href: "/dashboard/rrhh/sucesion",       label: "Sucesión",       icon: GitBranch       },
-      { href: "/dashboard/rrhh/costos",         label: "Costos",         icon: Wallet          },
-      { href: "/dashboard/rrhh/foros",          label: "Foros",          icon: MessageSquare   },
-      { href: "/dashboard/rrhh/temperatura",    label: "Temperatura",    icon: Thermometer     },
       { href: "/dashboard/rrhh/evaluaciones",   label: "Evaluaciones",   icon: ClipboardList   },
+      { href: "/dashboard/rrhh/temperatura",    label: "Temperatura",    icon: Thermometer     },
       { href: "/dashboard/rrhh/capacitaciones", label: "Capacitaciones", icon: BookOpen        },
-      { href: "/dashboard/rrhh/auditoria",      label: "Auditoría",      icon: History         },
-      { href: "/dashboard/rrhh/configuracion",  label: "Configuración",  icon: Settings        },
+      { href: "/dashboard/rrhh/costos",         label: "Costos",         icon: Wallet          },
+      { href: "/dashboard/rrhh/enps",           label: "eNPS",           icon: LineChart       },
+    ],
+  },
+  {
+    label: "Administración",
+    items: [
+      { href: "/dashboard/rrhh/configuracion",  label: "Configuración",  icon: Settings      },
+      { href: "/dashboard/rrhh/auditoria",      label: "Auditoría",      icon: History       },
+      { href: "/dashboard/rrhh/foros",          label: "Foros",          icon: MessageSquare },
+      { href: "/dashboard/rrhh/vacantes",       label: "Vacantes",       icon: Megaphone     },
     ],
   },
 ];
@@ -89,8 +106,9 @@ interface SidebarProps {
 
 export default function Sidebar({ nombre, email, empresaNombre }: SidebarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [grupo1Open, setGrupo1Open] = useState(true);
-  const [grupo2Open, setGrupo2Open] = useState(true);
+  const [openStates, setOpenStates] = useState<boolean[]>(
+    () => Array(grupos.length).fill(true)
+  );
   const pathname = usePathname();
   const router = useRouter();
 
@@ -101,10 +119,13 @@ export default function Sidebar({ nombre, email, empresaNombre }: SidebarProps) 
     .join("")
     .toUpperCase();
 
-  const groupStates = [
-    { open: grupo1Open, setOpen: setGrupo1Open },
-    { open: grupo2Open, setOpen: setGrupo2Open },
-  ];
+  function toggleGroup(i: number) {
+    setOpenStates((prev) => {
+      const next = [...prev];
+      next[i] = !next[i];
+      return next;
+    });
+  }
 
   async function handleLogout() {
     const supabase = createClient();
@@ -144,12 +165,12 @@ export default function Sidebar({ nombre, email, empresaNombre }: SidebarProps) 
       {/* Nav con grupos */}
       <nav className="flex-1 px-3 py-3 overflow-y-auto space-y-1">
         {grupos.map((grupo, gi) => {
-          const { open, setOpen } = groupStates[gi];
+          const open = openStates[gi];
           return (
             <div key={grupo.label}>
               {/* Cabecera del grupo */}
               <button
-                onClick={() => setOpen(!open)}
+                onClick={() => toggleGroup(gi)}
                 className="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-border/20 transition-colors group"
               >
                 <span className="text-[10px] font-semibold uppercase tracking-[0.7px] text-secondary/50 group-hover:text-secondary/70 transition-colors">

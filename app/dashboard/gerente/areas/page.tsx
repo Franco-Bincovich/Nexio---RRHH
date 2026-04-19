@@ -63,7 +63,7 @@ export default async function AreasPage() {
       </div>
 
       {!areas || areas.length === 0 ? (
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-16 text-center">
+        <div className="bg-surface rounded-xl border border-border shadow-sm py-16 text-center">
           <Building2 size={32} className="text-secondary mx-auto mb-3" />
           <p className="text-secondary text-sm">No hay áreas registradas todavía.</p>
         </div>
@@ -79,7 +79,7 @@ export default async function AreasPage() {
             return (
               <div
                 key={area.id}
-                className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5"
+                className="bg-surface rounded-xl border border-border shadow-sm p-5"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">
@@ -95,7 +95,7 @@ export default async function AreasPage() {
                 <h3 className="font-bold text-base mb-3">{area.nombre}</h3>
 
                 {/* Líder */}
-                <div className="border-t border-[#1A2235] pt-3">
+                <div className="border-t border-border pt-3">
                   {lider ? (
                     <div className="flex items-center gap-2.5">
                       <div className="w-7 h-7 rounded-full bg-accent/15 border border-accent/25 flex items-center justify-center text-[10px] font-semibold text-accent flex-shrink-0">

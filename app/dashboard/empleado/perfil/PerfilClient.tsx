@@ -127,7 +127,7 @@ export default function PerfilClient({ empleado, userId, documentos: initialDocs
   return (
     <div className="space-y-6 max-w-3xl">
       {/* Foto de perfil */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-6">
+      <div className="bg-surface rounded-xl border border-border shadow-sm p-6">
         <h2 className="text-sm font-semibold mb-4">Foto de perfil</h2>
         <div className="flex items-center gap-5">
           <div className="relative group flex-shrink-0">
@@ -173,8 +173,8 @@ export default function PerfilClient({ empleado, userId, documentos: initialDocs
 
       {/* Formulario de datos */}
       <form onSubmit={handleGuardarPerfil}>
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-          <div className="px-6 py-4 border-b border-[#1A2235]">
+        <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-border">
             <h2 className="text-sm font-semibold">Datos personales</h2>
           </div>
           <div className="px-6 py-5 space-y-4">
@@ -187,7 +187,7 @@ export default function PerfilClient({ empleado, userId, documentos: initialDocs
               <Field label="Dirección" name="direccion" defaultValue={empleado.direccion ?? ""} placeholder="Av. Corrientes 1234, CABA" />
             </div>
 
-            <div className="pt-2 border-t border-[#1A2235]">
+            <div className="pt-2 border-t border-border">
               <p className="text-[10px] uppercase tracking-[0.7px] text-secondary/60 mb-3">Contacto de emergencia</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <Field label="Nombre" name="contacto_emergencia_nombre" defaultValue={empleado.contacto_emergencia_nombre ?? ""} placeholder="Juan Pérez" />
@@ -196,7 +196,7 @@ export default function PerfilClient({ empleado, userId, documentos: initialDocs
             </div>
           </div>
 
-          <div className="px-6 py-4 border-t border-[#1A2235] flex items-center justify-between gap-4">
+          <div className="px-6 py-4 border-t border-border flex items-center justify-between gap-4">
             {formMsg?.ok && (
               <span className="flex items-center gap-1.5 text-xs text-accent"><CheckCircle2 size={13} />Cambios guardados</span>
             )}
@@ -207,7 +207,7 @@ export default function PerfilClient({ empleado, userId, documentos: initialDocs
             <button
               type="submit"
               disabled={isPending}
-              className="flex items-center gap-2 bg-accent hover:bg-accent/90 disabled:opacity-50 text-base text-sm font-semibold px-5 py-2 rounded-lg transition-colors"
+              className="flex items-center gap-2 bg-accent hover:bg-accent/90 disabled:opacity-50 text-sm font-semibold px-5 py-2 rounded-lg transition-colors"
             >
               {isPending ? <Loader2 size={15} className="animate-spin" /> : <Save size={15} />}
               Guardar cambios
@@ -217,8 +217,8 @@ export default function PerfilClient({ empleado, userId, documentos: initialDocs
       </form>
 
       {/* Mis documentos */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#1A2235]">
+      <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border">
           <h2 className="text-sm font-semibold">Mis documentos</h2>
           <button
             type="button"
@@ -254,9 +254,9 @@ export default function PerfilClient({ empleado, userId, documentos: initialDocs
             <p className="text-sm text-secondary/60">No hay documentos subidos todavía.</p>
           </div>
         ) : (
-          <ul className="divide-y divide-[#1A2235]">
+          <ul className="divide-y divide-border">
             {docs.map((doc) => (
-              <li key={doc.name} className="flex items-center justify-between gap-3 px-6 py-3 hover:bg-white/[0.02]">
+              <li key={doc.name} className="flex items-center justify-between gap-3 px-6 py-3 hover:bg-border/20">
                 <div className="flex items-center gap-3 min-w-0">
                   <FileText size={15} className="text-accent flex-shrink-0" />
                   <div className="min-w-0">
@@ -281,8 +281,8 @@ export default function PerfilClient({ empleado, userId, documentos: initialDocs
         )}
       </div>
       {/* Preferencias de notificaciones */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-        <div className="flex items-center gap-2 px-6 py-4 border-b border-[#1A2235]">
+      <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="flex items-center gap-2 px-6 py-4 border-b border-border">
           <Bell size={15} className="text-accent" />
           <h2 className="text-sm font-semibold">Preferencias de notificaciones</h2>
         </div>
@@ -337,7 +337,7 @@ function Field({
         placeholder={placeholder}
         required={required}
         disabled={disabled}
-        className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2 text-sm text-white placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-white placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition disabled:opacity-50 disabled:cursor-not-allowed"
       />
     </div>
   );

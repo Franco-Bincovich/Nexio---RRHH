@@ -89,7 +89,7 @@ export default function ForoClient({ mensajesArea, mensajesRrhh, areaNombre, are
   return (
     <div className="flex flex-col h-[calc(100vh-180px)] min-h-[500px]">
       {/* Tabs */}
-      <div className="flex gap-1 mb-4 bg-surface border border-[#1A2235] rounded-xl p-1 w-fit">
+      <div className="flex gap-1 mb-4 bg-surface border border-border rounded-xl p-1 w-fit">
         <TabBtn
           active={tab === "area"}
           onClick={() => setTab("area")}
@@ -107,7 +107,7 @@ export default function ForoClient({ mensajesArea, mensajesRrhh, areaNombre, are
       {/* Lista de mensajes */}
       <div
         ref={listRef}
-        className="flex-1 bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-y-auto mb-3 flex flex-col"
+        className="flex-1 bg-surface rounded-xl border border-border shadow-sm overflow-y-auto mb-3 flex flex-col"
       >
         {mensajes.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center py-16 px-5 text-center">
@@ -142,7 +142,7 @@ export default function ForoClient({ mensajesArea, mensajesRrhh, areaNombre, are
                       )}
                       <span className="text-[10px] text-secondary/40 ml-auto">{tiempoRelativo(m.created_at)}</span>
                     </div>
-                    <div className="bg-white/[0.03] border border-[#1A2235] rounded-xl rounded-tl-sm px-3.5 py-2.5">
+                    <div className="bg-white/[0.03] border border-border rounded-xl rounded-tl-sm px-3.5 py-2.5">
                       <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">{m.mensaje}</p>
                     </div>
                   </div>
@@ -154,7 +154,7 @@ export default function ForoClient({ mensajesArea, mensajesRrhh, areaNombre, are
       </div>
 
       {/* Input */}
-      <form onSubmit={handleSubmit} className="bg-surface border border-[#1A2235] rounded-xl shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-3 flex gap-3 items-end">
+      <form onSubmit={handleSubmit} className="bg-surface border border-border rounded-xl shadow-sm p-3 flex gap-3 items-end">
         <div className="w-7 h-7 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-xs font-bold text-accent flex-shrink-0 mb-0.5">
           {initials(empleadoNombre)}
         </div>

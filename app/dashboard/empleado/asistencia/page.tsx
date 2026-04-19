@@ -67,7 +67,7 @@ export default async function AsistenciaPage() {
 
   return (
     <div className="p-4 md:p-8 max-w-4xl">
-      <div className="flex items-start justify-between mb-8">
+      <div className="flex flex-wrap items-start justify-between gap-3 mb-8">
         <div>
           <h1 className="text-2xl font-bold mb-1">Mi asistencia</h1>
           <p className="text-secondary text-sm">Últimos 50 registros</p>
@@ -94,10 +94,10 @@ export default async function AsistenciaPage() {
       {!registros || registros.length === 0 ? (
         <EmptyState />
       ) : (
-        <div className="bg-surface rounded-2xl border border-[#1A2235] overflow-hidden">
+        <div className="bg-surface rounded-2xl border border-border overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-[#1A2235] text-secondary text-xs uppercase tracking-wider">
+              <tr className="border-b border-border text-secondary text-xs uppercase tracking-wider">
                 <th className="text-left px-5 py-3 font-medium">Fecha</th>
                 <th className="text-left px-5 py-3 font-medium">Tipo</th>
                 <th className="text-left px-5 py-3 font-medium">Hora entrada</th>
@@ -114,7 +114,7 @@ export default async function AsistenciaPage() {
                 return (
                   <tr
                     key={r.id}
-                    className="border-b border-[#1A2235] last:border-0 hover:bg-white/[0.02] transition-colors"
+                    className="border-b border-border last:border-0 hover:bg-border/20 transition-colors"
                   >
                     <td className="px-5 py-3.5 font-medium">{formatFecha(r.fecha)}</td>
                     <td className="px-5 py-3.5">
@@ -148,7 +148,7 @@ export default async function AsistenciaPage() {
 
 function StatCard({ label, value, color }: { label: string; value: string | number; color: string }) {
   return (
-    <div className="bg-surface rounded-2xl border border-[#1A2235] px-5 py-4">
+    <div className="bg-surface rounded-2xl border border-border px-5 py-4">
       <p className="text-xs text-secondary mb-1">{label}</p>
       <p className={`text-2xl font-bold ${color}`}>{value}</p>
     </div>
@@ -157,7 +157,7 @@ function StatCard({ label, value, color }: { label: string; value: string | numb
 
 function EmptyState() {
   return (
-    <div className="bg-surface rounded-2xl border border-[#1A2235] py-16 text-center">
+    <div className="bg-surface rounded-2xl border border-border py-16 text-center">
       <p className="text-secondary text-sm">No hay registros de asistencia todavía.</p>
     </div>
   );

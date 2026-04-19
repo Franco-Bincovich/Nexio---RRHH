@@ -70,7 +70,7 @@ export default function AiChatClient({ areaId, empresaId, areaNombre }: Props) {
   return (
     <div className="flex flex-col h-[calc(100vh-0px)] lg:h-screen max-h-screen">
       {/* Header */}
-      <div className="flex-shrink-0 border-b border-[#1A2235] px-6 py-4 flex items-center gap-3">
+      <div className="flex-shrink-0 border-b border-border px-6 py-4 flex items-center gap-3">
         <NexioAvatar />
         <div>
           <div className="flex items-center gap-2">
@@ -98,7 +98,7 @@ export default function AiChatClient({ areaId, empresaId, areaNombre }: Props) {
                 <button
                   key={s}
                   onClick={() => sendMessage(s)}
-                  className="text-left text-sm text-secondary hover:text-white bg-surface border border-[#1A2235] hover:border-accent/30 rounded-xl px-4 py-3 transition-colors"
+                  className="text-left text-sm text-secondary hover:text-white bg-surface border border-border hover:border-accent/30 rounded-xl px-4 py-3 transition-colors"
                 >
                   {s}
                 </button>
@@ -119,7 +119,7 @@ export default function AiChatClient({ areaId, empresaId, areaNombre }: Props) {
             <div className={`rounded-2xl px-4 py-3 text-sm leading-relaxed max-w-[80%] whitespace-pre-wrap ${
               msg.role === "user"
                 ? "bg-accent/10 border border-accent/20 text-white rounded-tr-sm"
-                : "bg-surface border border-[#1A2235] text-secondary rounded-tl-sm"
+                : "bg-surface border border-border text-secondary rounded-tl-sm"
             }`}>
               {msg.content}
             </div>
@@ -129,7 +129,7 @@ export default function AiChatClient({ areaId, empresaId, areaNombre }: Props) {
         {loading && (
           <div className="flex gap-3 max-w-3xl mx-auto">
             <div className="flex-shrink-0 mt-0.5"><NexioAvatar size={28} /></div>
-            <div className="bg-surface border border-[#1A2235] rounded-2xl rounded-tl-sm px-4 py-3">
+            <div className="bg-surface border border-border rounded-2xl rounded-tl-sm px-4 py-3">
               <Loader2 size={16} className="text-accent animate-spin" />
             </div>
           </div>
@@ -147,7 +147,7 @@ export default function AiChatClient({ areaId, empresaId, areaNombre }: Props) {
       </div>
 
       {/* Input */}
-      <div className="flex-shrink-0 border-t border-[#1A2235] px-4 md:px-8 py-4">
+      <div className="flex-shrink-0 border-t border-border px-4 md:px-8 py-4">
         <div className="max-w-3xl mx-auto flex items-end gap-3">
           <textarea
             ref={inputRef}
@@ -157,7 +157,7 @@ export default function AiChatClient({ areaId, empresaId, areaNombre }: Props) {
             rows={1}
             placeholder="Preguntale a Nexio AI..."
             disabled={loading}
-            className="flex-1 bg-surface border border-[#1A2235] focus:border-accent/40 rounded-xl px-4 py-3 text-sm placeholder:text-secondary/40 focus:outline-none transition-colors resize-none disabled:opacity-50 max-h-40 overflow-y-auto"
+            className="flex-1 bg-surface border border-border focus:border-accent/40 rounded-xl px-4 py-3 text-sm placeholder:text-secondary/40 focus:outline-none transition-colors resize-none disabled:opacity-50 max-h-40 overflow-y-auto"
             style={{ minHeight: "44px" }}
             onInput={(e) => {
               const t = e.target as HTMLTextAreaElement;

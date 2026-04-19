@@ -129,8 +129,8 @@ export default async function OwnerDashboardPage() {
 
       <div className="grid lg:grid-cols-3 gap-6 mb-6">
         {/* Tabla empresas */}
-        <div className="lg:col-span-2 bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-4 border-b border-[#1A2235]">
+        <div className="lg:col-span-2 bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
             <Building2 size={15} className="text-accent" />
             <h2 className="text-sm font-semibold">Resumen por empresa</h2>
           </div>
@@ -140,7 +140,7 @@ export default async function OwnerDashboardPage() {
           ) : (
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[#1A2235] text-[10px] uppercase tracking-[0.7px] text-secondary">
+                <tr className="border-b border-border text-[10px] uppercase tracking-[0.7px] text-secondary">
                   <th className="text-left px-5 py-2.5 font-medium">Empresa</th>
                   <th className="text-right px-5 py-2.5 font-medium">Empl.</th>
                   <th className="text-right px-5 py-2.5 font-medium">Asistencia</th>
@@ -151,7 +151,7 @@ export default async function OwnerDashboardPage() {
               </thead>
               <tbody>
                 {statsPerEmpresa.map((emp) => (
-                  <tr key={emp.id} className="border-b border-[#1A2235] last:border-0 hover:bg-white/[0.02] transition-colors">
+                  <tr key={emp.id} className="border-b border-border last:border-0 hover:bg-border/20 transition-colors">
                     <td className="px-5 py-3 font-medium">{emp.nombre}</td>
                     <td className="px-5 py-3 text-right text-secondary">{emp.total}</td>
                     <td className="px-5 py-3 text-right">
@@ -197,8 +197,8 @@ export default async function OwnerDashboardPage() {
         </div>
 
         {/* Objetivos global */}
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-          <div className="border-b border-[#1A2235]">
+        <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+          <div className="border-b border-border">
             <ExpandSection
               title={<span className="flex items-center gap-2"><Target size={15} className="text-accent" />Objetivos</span>}
               badge={
@@ -248,7 +248,7 @@ function StatCard({ label, value, icon: Icon, color, sub }: {
   label: string; value: number; icon: React.ElementType; color: string; sub?: string;
 }) {
   return (
-    <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+    <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
       <div className="flex items-center gap-2 mb-2">
         <Icon size={14} className={color} />
         <p className="text-[10px] uppercase tracking-[0.7px] text-secondary">{label}</p>

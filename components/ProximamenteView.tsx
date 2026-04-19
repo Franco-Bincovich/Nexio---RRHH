@@ -19,8 +19,8 @@ export default function ProximamenteView({ titulo, descripcion, icon: Icon, acci
       </div>
       <p className="text-secondary text-sm mb-8">{descripcion}</p>
 
-      <div className="bg-surface rounded-2xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-        <div className="px-6 py-12 text-center border-b border-[#1A2235]">
+      <div className="bg-surface rounded-2xl border border-border shadow-sm overflow-hidden">
+        <div className="px-6 py-12 text-center border-b border-border">
           <div className="w-16 h-16 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-4">
             <Icon size={28} className="text-accent" />
           </div>

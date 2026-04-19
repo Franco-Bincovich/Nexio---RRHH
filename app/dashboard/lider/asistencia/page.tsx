@@ -1,9 +1,10 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
 import { getLiderScope } from "@/lib/lider-scope";
-import { Wifi, Home, ClipboardEdit, ArrowDownCircle, ArrowUpCircle } from "lucide-react";
+import { Wifi, Home, ClipboardEdit, ArrowDownCircle, ArrowUpCircle, CalendarClock } from "lucide-react";
 import type { MetodoRegistro, AsistenciaTipo } from "@/types/database";
 import AsistenciaExportBtn, { type AsistenciaRow } from "./AsistenciaExportBtn";
+import { EmptyState } from "@/components/ui";
 
 const METODO_CONFIG: Record<MetodoRegistro, { label: string; icon: React.ElementType }> = {
   wifi:   { label: "Wi-Fi",  icon: Wifi },
@@ -108,14 +109,16 @@ export default async function LiderAsistenciaPage() {
 
       {/* Tabla */}
       {!registros || registros.length === 0 ? (
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-16 text-center">
-          <p className="text-secondary text-sm">No hay registros de asistencia en el área todavía.</p>
-        </div>
+        <EmptyState
+          icon={CalendarClock}
+          titulo="No hay registros de asistencia"
+          descripcion="Cuando los empleados del área registren entrada o salida, vas a ver el historial acá."
+        />
       ) : (
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
+        <div className="bg-surface rounded-xl border border-border shadow-sm overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-[#1A2235] text-secondary text-xs uppercase tracking-wider">
+              <tr className="border-b border-border text-secondary text-xs uppercase tracking-wider">
                 <th className="text-left px-5 py-3 font-medium">Empleado</th>
                 <th className="text-left px-5 py-3 font-medium">Fecha</th>
                 <th className="text-left px-5 py-3 font-medium">Tipo</th>
@@ -133,7 +136,7 @@ export default async function LiderAsistenciaPage() {
                 return (
                   <tr
                     key={r.id}
-                    className="border-b border-[#1A2235] last:border-0 hover:bg-white/[0.02] transition-colors"
+                    className="border-b border-border last:border-0 hover:bg-border/20 transition-colors"
                   >
                     <td className="px-5 py-3.5 font-medium">
                       {empleadoMap[r.empleado_id] ?? "—"}
@@ -170,7 +173,7 @@ export default async function LiderAsistenciaPage() {
 
 function StatCard({ label, value, color }: { label: string; value: string | number; color: string }) {
   return (
-    <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+    <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
       <p className="text-[10px] uppercase tracking-[0.7px] text-secondary mb-1">{label}</p>
       <p className={`text-[22px] font-extrabold ${color}`}>{value}</p>
     </div>

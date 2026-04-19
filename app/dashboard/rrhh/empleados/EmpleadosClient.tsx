@@ -107,7 +107,7 @@ export default function EmpleadosClient({ empleados, areas }: Props) {
   return (
     <>
       <div className="p-4 md:p-8 max-w-6xl">
-        <div className="flex items-start justify-between mb-8">
+        <div className="flex flex-wrap items-start justify-between gap-3 mb-8">
           <div>
             <h1 className="text-2xl font-bold mb-1">Empleados</h1>
             <p className="text-secondary text-sm">
@@ -143,11 +143,11 @@ export default function EmpleadosClient({ empleados, areas }: Props) {
         )}
 
         {empleados.length === 0 ? (
-          <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-16 text-center">
+          <div className="bg-surface rounded-xl border border-border shadow-sm py-16 text-center">
             <p className="text-secondary text-sm">No hay empleados registrados todavía.</p>
           </div>
         ) : (
-          <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
+          <div className="bg-surface rounded-xl border border-border shadow-sm overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border text-[10px] uppercase tracking-[0.7px] text-secondary">
@@ -437,7 +437,7 @@ function ModalWrapper({ title, onClose, children }: { title: string; onClose: ()
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-surface border border-border rounded-xl w-full max-w-md p-6 shadow-[0_1px_4px_rgba(0,0,0,0.4)]">
+      <div className="relative bg-surface border border-border rounded-xl w-full max-w-md p-6 shadow-sm">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-base font-semibold">{title}</h2>
           <button onClick={onClose} className="text-secondary hover:text-white transition-colors"><X size={18} /></button>
@@ -470,7 +470,7 @@ function ModalFooter({ onClose, status, error, submitLabel }: { onClose: () => v
         <button
           type="submit"
           disabled={status === "loading"}
-          className="flex-1 px-4 py-2.5 rounded-lg bg-accent text-base text-sm font-medium hover:bg-accent/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
+          className="flex-1 px-4 py-2.5 rounded-lg bg-accent text-sm font-medium hover:bg-accent/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
         >
           {status === "loading" && <Loader2 size={14} className="animate-spin" />}
           {status === "loading" ? "Guardando..." : submitLabel}

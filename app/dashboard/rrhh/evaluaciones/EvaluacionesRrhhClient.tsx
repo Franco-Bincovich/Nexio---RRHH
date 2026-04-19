@@ -7,6 +7,7 @@ import { Power, Download, Loader2, CheckCircle2, AlertCircle, Star, Clock } from
 import type { CicloConfig, CriterioScores } from "@/lib/evaluaciones";
 import { CRITERIOS } from "@/lib/evaluaciones";
 import { toggleCicloEvaluaciones } from "./actions";
+import { Badge, Card, PageHeader } from "@/components/ui";
 
 export type AreaMini = { id: string; nombre: string };
 
@@ -117,13 +118,14 @@ export default function EvaluacionesRrhhClient({ ciclo, resumen, areas, detalle 
 
   return (
     <div className="p-4 md:p-8 max-w-5xl space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold mb-1">Evaluaciones de desempeño</h1>
-        <p className="text-secondary text-sm">Control del ciclo y resultados consolidados</p>
-      </div>
+      <PageHeader
+        titulo="Evaluaciones de desempeño"
+        descripcion="Control del ciclo y resultados consolidados"
+        className="mb-0"
+      />
 
       {/* Control del ciclo */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5">
+      <div className="bg-surface rounded-xl border border-border shadow-sm p-5">
         <div className="flex flex-wrap items-center gap-4">
           <Power size={16} className={ciclo.evaluaciones_activas ? "text-accent" : "text-secondary/60"} />
           <div>
@@ -165,12 +167,12 @@ export default function EvaluacionesRrhhClient({ ciclo, resumen, areas, detalle 
       </div>
 
       {/* Controles resultados */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-4 flex flex-wrap items-center gap-3">
+      <div className="bg-surface rounded-xl border border-border shadow-sm p-4 flex flex-wrap items-center gap-3">
         <label className="text-xs text-secondary/80">Área:</label>
         <select
           value={areaSel}
           onChange={(e) => setAreaSel(e.target.value)}
-          className="bg-base border border-[#1A2235] rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-accent/50"
+          className="bg-base border border-border rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-accent/50"
         >
           <option value="">Todas las áreas</option>
           {areas.map((a) => (
@@ -188,8 +190,8 @@ export default function EvaluacionesRrhhClient({ ciclo, resumen, areas, detalle 
       </div>
 
       {/* Tabla resultados */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-        <div className="flex items-center gap-2 px-5 py-4 border-b border-[#1A2235]">
+      <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
           <h2 className="text-sm font-semibold">Resultados</h2>
           <span className="ml-auto text-[10px] text-secondary/60">{resumenFiltrado.length} empleado{resumenFiltrado.length !== 1 ? "s" : ""}</span>
         </div>
@@ -200,7 +202,7 @@ export default function EvaluacionesRrhhClient({ ciclo, resumen, areas, detalle 
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-[#1A2235] text-[10px] uppercase tracking-[0.7px] text-secondary">
+              <tr className="border-b border-border text-[10px] uppercase tracking-[0.7px] text-secondary">
                 <th className="text-left px-5 py-2.5 font-medium">Empleado</th>
                 <th className="text-left px-5 py-2.5 font-medium">Cargo</th>
                 <th className="text-left px-5 py-2.5 font-medium">Área</th>
@@ -211,16 +213,16 @@ export default function EvaluacionesRrhhClient({ ciclo, resumen, areas, detalle 
             </thead>
             <tbody>
               {resumenFiltrado.map((r) => (
-                <tr key={r.empleado_id} className="border-b border-[#1A2235] last:border-0 hover:bg-white/[0.02] transition-colors">
+                <tr key={r.empleado_id} className="border-b border-border last:border-0 hover:bg-border/20 transition-colors">
                   <td className="px-5 py-3 text-xs font-medium">{r.nombre}</td>
                   <td className="px-5 py-3 text-xs text-secondary capitalize">{ROL_LABEL[r.rol] ?? r.rol}</td>
                   <td className="px-5 py-3 text-xs text-secondary">{r.area_nombre ?? "—"}</td>
                   <td className="px-5 py-3 text-xs text-right">{r.completadas}</td>
                   <td className="px-5 py-3">
                     {r.estado === "completada" ? (
-                      <span className="text-[10px] font-bold uppercase text-accent bg-accent/10 border border-accent/20 px-2 py-0.5 rounded-full">Completada</span>
+                      <Badge estado="completada" showIcon={false} />
                     ) : (
-                      <span className="text-[10px] font-bold uppercase text-yellow-400 bg-yellow-400/10 border border-yellow-400/20 px-2 py-0.5 rounded-full">Pendiente</span>
+                      <Badge estado="pendiente" showIcon={false} />
                     )}
                   </td>
                   <td className="px-5 py-3 text-xs text-right font-semibold">
@@ -235,7 +237,7 @@ export default function EvaluacionesRrhhClient({ ciclo, resumen, areas, detalle 
 
       {/* Mensaje si no hay ciclo y no hay datos */}
       {!ciclo.evaluaciones_activas && resumen.every((r) => r.completadas === 0) && (
-        <div className="flex items-center gap-2 text-xs text-secondary/70 bg-white/[0.02] border border-[#1A2235] rounded-xl px-4 py-3">
+        <div className="flex items-center gap-2 text-xs text-secondary/70 bg-white/[0.02] border border-border rounded-xl px-4 py-3">
           <AlertCircle size={13} />
           No hay evaluaciones registradas en el período. Activá el ciclo para habilitar las evaluaciones.
         </div>
@@ -246,12 +248,12 @@ export default function EvaluacionesRrhhClient({ ciclo, resumen, areas, detalle 
 
 function Kpi({ icon, label, value, color }: { icon: React.ReactNode; label: string; value: string | number; color: string }) {
   return (
-    <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+    <Card className="px-5 py-4" noPadding>
       <div className="flex items-center gap-2 mb-2">
         {icon}
         <p className="text-[10px] uppercase tracking-[0.7px] text-secondary">{label}</p>
       </div>
       <p className={`text-[22px] font-extrabold ${color}`}>{value}</p>
-    </div>
+    </Card>
   );
 }

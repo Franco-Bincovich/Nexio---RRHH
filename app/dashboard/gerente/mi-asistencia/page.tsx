@@ -29,7 +29,7 @@ export default async function MiAsistenciaGerentePage() {
 
   return (
     <div className="p-4 md:p-8 max-w-4xl">
-      <div className="flex items-start justify-between mb-8">
+      <div className="flex flex-wrap items-start justify-between gap-3 mb-8">
         <div><h1 className="text-2xl font-bold mb-1">Mi asistencia</h1><p className="text-secondary text-sm">Últimos 50 registros</p></div>
         <RegistrarHomeGerenteButton empleadoId={gerente.id} entradaHoyId={entradaHoy?.id ?? null} />
       </div>
@@ -39,11 +39,11 @@ export default async function MiAsistenciaGerentePage() {
         <StatCard label="Último registro"      value={registros?.[0] ? fmt(registros[0].fecha) : "—"} color="text-white" />
       </div>
       {!registros || registros.length === 0 ? (
-        <div className="bg-surface rounded-2xl border border-[#1A2235] py-16 text-center"><p className="text-secondary text-sm">No hay registros todavía.</p></div>
+        <div className="bg-surface rounded-2xl border border-border py-16 text-center"><p className="text-secondary text-sm">No hay registros todavía.</p></div>
       ) : (
-        <div className="bg-surface rounded-2xl border border-[#1A2235] overflow-hidden">
+        <div className="bg-surface rounded-2xl border border-border overflow-x-auto">
           <table className="w-full text-sm">
-            <thead><tr className="border-b border-[#1A2235] text-secondary text-xs uppercase tracking-wider">
+            <thead><tr className="border-b border-border text-secondary text-xs uppercase tracking-wider">
               <th className="text-left px-5 py-3 font-medium">Fecha</th>
               <th className="text-left px-5 py-3 font-medium">Tipo</th>
               <th className="text-left px-5 py-3 font-medium">Hora entrada</th>
@@ -57,7 +57,7 @@ export default async function MiAsistenciaGerentePage() {
                 const TI = tipo?.icon   ?? ArrowDownCircle;
                 const MI = metodo?.icon ?? ClipboardEdit;
                 return (
-                  <tr key={r.id} className="border-b border-[#1A2235] last:border-0 hover:bg-white/[0.02] transition-colors">
+                  <tr key={r.id} className="border-b border-border last:border-0 hover:bg-border/20 transition-colors">
                     <td className="px-5 py-3.5 font-medium">{fmt(r.fecha)}</td>
                     <td className="px-5 py-3.5"><span className={`flex items-center gap-1.5 ${tipo?.color ?? ""}`}><TI size={14} />{tipo?.label ?? r.tipo}</span></td>
                     <td className="px-5 py-3.5 text-secondary">{r.hora_entrada ? r.hora_entrada.slice(0,5) : "—"}</td>
@@ -79,5 +79,5 @@ function fmt(fecha: string) {
   return new Date(Number(y), Number(m) - 1, Number(d)).toLocaleDateString("es-AR", { weekday: "short", year: "numeric", month: "short", day: "numeric" });
 }
 function StatCard({ label, value, color }: { label: string; value: string | number; color: string }) {
-  return <div className="bg-surface rounded-2xl border border-[#1A2235] px-5 py-4"><p className="text-xs text-secondary mb-1">{label}</p><p className={`text-2xl font-bold ${color}`}>{value}</p></div>;
+  return <div className="bg-surface rounded-2xl border border-border px-5 py-4"><p className="text-xs text-secondary mb-1">{label}</p><p className={`text-2xl font-bold ${color}`}>{value}</p></div>;
 }

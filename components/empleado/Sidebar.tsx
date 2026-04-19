@@ -34,7 +34,7 @@ const navItems = [
   { href: "/dashboard/empleado/evaluaciones",   label: "Evaluaciones",           icon: BarChart2 },
   { href: "/dashboard/empleado/capacitaciones", label: "Capacitaciones",         icon: BookOpen },
   { href: "/dashboard/empleado/temperatura",    label: "Temperatura del equipo", icon: Heart },
-  { href: "/dashboard/empleado/foro",           label: "Foro del área",          icon: MessageSquare },
+  { href: "/dashboard/empleado/foro",           label: "Foros",                  icon: MessageSquare },
 ];
 
 interface SidebarProps {

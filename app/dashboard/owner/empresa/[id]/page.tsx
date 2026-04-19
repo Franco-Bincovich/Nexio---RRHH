@@ -206,8 +206,8 @@ function EmpresaView({
       <div className="grid lg:grid-cols-3 gap-6 mb-6">
         {/* Columna izquierda */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-            <div className="border-b border-[#1A2235]">
+          <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+            <div className="border-b border-border">
               <ExpandSection
                 title={<span className="flex items-center gap-2"><Target size={15} className="text-accent" />Objetivos</span>}
                 badge={
@@ -251,7 +251,7 @@ function EmpresaView({
           </div>
 
           {/* Organigrama */}
-          <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
+          <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
             <ExpandSection
               title={<span className="flex items-center gap-2"><Building2 size={15} className="text-accent" />Organigrama</span>}
               defaultOpen
@@ -261,7 +261,7 @@ function EmpresaView({
               ) : (
                 <div className="space-y-3">
                   {gerente && (
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.03] border border-[#1A2235]">
+                    <div className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.03] border border-border">
                       <div className="w-8 h-8 rounded-full bg-accent/15 border border-accent/25 flex items-center justify-center flex-shrink-0">
                         <UserSquare2 size={14} className="text-accent" />
                       </div>
@@ -278,8 +278,8 @@ function EmpresaView({
                         <span className="text-[10px] uppercase tracking-[0.7px] text-secondary/50">Líderes de área</span>
                       </div>
                       {lideres.map((lider) => (
-                        <div key={lider.id} className="flex items-center gap-3 p-2.5 rounded-lg bg-white/[0.02] border border-[#1A2235]">
-                          <div className="w-7 h-7 rounded-full bg-white/5 border border-[#1A2235] flex items-center justify-center flex-shrink-0">
+                        <div key={lider.id} className="flex items-center gap-3 p-2.5 rounded-lg bg-white/[0.02] border border-border">
+                          <div className="w-7 h-7 rounded-full bg-white/5 border border-border flex items-center justify-center flex-shrink-0">
                             <UserSquare2 size={12} className="text-secondary" />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -299,8 +299,8 @@ function EmpresaView({
 
         {/* Columna derecha: Alertas */}
         <div className="space-y-6">
-          <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-            <div className="flex items-center gap-2 px-5 py-4 border-b border-[#1A2235]">
+          <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+            <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
               <AlertCircle size={15} className="text-red-400" />
               <h2 className="text-sm font-semibold">Alertas</h2>
               {(ausentes > 0 || objPendientes > 0) && (
@@ -354,7 +354,7 @@ function StatCard({ label, value, icon: Icon, color, sub }: {
   label: string; value: number; icon: React.ElementType; color: string; sub?: string;
 }) {
   return (
-    <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+    <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
       <div className="flex items-center gap-2 mb-2">
         <Icon size={14} className={color} />
         <p className="text-[10px] uppercase tracking-[0.7px] text-secondary">{label}</p>

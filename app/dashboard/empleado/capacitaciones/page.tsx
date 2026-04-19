@@ -110,9 +110,9 @@ export default function CapacitacionesPage() {
 
       {/* Divider */}
       <div className="flex items-center gap-3 mb-6">
-        <div className="flex-1 h-px bg-[#1A2235]" />
+        <div className="flex-1 h-px bg-border/40" />
         <span className="text-[10px] uppercase tracking-[0.9px] text-secondary/40">Catálogo disponible</span>
-        <div className="flex-1 h-px bg-[#1A2235]" />
+        <div className="flex-1 h-px bg-border/40" />
       </div>
 
       {/* Sección 2: Catálogo */}
@@ -128,7 +128,7 @@ export default function CapacitacionesPage() {
           {catalogo.map((cap, i) => (
             <div
               key={i}
-              className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4 flex items-center gap-4"
+              className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4 flex items-center gap-4"
             >
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
@@ -156,7 +156,7 @@ export default function CapacitacionesPage() {
 
 function CapCard({ cap }: { cap: typeof misCapacitaciones[0] }) {
   return (
-    <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5 space-y-4">
+    <div className="bg-surface rounded-xl border border-border shadow-sm p-5 space-y-4">
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-start gap-3">
           <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">

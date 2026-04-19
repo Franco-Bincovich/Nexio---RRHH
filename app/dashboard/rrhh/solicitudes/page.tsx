@@ -367,7 +367,7 @@ export default function SolicitudesPage() {
   return (
     <div className="p-4 md:p-8 max-w-4xl">
       {/* Header */}
-      <div className="flex items-start justify-between mb-6">
+      <div className="flex flex-wrap items-start justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-bold mb-1">Solicitudes</h1>
           <p className="text-secondary text-sm">
@@ -503,7 +503,7 @@ export default function SolicitudesPage() {
             return (
               <div
                 key={`${s._tipo}-${s.id}`}
-                className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4 hover:border-white/10 transition-colors"
+                className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4 hover:border-white/10 transition-colors"
               >
                 <div className="flex items-start gap-3">
                   {/* Type dot */}

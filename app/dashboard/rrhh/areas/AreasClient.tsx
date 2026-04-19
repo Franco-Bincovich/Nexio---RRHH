@@ -40,14 +40,14 @@ export default function AreasClient({ areas, lideres }: Props) {
   return (
     <>
       <div className="p-4 md:p-8 max-w-5xl">
-        <div className="flex items-start justify-between mb-8">
+        <div className="flex flex-wrap items-start justify-between gap-3 mb-8">
           <div>
             <h1 className="text-2xl font-bold mb-1">Áreas</h1>
             <p className="text-secondary text-sm">{areas.length} área{areas.length !== 1 ? "s" : ""} registrada{areas.length !== 1 ? "s" : ""}</p>
           </div>
           <button
             onClick={() => setNuevaOpen(true)}
-            className="flex items-center gap-2 bg-accent text-base text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-accent/90 transition-colors"
+            className="flex items-center gap-2 bg-accent text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-accent/90 transition-colors"
           >
             <Plus size={16} />
             Nueva área
@@ -62,7 +62,7 @@ export default function AreasClient({ areas, lideres }: Props) {
         )}
 
         {areas.length === 0 ? (
-          <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-16 text-center">
+          <div className="bg-surface rounded-xl border border-border shadow-sm py-16 text-center">
             <Building2 size={32} className="text-secondary mx-auto mb-3" />
             <p className="text-secondary text-sm">No hay áreas registradas todavía.</p>
           </div>
@@ -76,7 +76,7 @@ export default function AreasClient({ areas, lideres }: Props) {
                 : null;
 
               return (
-                <div key={area.id} className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5">
+                <div key={area.id} className="bg-surface rounded-xl border border-border shadow-sm p-5">
                   <div className="flex items-start justify-between mb-4">
                     <div className="w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center">
                       <Building2 size={18} className="text-accent" />
@@ -243,7 +243,7 @@ function ModalWrapper({ title, onClose, children }: { title: string; onClose: ()
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-surface border border-border rounded-xl w-full max-w-md p-6 shadow-[0_1px_4px_rgba(0,0,0,0.4)]">
+      <div className="relative bg-surface border border-border rounded-xl w-full max-w-md p-6 shadow-sm">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-base font-semibold">{title}</h2>
           <button onClick={onClose} className="text-secondary hover:text-white transition-colors"><X size={18} /></button>
@@ -267,7 +267,7 @@ function ModalFooter({ onClose, status, error, submitLabel }: { onClose: () => v
         <button
           type="submit"
           disabled={status === "loading"}
-          className="flex-1 px-4 py-2.5 rounded-lg bg-accent text-base text-sm font-medium hover:bg-accent/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
+          className="flex-1 px-4 py-2.5 rounded-lg bg-accent text-sm font-medium hover:bg-accent/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
         >
           {status === "loading" && <Loader2 size={14} className="animate-spin" />}
           {status === "loading" ? "Guardando..." : submitLabel}

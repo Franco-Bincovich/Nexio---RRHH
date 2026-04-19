@@ -63,7 +63,7 @@ export default function PerfilGerenteClient({ empleado, userId, documentos: init
 
   return (
     <div className="space-y-6 max-w-3xl">
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-6">
+      <div className="bg-surface rounded-xl border border-border shadow-sm p-6">
         <h2 className="text-sm font-semibold mb-4">Foto de perfil</h2>
         <div className="flex items-center gap-5">
           <div className="relative flex-shrink-0">
@@ -83,8 +83,8 @@ export default function PerfilGerenteClient({ empleado, userId, documentos: init
       </div>
 
       <form onSubmit={handleGuardarPerfil}>
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-          <div className="px-6 py-4 border-b border-[#1A2235]"><h2 className="text-sm font-semibold">Datos personales</h2></div>
+        <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-border"><h2 className="text-sm font-semibold">Datos personales</h2></div>
           <div className="px-6 py-5 space-y-4">
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Nombre completo" name="nombre" defaultValue={empleado.nombre} required />
@@ -94,7 +94,7 @@ export default function PerfilGerenteClient({ empleado, userId, documentos: init
               <Field label="Teléfono" name="telefono" type="tel" defaultValue={empleado.telefono ?? ""} placeholder="+54 11 1234-5678" />
               <Field label="Dirección" name="direccion" defaultValue={empleado.direccion ?? ""} placeholder="Av. Corrientes 1234, CABA" />
             </div>
-            <div className="pt-2 border-t border-[#1A2235]">
+            <div className="pt-2 border-t border-border">
               <p className="text-[10px] uppercase tracking-[0.7px] text-secondary/60 mb-3">Contacto de emergencia</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <Field label="Nombre" name="contacto_emergencia_nombre" defaultValue={empleado.contacto_emergencia_nombre ?? ""} />
@@ -102,19 +102,19 @@ export default function PerfilGerenteClient({ empleado, userId, documentos: init
               </div>
             </div>
           </div>
-          <div className="px-6 py-4 border-t border-[#1A2235] flex items-center justify-between gap-4">
+          <div className="px-6 py-4 border-t border-border flex items-center justify-between gap-4">
             {formMsg?.ok    && <span className="flex items-center gap-1.5 text-xs text-accent"><CheckCircle2 size={13} />Cambios guardados</span>}
             {formMsg?.error && <span className="flex items-center gap-1.5 text-xs text-red-400"><AlertCircle size={13} />{formMsg.error}</span>}
             {!formMsg && <span />}
-            <button type="submit" disabled={isPending} className="flex items-center gap-2 bg-accent hover:bg-accent/90 disabled:opacity-50 text-base text-sm font-semibold px-5 py-2 rounded-lg transition-colors">
+            <button type="submit" disabled={isPending} className="flex items-center gap-2 bg-accent hover:bg-accent/90 disabled:opacity-50 text-sm font-semibold px-5 py-2 rounded-lg transition-colors">
               {isPending ? <Loader2 size={15} className="animate-spin" /> : <Save size={15} />}Guardar cambios
             </button>
           </div>
         </div>
       </form>
 
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#1A2235]">
+      <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border">
           <h2 className="text-sm font-semibold">Mis documentos</h2>
           <button type="button" onClick={() => docInputRef.current?.click()} disabled={isPending} className="flex items-center gap-1.5 text-xs bg-accent/10 hover:bg-accent/20 text-accent border border-accent/20 px-3 py-1.5 rounded-lg transition-colors disabled:opacity-50"><Upload size={12} />Subir archivo</button>
           <input ref={docInputRef} type="file" accept=".jpg,.jpeg,.png,.pdf,.docx,.xlsx" className="hidden" onChange={handleSubirDoc} />
@@ -127,9 +127,9 @@ export default function PerfilGerenteClient({ empleado, userId, documentos: init
         {docs.length === 0 ? (
           <div className="px-6 py-8 text-center"><FileText size={24} className="text-secondary/30 mx-auto mb-2" /><p className="text-sm text-secondary/60">No hay documentos.</p></div>
         ) : (
-          <ul className="divide-y divide-[#1A2235]">
+          <ul className="divide-y divide-border">
             {docs.map((doc) => (
-              <li key={doc.name} className="flex items-center justify-between gap-3 px-6 py-3 hover:bg-white/[0.02]">
+              <li key={doc.name} className="flex items-center justify-between gap-3 px-6 py-3 hover:bg-border/20">
                 <div className="flex items-center gap-3 min-w-0">
                   <FileText size={15} className="text-accent flex-shrink-0" />
                   <div className="min-w-0">
@@ -146,8 +146,8 @@ export default function PerfilGerenteClient({ empleado, userId, documentos: init
         )}
       </div>
 
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-        <div className="flex items-center gap-2 px-6 py-4 border-b border-[#1A2235]"><Bell size={15} className="text-accent" /><h2 className="text-sm font-semibold">Preferencias de notificaciones</h2></div>
+      <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="flex items-center gap-2 px-6 py-4 border-b border-border"><Bell size={15} className="text-accent" /><h2 className="text-sm font-semibold">Preferencias de notificaciones</h2></div>
         <div className="px-6 py-4 space-y-3">
           {([{ key: "inasistencias", label: "Inasistencias" }, { key: "objetivos", label: "Objetivos" }, { key: "vacaciones", label: "Vacaciones" }, { key: "capacitaciones", label: "Capacitaciones" }] as { key: keyof NotifPrefs; label: string }[]).map(({ key, label }) => (
             <div key={key} className="flex items-center justify-between gap-4">
@@ -169,7 +169,7 @@ function Field({ label, name, type = "text", defaultValue, placeholder, required
   return (
     <div>
       <label className="block text-[11px] uppercase tracking-[0.6px] text-secondary/70 mb-1.5">{label}</label>
-      <input type={type} name={name} defaultValue={defaultValue} placeholder={placeholder} required={required} disabled={disabled} className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2 text-sm text-white placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition disabled:opacity-50 disabled:cursor-not-allowed" />
+      <input type={type} name={name} defaultValue={defaultValue} placeholder={placeholder} required={required} disabled={disabled} className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-white placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition disabled:opacity-50 disabled:cursor-not-allowed" />
     </div>
   );
 }

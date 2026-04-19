@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { X, Loader2 } from "lucide-react";
+import { Search, Loader2 } from "lucide-react";
 import { asignarObjetivo } from "@/app/dashboard/lider/objetivos/actions";
+import { Modal } from "@/components/ui";
 
 interface Empleado {
   id: string;
@@ -24,6 +25,13 @@ export default function AsignarObjetivoModal({ empleados, empresaId, liderEmplea
   const [status, setStatus] = useState<"idle" | "ok" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [seleccionados, setSeleccionados] = useState<Set<string>>(new Set());
+  const [busqueda, setBusqueda] = useState("");
+
+  const empleadosFiltrados = useMemo(() => {
+    const q = busqueda.trim().toLowerCase();
+    if (!q) return empleados;
+    return empleados.filter((e) => e.nombre.toLowerCase().includes(q));
+  }, [empleados, busqueda]);
 
   function toggleEmpleado(id: string) {
     setSeleccionados((prev) => {
@@ -75,16 +83,7 @@ export default function AsignarObjetivoModal({ empleados, empresaId, liderEmplea
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-surface border border-[#1A2235] rounded-xl w-full max-w-md p-6 shadow-[0_1px_4px_rgba(0,0,0,0.4)] max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between mb-5">
-          <h2 className="text-base font-semibold">Asignar objetivo</h2>
-          <button onClick={onClose} className="text-secondary hover:text-white transition-colors">
-            <X size={18} />
-          </button>
-        </div>
-
+    <Modal open onClose={onClose} titulo="Asignar objetivo" maxWidth="md">
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Empleados — selección múltiple */}
           <div>
@@ -92,11 +91,23 @@ export default function AsignarObjetivoModal({ empleados, empresaId, liderEmplea
               Empleados <span className="text-red-400">*</span>
               <span className="text-secondary/50 ml-1">({seleccionados.size} seleccionado{seleccionados.size !== 1 ? "s" : ""})</span>
             </label>
-            <div className="bg-base border border-[#1A2235] rounded-lg divide-y divide-[#1A2235] max-h-40 overflow-y-auto">
+            <div className="relative mb-2">
+              <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-secondary/50 pointer-events-none" />
+              <input
+                type="text"
+                value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
+                placeholder="Buscar empleado..."
+                className="w-full bg-base border border-border rounded-lg pl-7 pr-3 py-2 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors"
+              />
+            </div>
+            <div className="bg-base border border-border rounded-lg divide-y divide-border max-h-40 overflow-y-auto">
               {empleados.length === 0 ? (
                 <p className="px-3 py-3 text-xs text-secondary/60">Sin empleados en el área.</p>
+              ) : empleadosFiltrados.length === 0 ? (
+                <p className="px-3 py-3 text-xs text-secondary/60">Sin resultados para &quot;{busqueda}&quot;.</p>
               ) : (
-                empleados.map((emp) => (
+                empleadosFiltrados.map((emp) => (
                   <label key={emp.id} className="flex items-center gap-3 px-3 py-2.5 cursor-pointer hover:bg-white/[0.03] transition-colors">
                     <input
                       type="checkbox"
@@ -121,7 +132,7 @@ export default function AsignarObjetivoModal({ empleados, empresaId, liderEmplea
               type="text"
               required
               placeholder="Ej: Mejorar tiempo de respuesta al cliente"
-              className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors"
+              className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors"
             />
           </div>
 
@@ -132,7 +143,7 @@ export default function AsignarObjetivoModal({ empleados, empresaId, liderEmplea
               name="descripcion"
               rows={3}
               placeholder="Detalles opcionales del objetivo..."
-              className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors resize-none"
+              className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors resize-none"
             />
           </div>
 
@@ -143,7 +154,7 @@ export default function AsignarObjetivoModal({ empleados, empresaId, liderEmplea
                 name="categoria"
                 type="text"
                 placeholder="Ej: Desempeño"
-                className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors"
+                className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors"
               />
             </div>
             <div>
@@ -151,7 +162,7 @@ export default function AsignarObjetivoModal({ empleados, empresaId, liderEmplea
               <input
                 name="vencimiento"
                 type="date"
-                className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent/50 transition-colors [color-scheme:dark]"
+                className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent/50 transition-colors [color-scheme:dark]"
               />
             </div>
           </div>
@@ -171,21 +182,20 @@ export default function AsignarObjetivoModal({ empleados, empresaId, liderEmplea
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 rounded-lg border border-[#1A2235] text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={isPending || status === "ok"}
-              className="flex-1 px-4 py-2.5 rounded-lg bg-accent text-base text-sm font-medium hover:bg-accent/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
+              className="flex-1 px-4 py-2.5 rounded-lg bg-accent text-sm font-medium hover:bg-accent/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
             >
               {isPending && <Loader2 size={14} className="animate-spin" />}
               {isPending ? "Guardando..." : "Asignar"}
             </button>
           </div>
         </form>
-      </div>
-    </div>
+    </Modal>
   );
 }

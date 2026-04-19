@@ -49,7 +49,7 @@ export default function CapacitacionesPage() {
 
   return (
     <div className="p-4 md:p-8 max-w-3xl">
-      <div className="flex items-start justify-between mb-8">
+      <div className="flex flex-wrap items-start justify-between gap-3 mb-8">
         <div>
           <h1 className="text-2xl font-bold mb-1">Capacitaciones</h1>
           <p className="text-secondary text-sm">
@@ -68,7 +68,7 @@ export default function CapacitacionesPage() {
 
       <div className="space-y-4">
         {capacitaciones.map((cap, i) => (
-          <div key={i} className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5 space-y-4">
+          <div key={i} className="bg-surface rounded-xl border border-border shadow-sm p-5 space-y-4">
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-start gap-3">
                 <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">

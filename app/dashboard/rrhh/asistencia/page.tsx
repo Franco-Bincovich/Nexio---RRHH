@@ -229,7 +229,7 @@ export default function AsistenciaPage() {
   return (
     <div className="p-4 md:p-8 max-w-5xl">
       {/* Header */}
-      <div className="flex items-start justify-between mb-8">
+      <div className="flex flex-wrap items-start justify-between gap-3 mb-8">
         <div>
           <h1 className="text-2xl font-bold mb-1">Asistencia</h1>
           <p className="text-secondary text-sm">
@@ -285,7 +285,7 @@ export default function AsistenciaPage() {
       ) : (
         <>
           {/* Resumen semanal */}
-          <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden mb-6">
+          <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden mb-6">
             <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
               <CalendarClock size={15} className="text-accent" />
               <h2 className="text-sm font-semibold">Semana actual</h2>
@@ -379,7 +379,7 @@ export default function AsistenciaPage() {
           </div>
 
           {/* Alertas */}
-          <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5">
+          <div className="bg-surface rounded-xl border border-border shadow-sm p-5">
             <div className="flex items-center gap-2 mb-4">
               <AlertTriangle size={15} className="text-yellow-400" />
               <h2 className="text-sm font-semibold">

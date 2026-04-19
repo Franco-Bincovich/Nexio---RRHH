@@ -42,8 +42,8 @@ export default function PreferenciasNotificaciones({ initialPrefs, onSave }: Pro
   }
 
   return (
-    <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-      <div className="flex items-center gap-2 px-5 py-4 border-b border-[#1A2235]">
+    <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+      <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
         <Bell size={15} className="text-accent" />
         <h2 className="text-sm font-semibold">Preferencias de notificaciones</h2>
         {feedback && (
@@ -57,7 +57,7 @@ export default function PreferenciasNotificaciones({ initialPrefs, onSave }: Pro
         {ORDER.map((key) => (
           <li
             key={key}
-            className="flex items-center justify-between px-5 py-3.5 border-b border-[#1A2235] last:border-0"
+            className="flex items-center justify-between px-5 py-3.5 border-b border-border last:border-0"
           >
             <span className="text-sm">{PREF_LABELS[key]}</span>
             <button

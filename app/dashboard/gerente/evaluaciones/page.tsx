@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase-server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { getCicloConfig, score1_10A1_5 } from "@/lib/evaluaciones";
 import { Building2, CheckCircle2, Clock, Star, AlertCircle, Power } from "lucide-react";
+import { PageHeader } from "@/components/ui";
 
 export default async function GerenteEvaluacionesPage() {
   const supabase = await createClient();
@@ -99,12 +100,13 @@ export default async function GerenteEvaluacionesPage() {
 
   return (
     <div className="p-4 md:p-8 max-w-5xl space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold mb-1">Evaluaciones</h1>
-        <p className="text-secondary text-sm">Vista consolidada por área</p>
-      </div>
+      <PageHeader
+        titulo="Evaluaciones"
+        descripcion="Vista consolidada por área"
+        className="mb-0"
+      />
 
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-4 flex items-center gap-3">
+      <div className="bg-surface rounded-xl border border-border shadow-sm p-4 flex items-center gap-3">
         <Power size={14} className={ciclo.evaluaciones_activas ? "text-accent" : "text-secondary/60"} />
         <p className="text-sm">
           {ciclo.evaluaciones_activas
@@ -120,19 +122,19 @@ export default async function GerenteEvaluacionesPage() {
       </div>
 
       {areasRows.length === 0 ? (
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-12 text-center">
+        <div className="bg-surface rounded-xl border border-border shadow-sm py-12 text-center">
           <AlertCircle size={24} className="text-secondary/30 mx-auto mb-2" />
           <p className="text-sm text-secondary/60">No hay áreas registradas.</p>
         </div>
       ) : (
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-4 border-b border-[#1A2235]">
+        <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
             <Building2 size={15} className="text-accent" />
             <h2 className="text-sm font-semibold">Resultados por área</h2>
           </div>
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-[#1A2235] text-[10px] uppercase tracking-[0.7px] text-secondary">
+              <tr className="border-b border-border text-[10px] uppercase tracking-[0.7px] text-secondary">
                 <th className="text-left px-5 py-2.5 font-medium">Área</th>
                 <th className="text-right px-5 py-2.5 font-medium">Empleados</th>
                 <th className="text-right px-5 py-2.5 font-medium">Completadas</th>
@@ -142,7 +144,7 @@ export default async function GerenteEvaluacionesPage() {
             </thead>
             <tbody>
               {areasRows.map((a) => (
-                <tr key={a.nombre} className="border-b border-[#1A2235] last:border-0 hover:bg-white/[0.02] transition-colors">
+                <tr key={a.nombre} className="border-b border-border last:border-0 hover:bg-border/20 transition-colors">
                   <td className="px-5 py-3 text-xs font-medium">{a.nombre}</td>
                   <td className="px-5 py-3 text-xs text-right">{a.empleadosTotal}</td>
                   <td className="px-5 py-3 text-xs text-right text-accent">{a.completadas}</td>
@@ -162,7 +164,7 @@ export default async function GerenteEvaluacionesPage() {
 
 function Kpi({ icon, label, value, color }: { icon: React.ReactNode; label: string; value: string | number; color: string }) {
   return (
-    <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+    <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
       <div className="flex items-center gap-2 mb-2">
         {icon}
         <p className="text-[10px] uppercase tracking-[0.7px] text-secondary">{label}</p>

@@ -196,7 +196,7 @@ export default function AuditoriaPage() {
       </div>
 
       {/* Tabla */}
-      <div className="bg-surface border border-border rounded-xl overflow-hidden">
+      <div className="bg-surface border border-border rounded-xl overflow-x-auto">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>

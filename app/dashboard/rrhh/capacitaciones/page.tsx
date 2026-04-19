@@ -426,7 +426,7 @@ function CapacitacionCard({
   }
 
   return (
-    <div className={`bg-surface rounded-xl border shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden transition-colors ${cap.estado === "archivada" ? "border-white/5 opacity-60" : "border-border"}`}>
+    <div className={`bg-surface rounded-xl border shadow-sm overflow-hidden transition-colors ${cap.estado === "archivada" ? "border-white/5 opacity-60" : "border-border"}`}>
       {/* Card header */}
       <div className="p-4">
         <div className="flex items-start justify-between gap-4 mb-3">
@@ -519,7 +519,7 @@ function CapacitacionCard({
               Sin empleados asignados aún.
             </div>
           ) : (
-            <div className="divide-y divide-[#1A2235]">
+            <div className="divide-y divide-border">
               {asignaciones.map((asig) => {
                 const emp = empMap[asig.empleado_id];
                 const cfg = ASIG_CONFIG[asig.estado];
@@ -675,15 +675,15 @@ export default function CapacitacionesPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+        <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
           <div className="flex items-center gap-2 mb-2"><Users size={14} className="text-accent" /><p className="text-[10px] uppercase tracking-[0.7px] text-secondary">Inscripciones</p></div>
           <p className="text-[22px] font-extrabold text-accent">{totalInscriptos}</p>
         </div>
-        <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+        <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
           <div className="flex items-center gap-2 mb-2"><CheckCircle2 size={14} className="text-green-400" /><p className="text-[10px] uppercase tracking-[0.7px] text-secondary">Completadas</p></div>
           <p className="text-[22px] font-extrabold text-green-400">{totalCompletados}</p>
         </div>
-        <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+        <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
           <div className="flex items-center gap-2 mb-2"><TrendingUp size={14} className="text-blue-400" /><p className="text-[10px] uppercase tracking-[0.7px] text-secondary">Tasa completitud</p></div>
           <p className="text-[22px] font-extrabold text-blue-400">{pctCompletion}%</p>
         </div>

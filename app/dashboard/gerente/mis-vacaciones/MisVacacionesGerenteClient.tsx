@@ -89,7 +89,7 @@ export default function MisVacacionesGerenteClient({ vacaciones }: Props) {
       </div>
 
       {mostrarForm && (
-        <form onSubmit={handleSubmit} className="bg-surface border border-[#1A2235] rounded-xl p-5 mb-6 shadow-[0_1px_4px_rgba(0,0,0,0.4)]">
+        <form onSubmit={handleSubmit} className="bg-surface border border-border rounded-xl p-5 mb-6 shadow-sm">
           <h2 className="text-sm font-semibold mb-4">Registrar vacaciones</h2>
           <div className="space-y-3">
             <div className="grid grid-cols-2 gap-3">
@@ -100,7 +100,7 @@ export default function MisVacacionesGerenteClient({ vacaciones }: Props) {
                   value={desde}
                   onChange={(e) => setDesde(e.target.value)}
                   required
-                  className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50 transition-colors"
+                  className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50 transition-colors"
                 />
               </div>
               <div>
@@ -111,7 +111,7 @@ export default function MisVacacionesGerenteClient({ vacaciones }: Props) {
                   onChange={(e) => setHasta(e.target.value)}
                   required
                   min={desde}
-                  className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50 transition-colors"
+                  className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50 transition-colors"
                 />
               </div>
             </div>
@@ -129,7 +129,7 @@ export default function MisVacacionesGerenteClient({ vacaciones }: Props) {
                 onChange={(e) => setComentario(e.target.value)}
                 rows={2}
                 placeholder="Alguna aclaración adicional..."
-                className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/40 focus:outline-none focus:border-accent/50 transition-colors resize-none"
+                className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/40 focus:outline-none focus:border-accent/50 transition-colors resize-none"
               />
             </div>
           </div>
@@ -149,7 +149,7 @@ export default function MisVacacionesGerenteClient({ vacaciones }: Props) {
             <button
               type="button"
               onClick={() => setMostrarForm(false)}
-              className="flex-1 px-4 py-2.5 rounded-lg border border-[#1A2235] text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
             >
               Cancelar
             </button>
@@ -159,14 +159,14 @@ export default function MisVacacionesGerenteClient({ vacaciones }: Props) {
               className="flex-1 px-4 py-2.5 rounded-lg bg-accent/80 hover:bg-accent text-black text-sm font-medium transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
             >
               {isPending && <Loader2 size={14} className="animate-spin" />}
-              Registrar
+              Registrar vacaciones
             </button>
           </div>
         </form>
       )}
 
       {vacaciones.length === 0 ? (
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-16 text-center">
+        <div className="bg-surface rounded-xl border border-border shadow-sm py-16 text-center">
           <Umbrella size={28} className="text-secondary/25 mx-auto mb-3" />
           <p className="text-sm text-secondary/60">No tenés solicitudes de vacaciones.</p>
         </div>
@@ -176,7 +176,7 @@ export default function MisVacacionesGerenteClient({ vacaciones }: Props) {
             const cfg = ESTADO_CONFIG[v.estado];
             const EstadoIcon = cfg.icon;
             return (
-              <div key={v.id} className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-4">
+              <div key={v.id} className="bg-surface rounded-xl border border-border shadow-sm p-4">
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div>
                     <p className="text-sm font-semibold">

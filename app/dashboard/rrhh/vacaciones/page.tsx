@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase-admin";
 import VacacionesRrhhClient from "./VacacionesRrhhClient";
 import type { SolicitudVacacion } from "@/components/MapaVacaciones";
 import type { VacacionFila } from "@/lib/export-vacaciones";
+import { PageHeader } from "@/components/ui";
 
 export default async function RrhhVacacionesPage() {
   const supabase = await createClient();
@@ -84,10 +85,11 @@ export default async function RrhhVacacionesPage() {
 
   return (
     <div className="p-4 md:p-8 max-w-6xl">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-1">Vacaciones</h1>
-        <p className="text-secondary text-sm">Vista consolidada de toda la empresa</p>
-      </div>
+      <PageHeader
+        titulo="Vacaciones"
+        descripcion="Vista consolidada de toda la empresa"
+        className="mb-6"
+      />
       <VacacionesRrhhClient
         solicitudes={solicitudes}
         filas={filas}

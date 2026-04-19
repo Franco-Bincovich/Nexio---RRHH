@@ -89,14 +89,14 @@ export default function MapaVacaciones({
       <div className="flex items-center gap-2">
         <button
           onClick={prev}
-          className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#1A2235] hover:bg-white/[0.04] transition-colors"
+          className="w-8 h-8 flex items-center justify-center rounded-lg border border-border hover:bg-white/[0.04] transition-colors"
           aria-label="Mes anterior"
         >
           <ChevronLeft size={14} />
         </button>
         <button
           onClick={next}
-          className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#1A2235] hover:bg-white/[0.04] transition-colors"
+          className="w-8 h-8 flex items-center justify-center rounded-lg border border-border hover:bg-white/[0.04] transition-colors"
           aria-label="Mes siguiente"
         >
           <ChevronRight size={14} />
@@ -150,12 +150,12 @@ function MesGrid({
   const weeks = buildMonthWeeks(year, month);
 
   return (
-    <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-      <div className="px-4 py-3 border-b border-[#1A2235]">
+    <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+      <div className="px-4 py-3 border-b border-border">
         <h3 className="text-sm font-semibold">{MESES_ES[month]} {year}</h3>
       </div>
 
-      <div className="grid grid-cols-7 text-[10px] uppercase tracking-wide text-secondary/60 border-b border-[#1A2235]">
+      <div className="grid grid-cols-7 text-[10px] uppercase tracking-wide text-secondary/60 border-b border-border">
         {DIAS.map((d, i) => (
           <div key={i} className="px-2 py-1.5 text-center">{d}</div>
         ))}
@@ -169,7 +169,7 @@ function MesGrid({
           return (
             <div
               key={idx}
-              className={`border-r border-b border-[#1A2235] last:border-r-0 p-1 text-[10px] overflow-hidden ${
+              className={`border-r border-b border-border last:border-r-0 p-1 text-[10px] overflow-hidden ${
                 !cell.inMonth ? "bg-white/[0.015] text-secondary/30" : ""
               } ${overlap ? "ring-1 ring-inset ring-red-400/80" : ""}`}
             >

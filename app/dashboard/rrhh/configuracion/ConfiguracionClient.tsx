@@ -48,7 +48,7 @@ function SectionCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
+    <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
       <div className="flex items-center gap-3 px-5 py-4 border-b border-border">
         <div className={`w-8 h-8 rounded-lg ${iconBg} flex items-center justify-center flex-shrink-0`}>
           <span className={iconColor}>{icon}</span>
@@ -467,7 +467,7 @@ export default function ConfiguracionClient({
         title="Notificaciones"
         description="Controlá qué alertas se envían a nivel empresa"
       >
-        <div className="space-y-0 divide-y divide-[#1A2235]">
+        <div className="space-y-0 divide-y divide-border">
           {(
             [
               ["notif_ausentismo",         "Alertas por ausentismo repetido"],

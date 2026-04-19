@@ -6,6 +6,7 @@ import { Star, CheckCircle2, Clock, AlertCircle, ClipboardCheck } from "lucide-r
 import {
   CRITERIOS, decodeComentario, getCicloConfig, score1_10A1_5,
 } from "@/lib/evaluaciones";
+import { EmptyState } from "@/components/ui";
 
 export default async function EvaluacionesEmpleadoPage() {
   const supabase = await createClient();
@@ -71,7 +72,7 @@ export default async function EvaluacionesEmpleadoPage() {
         </div>
       )}
       {!ciclo.evaluaciones_activas && evaluaciones.length === 0 && (
-        <div className="flex items-center gap-3 text-secondary/80 bg-white/[0.02] border border-[#1A2235] rounded-xl px-4 py-3 text-sm">
+        <div className="flex items-center gap-3 text-secondary/80 bg-white/[0.02] border border-border rounded-xl px-4 py-3 text-sm">
           <AlertCircle size={15} />
           No hay período de evaluación activo
         </div>
@@ -79,14 +80,15 @@ export default async function EvaluacionesEmpleadoPage() {
 
       {/* Historial */}
       {evaluaciones.length === 0 ? (
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-16 text-center">
-          <ClipboardCheck size={28} className="text-secondary/25 mx-auto mb-3" />
-          <p className="text-sm text-secondary/60">No tenés evaluaciones registradas.</p>
-        </div>
+        <EmptyState
+          icon={ClipboardCheck}
+          titulo="No tenés evaluaciones registradas"
+          descripcion="Cuando tu líder complete tu evaluación, vas a ver los resultados acá."
+        />
       ) : (
         <div className="space-y-4">
           {evaluaciones.map((ev) => (
-            <div key={ev.id} className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5">
+            <div key={ev.id} className="bg-surface rounded-xl border border-border shadow-sm p-5">
               <div className="flex items-start justify-between gap-3 mb-4">
                 <div>
                   <div className="flex items-center gap-2">
@@ -117,7 +119,7 @@ export default async function EvaluacionesEmpleadoPage() {
                     return (
                       <div
                         key={c.key}
-                        className="flex items-center justify-between bg-white/[0.02] border border-[#1A2235] rounded-lg px-3 py-2"
+                        className="flex items-center justify-between bg-white/[0.02] border border-border rounded-lg px-3 py-2"
                       >
                         <span className="text-xs text-secondary">{c.label}</span>
                         <span className="flex items-center gap-1 text-xs font-semibold">
@@ -131,7 +133,7 @@ export default async function EvaluacionesEmpleadoPage() {
               )}
 
               {ev.texto && (
-                <div className="bg-white/[0.02] border border-[#1A2235] rounded-lg px-4 py-3">
+                <div className="bg-white/[0.02] border border-border rounded-lg px-4 py-3">
                   <p className="text-[10px] uppercase tracking-wide text-secondary/60 mb-1">Comentario</p>
                   <p className="text-xs text-secondary">{ev.texto}</p>
                 </div>

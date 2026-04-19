@@ -133,8 +133,8 @@ export default async function GerenteDashboardPage() {
 
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Tabla de áreas */}
-        <div className="lg:col-span-2 bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-4 border-b border-[#1A2235]">
+        <div className="lg:col-span-2 bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
             <Building2 size={15} className="text-accent" />
             <h2 className="text-sm font-semibold">Áreas de la empresa</h2>
             <span className="ml-auto text-[10px] text-secondary uppercase tracking-[0.7px]">
@@ -147,7 +147,7 @@ export default async function GerenteDashboardPage() {
           ) : (
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-secondary text-[10px] uppercase tracking-[0.7px] border-b border-[#1A2235]">
+                <tr className="text-secondary text-[10px] uppercase tracking-[0.7px] border-b border-border">
                   <th className="text-left px-5 py-2.5 font-medium">Área</th>
                   <th className="text-left px-5 py-2.5 font-medium">Líder</th>
                   <th className="text-right px-5 py-2.5 font-medium">Empleados</th>
@@ -162,7 +162,7 @@ export default async function GerenteDashboardPage() {
                   return (
                     <tr
                       key={area.id}
-                      className="border-b border-[#1A2235] last:border-0 hover:bg-white/[0.02] transition-colors"
+                      className="border-b border-border last:border-0 hover:bg-border/20 transition-colors"
                     >
                       <td className="px-5 py-3 font-medium">{area.nombre}</td>
                       <td className="px-5 py-3 text-secondary">
@@ -191,7 +191,7 @@ export default async function GerenteDashboardPage() {
         </div>
 
         {/* Objetivos globales */}
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5">
+        <div className="bg-surface rounded-xl border border-border shadow-sm p-5">
           <div className="flex items-center gap-2 mb-5">
             <Target size={15} className="text-accent" />
             <h2 className="text-sm font-semibold">Objetivos globales</h2>
@@ -223,7 +223,7 @@ export default async function GerenteDashboardPage() {
                 textColor="text-accent"
               />
 
-              <div className="pt-2 border-t border-[#1A2235]">
+              <div className="pt-2 border-t border-border">
                 <div className="flex justify-between text-xs">
                   <span className="text-secondary uppercase tracking-[0.7px] text-[10px]">Total</span>
                   <span className="font-semibold">{totalObjetivos}</span>
@@ -254,7 +254,7 @@ function StatCard({
   label: string; value: number; icon: React.ElementType; color: string; sub?: string;
 }) {
   return (
-    <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+    <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
       <div className="flex items-center gap-2 mb-2">
         <Icon size={14} className={color} />
         <p className="text-[10px] uppercase tracking-[0.7px] text-secondary">{label}</p>

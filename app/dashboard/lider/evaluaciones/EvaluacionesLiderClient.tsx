@@ -12,6 +12,7 @@ import {
   type CriterioScores,
 } from "@/lib/evaluaciones";
 import { crearEvaluacion } from "./actions";
+import { Badge, PageHeader } from "@/components/ui";
 
 export type EmpleadoEvalRow = {
   empleado_id: string;
@@ -35,14 +36,11 @@ export default function EvaluacionesLiderClient({ empleados, areaNombre, cicloDe
 
   return (
     <div className="p-4 md:p-8 max-w-4xl space-y-6">
-      <div className="flex items-start justify-between gap-3 flex-wrap">
-        <div>
-          <h1 className="text-2xl font-bold mb-1">Evaluaciones</h1>
-          <p className="text-secondary text-sm">
-            {areaNombre ? `${areaNombre} · ` : ""}Ciclo abierto{cicloDesde ? ` desde ${new Date(cicloDesde).toLocaleDateString("es-AR")}` : ""}
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        titulo="Evaluaciones"
+        descripcion={`${areaNombre ? `${areaNombre} · ` : ""}Ciclo abierto${cicloDesde ? ` desde ${new Date(cicloDesde).toLocaleDateString("es-AR")}` : ""}`}
+        className="mb-0"
+      />
 
       <div className="grid grid-cols-3 gap-4">
         <Kpi icon={<Users size={13} className="text-blue-400" />}       label="Equipo"       value={empleados.length}   color="text-blue-400" />
@@ -50,8 +48,8 @@ export default function EvaluacionesLiderClient({ empleados, areaNombre, cicloDe
         <Kpi icon={<Clock size={13} className="text-yellow-400" />}     label="Pendientes"   value={pendientes}         color="text-yellow-400" />
       </div>
 
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-        <div className="px-5 py-4 border-b border-[#1A2235]">
+      <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="px-5 py-4 border-b border-border">
           <h2 className="text-sm font-semibold">Integrantes</h2>
         </div>
         {empleados.length === 0 ? (
@@ -59,11 +57,11 @@ export default function EvaluacionesLiderClient({ empleados, areaNombre, cicloDe
             No hay empleados para evaluar en tu ámbito.
           </p>
         ) : (
-          <ul className="divide-y divide-[#1A2235]">
+          <ul className="divide-y divide-border">
             {empleados.map((e) => (
               <li
                 key={e.empleado_id}
-                className="flex items-center gap-4 px-5 py-3 hover:bg-white/[0.02] transition-colors"
+                className="flex items-center gap-4 px-5 py-3 hover:bg-border/20 transition-colors"
               >
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium">{e.nombre}</p>
@@ -82,9 +80,7 @@ export default function EvaluacionesLiderClient({ empleados, areaNombre, cicloDe
                 )}
 
                 {e.estado === "completada" ? (
-                  <span className="text-[10px] font-bold uppercase text-accent bg-accent/10 border border-accent/20 px-2 py-0.5 rounded-full">
-                    Completada
-                  </span>
+                  <Badge estado="completada" showIcon={false} />
                 ) : (
                   <button
                     onClick={() => setActivo(e)}
@@ -111,7 +107,7 @@ export default function EvaluacionesLiderClient({ empleados, areaNombre, cicloDe
 
 function Kpi({ icon, label, value, color }: { icon: React.ReactNode; label: string; value: number; color: string }) {
   return (
-    <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+    <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
       <div className="flex items-center gap-2 mb-2">
         {icon}
         <p className="text-[10px] uppercase tracking-[0.7px] text-secondary">{label}</p>
@@ -192,7 +188,7 @@ function EvaluacionModal({
                     className={`flex-1 py-2 rounded-lg text-xs font-medium border transition-colors ${
                       scores[c.key] >= n
                         ? "bg-accent/20 border-accent/30 text-accent"
-                        : "border-[#1A2235] text-secondary hover:text-foreground hover:bg-white/[0.04]"
+                        : "border-border text-secondary hover:text-foreground hover:bg-white/[0.04]"
                     }`}
                   >
                     {n}
@@ -216,7 +212,7 @@ function EvaluacionModal({
               value={comentario}
               onChange={(e) => setComentario(e.target.value)}
               rows={3}
-              className="w-full bg-base border border-[#1A2235] text-sm rounded-lg px-3 py-2.5 resize-none focus:outline-none focus:border-accent/50 placeholder:text-secondary/40"
+              className="w-full bg-base border border-border text-sm rounded-lg px-3 py-2.5 resize-none focus:outline-none focus:border-accent/50 placeholder:text-secondary/40"
               placeholder="Observaciones sobre el desempeño..."
             />
           </div>

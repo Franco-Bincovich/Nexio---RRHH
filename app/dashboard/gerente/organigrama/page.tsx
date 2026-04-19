@@ -53,7 +53,7 @@ export default async function OrganigramaPage() {
 
       {/* Nodo raíz — Gerente */}
       <div className="flex flex-col items-center mb-2">
-        <div className="bg-surface rounded-xl border border-accent/30 shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-6 py-4 text-center w-64">
+        <div className="bg-surface rounded-xl border border-accent/30 shadow-sm px-6 py-4 text-center w-64">
           <div className="w-10 h-10 rounded-full bg-accent/15 border border-accent/25 flex items-center justify-center text-sm font-bold text-accent mx-auto mb-2">
             {initials(gerente.nombre)}
           </div>
@@ -61,7 +61,7 @@ export default async function OrganigramaPage() {
           <p className="text-[10px] text-accent uppercase tracking-[0.7px] mt-0.5">Gerente General</p>
           <p className="text-xs text-secondary mt-0.5">{empresaData?.nombre ?? "—"}</p>
         </div>
-        <div className="w-px h-8 bg-[#1A2235]" />
+        <div className="w-px h-8 bg-border/40" />
       </div>
 
       {/* Áreas */}
@@ -72,17 +72,17 @@ export default async function OrganigramaPage() {
           {/* Línea horizontal superior */}
           {areaRows.length > 1 && (
             <div
-              className="absolute top-0 bg-[#1A2235] h-px"
+              className="absolute top-0 bg-border/40 h-px"
               style={{ left: `calc(${100 / areaRows.length / 2}%)`, right: `calc(${100 / areaRows.length / 2}%)` }}
             />
           )}
           <div className={`grid gap-4`} style={{ gridTemplateColumns: `repeat(${Math.min(areaRows.length, 4)}, minmax(0, 1fr))` }}>
             {areaRows.map((area) => (
               <div key={area.id} className="flex flex-col items-center">
-                <div className="w-px h-6 bg-[#1A2235]" />
+                <div className="w-px h-6 bg-border/40" />
 
                 {/* Card del área + líder */}
-                <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-4 py-3 text-center w-full mb-3">
+                <div className="bg-surface rounded-xl border border-border shadow-sm px-4 py-3 text-center w-full mb-3">
                   <p className="text-[10px] text-secondary/50 uppercase tracking-[0.6px] mb-1">{area.nombre}</p>
                   {area.lider ? (
                     <>
@@ -95,7 +95,7 @@ export default async function OrganigramaPage() {
                   ) : (
                     <p className="text-[11px] text-secondary/40 mt-1">Sin líder asignado</p>
                   )}
-                  <div className="mt-2 pt-2 border-t border-[#1A2235]">
+                  <div className="mt-2 pt-2 border-t border-border">
                     <p className="text-[10px] text-secondary/50">
                       {area.empleados.length} empleado{area.empleados.length !== 1 ? "s" : ""}
                     </p>
@@ -106,7 +106,7 @@ export default async function OrganigramaPage() {
                 {area.empleados.length > 0 && (
                   <div className="flex flex-col gap-1.5 w-full">
                     {area.empleados.slice(0, 5).map((emp) => (
-                      <div key={emp.id} className="bg-[#0D1117] rounded-lg border border-[#1A2235] px-3 py-2 flex items-center gap-2">
+                      <div key={emp.id} className="bg-[#0D1117] rounded-lg border border-border px-3 py-2 flex items-center gap-2">
                         <div className="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center text-[9px] font-bold text-secondary flex-shrink-0">
                           {initials(emp.nombre)}
                         </div>
@@ -114,7 +114,7 @@ export default async function OrganigramaPage() {
                       </div>
                     ))}
                     {area.empleados.length > 5 && (
-                      <div className="bg-[#0D1117] rounded-lg border border-[#1A2235] px-3 py-2 text-center">
+                      <div className="bg-[#0D1117] rounded-lg border border-border px-3 py-2 text-center">
                         <p className="text-[10px] text-secondary/50">+{area.empleados.length - 5} más</p>
                       </div>
                     )}
@@ -127,7 +127,7 @@ export default async function OrganigramaPage() {
       )}
 
       {/* Leyenda */}
-      <div className="mt-10 flex items-center gap-6 text-xs text-secondary border-t border-[#1A2235] pt-4">
+      <div className="mt-10 flex items-center gap-6 text-xs text-secondary border-t border-border pt-4">
         <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-accent/40" /><span>Gerencia</span></div>
         <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-blue-400/40" /><span>Líder de área</span></div>
         <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-white/10" /><span>Empleado</span></div>

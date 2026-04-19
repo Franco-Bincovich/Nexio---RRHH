@@ -12,7 +12,16 @@
       "Bash(awk '$1 < 30 {print $2 \": \" $1 \" líneas\"}')",
       "Bash(find . -name \"*.tsx\" -type f -exec grep -l \"ProximamenteButton\\\\|próxima\\\\|coming\\\\|soon\" {} +)",
       "Bash(grep -l \"xlsx\" app/dashboard/rrhh/asistencia/*.tsx app/dashboard/rrhh/temperatura/*.tsx app/dashboard/rrhh/capacitaciones/*.tsx app/dashboard/lider/asistencia/*.tsx app/dashboard/lider/objetivos/*.tsx app/dashboard/gerente/temperatura/*.tsx)",
-      "Bash(ls app/dashboard/rrhh/asistencia/ app/dashboard/rrhh/temperatura/ app/dashboard/rrhh/capacitaciones/ app/dashboard/lider/asistencia/ app/dashboard/lider/objetivos/ app/dashboard/gerente/temperatura/)"
+      "Bash(ls app/dashboard/rrhh/asistencia/ app/dashboard/rrhh/temperatura/ app/dashboard/rrhh/capacitaciones/ app/dashboard/lider/asistencia/ app/dashboard/lider/objetivos/ app/dashboard/gerente/temperatura/)",
+      "Bash(grep -rE \"size=\\\\{[0-9]{1,2}\\\\}\" \"/Users/franbincovich/Desktop/VSCode/MoltbotKariaV1/Nexio - RRHH/app\")",
+      "Bash(grep -oE \"size=\\\\{[0-9]{1,2}\\\\}\")",
+      "Bash(xargs -0 perl -i -pe 's/border-\\\\[#1A2235\\\\]/border-border/g; s/shadow-\\\\[0_1px_4px_rgba\\\\\\(0,0,0,0\\\\.4\\\\\\)\\\\]/shadow-sm/g; s/hover:bg-white\\\\/\\\\[0\\\\.02\\\\]/hover:bg-border\\\\/20/g')",
+      "Bash(xargs -0 perl -i -pe 's/divide-\\\\[#1A2235\\\\]/divide-border/g; s/bg-\\\\[#1A2235\\\\]/bg-border\\\\/40/g')",
+      "Bash(xargs -0 perl -i -0777 -pe 's/\\(className=\"[^\"]*?overflow-hidden\"[^>]*>\\\\s*\\(?:<div[^>]*>\\\\s*\\)*\\)<table/my $m=$1; $m =~ s{overflow-hidden}{overflow-x-auto}; \"${m}<table\"/ge')",
+      "Bash(xargs -0 perl -i -pe 's/flex items-start justify-between mb-8\"/flex flex-wrap items-start justify-between gap-3 mb-8\"/g; s/flex items-start justify-between mb-6\"/flex flex-wrap items-start justify-between gap-3 mb-6\"/g')",
+      "Bash(xargs -0 perl -i -pe 's/text-base text-sm/text-sm/g; s/text-sm text-base/text-sm/g')",
+      "Bash(awk -F: '{print NR\": \"$0}')",
+      "Bash(awk '{print $2,$3,$4,$5,$6,$7}')"
     ]
   }
 }

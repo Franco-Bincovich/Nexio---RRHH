@@ -16,7 +16,7 @@ export default function ExpandSection({ title, badge, defaultOpen = false, child
     <div>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center justify-between w-full px-5 py-3 hover:bg-white/[0.02] transition-colors"
+        className="flex items-center justify-between w-full px-5 py-3 hover:bg-border/20 transition-colors"
       >
         <span className="text-sm font-medium">{title}</span>
         <div className="flex items-center gap-2">

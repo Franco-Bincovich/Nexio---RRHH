@@ -129,7 +129,7 @@ export default function ObjetivosClient({ objetivos, empleados, empresaId, lider
             </button>
             <button
               onClick={() => setModalAsignar(true)}
-              className="flex items-center gap-2 bg-accent text-base text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-accent/90 transition-colors"
+              className="flex items-center gap-2 bg-accent text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-accent/90 transition-colors"
             >
               <Plus size={16} />
               Asignar objetivo
@@ -138,7 +138,7 @@ export default function ObjetivosClient({ objetivos, empleados, empresaId, lider
         </div>
 
         {objetivos.length === 0 ? (
-          <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-16 text-center">
+          <div className="bg-surface rounded-xl border border-border shadow-sm py-16 text-center">
             <Target size={32} className="text-secondary mx-auto mb-3" />
             <p className="text-secondary text-sm">No hay objetivos asignados todavía.</p>
             <p className="text-secondary/60 text-xs mt-1">Usá el botón "Asignar objetivo" para crear el primero.</p>
@@ -151,7 +151,7 @@ export default function ObjetivosClient({ objetivos, empleados, empresaId, lider
               return (
                 <div
                   key={obj.id}
-                  className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5 space-y-4"
+                  className="bg-surface rounded-xl border border-border shadow-sm p-5 space-y-4"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
@@ -203,7 +203,7 @@ export default function ObjetivosClient({ objetivos, empleados, empresaId, lider
                   </div>
 
                   {/* Acciones */}
-                  <div className="flex items-center gap-2 pt-1 border-t border-[#1A2235]">
+                  <div className="flex items-center gap-2 pt-1 border-t border-border">
                     <button
                       onClick={() => setEditingObj(obj)}
                       className="flex items-center gap-1.5 text-xs text-secondary hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/[0.05] transition-colors"
@@ -241,12 +241,12 @@ export default function ObjetivosClient({ objetivos, empleados, empresaId, lider
         </div>
 
         {historialArea.length === 0 ? (
-          <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-12 text-center">
+          <div className="bg-surface rounded-xl border border-border shadow-sm py-12 text-center">
             <p className="text-sm text-secondary/60">Sin cambios registrados todavía.</p>
           </div>
         ) : (
-          <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-            <ul className="divide-y divide-[#1A2235]">
+          <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+            <ul className="divide-y divide-border">
               {historialArea.map((entry) => (
                 <HistorialRow
                   key={entry.id}
@@ -291,7 +291,7 @@ export default function ObjetivosClient({ objetivos, empleados, empresaId, lider
       {confirmDelete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setConfirmDelete(null)} />
-          <div className="relative bg-surface border border-[#1A2235] rounded-xl w-full max-w-sm p-6 shadow-[0_1px_4px_rgba(0,0,0,0.4)]">
+          <div className="relative bg-surface border border-border rounded-xl w-full max-w-sm p-6 shadow-sm">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-9 h-9 rounded-full bg-red-400/10 flex items-center justify-center flex-shrink-0">
                 <AlertCircle size={16} className="text-red-400" />
@@ -314,7 +314,7 @@ export default function ObjetivosClient({ objetivos, empleados, empresaId, lider
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirmDelete(null)}
-                className="flex-1 px-4 py-2.5 rounded-lg border border-[#1A2235] text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
               >
                 Cancelar
               </button>
@@ -360,7 +360,7 @@ function HistorialRow({ entry, objetivoTitulo }: { entry: { id: string; lider_no
   const esEstado    = entry.campo_modificado === "estado";
 
   return (
-    <li className="px-5 py-3.5 flex items-start gap-4 hover:bg-white/[0.02] transition-colors">
+    <li className="px-5 py-3.5 flex items-start gap-4 hover:bg-border/20 transition-colors">
       <div className="flex items-center gap-1 text-[10px] text-secondary/50 flex-shrink-0 w-32 pt-0.5">
         <Clock size={10} />
         {fecha}
@@ -389,7 +389,7 @@ function HistorialRow({ entry, objetivoTitulo }: { entry: { id: string; lider_no
               </>
             ) : (
               <>
-                <span className="text-[11px] text-secondary/70 bg-white/[0.04] border border-[#1A2235] rounded px-1.5 py-0.5 max-w-[120px] truncate">
+                <span className="text-[11px] text-secondary/70 bg-white/[0.04] border border-border rounded px-1.5 py-0.5 max-w-[120px] truncate">
                   {entry.valor_anterior ?? "(vacío)"}
                 </span>
                 <ArrowRight size={10} className="text-secondary/40" />

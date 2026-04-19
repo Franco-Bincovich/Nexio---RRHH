@@ -79,7 +79,7 @@ export default function Sidebar({ nombre, email, areaNombre, pendingSolicitudes 
         { href: "/dashboard/lider/dashboard",      label: "Dashboard",      icon: LayoutDashboard },
         { href: "/dashboard/lider/equipo",         label: "Mi equipo",      icon: Users },
         { href: "/dashboard/lider/asistencia",     label: "Asistencia",     icon: CalendarClock },
-        { href: "/dashboard/lider/solicitudes",    label: "Solicitudes",    icon: ClipboardList, badge: pendingSolicitudes || undefined },
+        { href: "/dashboard/lider/solicitudes",    label: "Solicitudes del equipo", icon: ClipboardList, badge: pendingSolicitudes || undefined },
         { href: "/dashboard/lider/objetivos",      label: "Objetivos",      icon: Target },
         { href: "/dashboard/lider/foro",           label: "Comunicaciones", icon: MessageSquare },
         { href: "/dashboard/lider/grupos",         label: "Grupos",         icon: UsersRound },

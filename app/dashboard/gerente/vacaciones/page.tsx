@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase-admin";
 import VacacionesGerenteClient from "./VacacionesGerenteClient";
 import type { SolicitudVacacion } from "@/components/MapaVacaciones";
 import type { VacacionFila } from "@/lib/export-vacaciones";
+import { PageHeader } from "@/components/ui";
 
 export type EmpleadoMini = {
   id: string;
@@ -98,10 +99,11 @@ export default async function GerenteVacacionesPage() {
 
   return (
     <div className="p-4 md:p-8 max-w-6xl">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-1">Vacaciones</h1>
-        <p className="text-secondary text-sm">Mapa de vacaciones de la empresa</p>
-      </div>
+      <PageHeader
+        titulo="Vacaciones"
+        descripcion="Mapa de vacaciones de la empresa"
+        className="mb-6"
+      />
       <VacacionesGerenteClient
         solicitudes={solicitudes}
         filas={filas}

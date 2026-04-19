@@ -137,7 +137,7 @@ export default async function LiderDashboardPage() {
       </div>
 
       {/* Objetivos */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-6">
+      <div className="bg-surface rounded-xl border border-border shadow-sm p-6">
         <div className="flex items-center gap-2 mb-5">
           <Target size={16} className="text-accent" />
           <h2 className="text-sm font-semibold">Estado de objetivos del área</h2>
@@ -158,7 +158,7 @@ export default async function LiderDashboardPage() {
       </div>
 
       {/* Grupos de trabajo */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-6 mt-6">
+      <div className="bg-surface rounded-xl border border-border shadow-sm p-6 mt-6">
         <div className="flex items-center gap-2 mb-5">
           <UsersRound size={16} className="text-accent" />
           <h2 className="text-sm font-semibold">Grupos de trabajo</h2>
@@ -185,7 +185,7 @@ export default async function LiderDashboardPage() {
             {grupos.map((g) => (
               <div
                 key={g.id}
-                className="bg-white/[0.02] border border-[#1A2235] rounded-xl px-4 py-3"
+                className="bg-white/[0.02] border border-border rounded-xl px-4 py-3"
               >
                 <div className="flex items-start justify-between gap-2">
                   <p className="text-sm font-medium truncate">{g.nombre}</p>
@@ -212,7 +212,7 @@ function StatCard({
   label: string; value: number; sub: string; icon: React.ElementType; color: string;
 }) {
   return (
-    <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+    <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
       <div className="flex items-center gap-2 mb-2">
         <Icon size={14} className={color} />
         <p className="text-[10px] uppercase tracking-[0.7px] text-secondary">{label}</p>

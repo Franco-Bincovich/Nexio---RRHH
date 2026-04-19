@@ -67,8 +67,8 @@ export default function RetirosClient({ solicitudes, hoy }: { solicitudes: Solic
       )}
 
       {showForm && (
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-[#1A2235]">
+        <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-border">
             <h2 className="text-sm font-semibold">Nuevo retiro anticipado</h2>
             <button onClick={() => setShowForm(false)} className="text-secondary hover:text-white transition-colors">
               <X size={16} />
@@ -83,7 +83,7 @@ export default function RetirosClient({ solicitudes, hoy }: { solicitudes: Solic
                   value={fecha}
                   onChange={(e) => setFecha(e.target.value)}
                   required
-                  className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
+                  className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
                 />
               </div>
               <div>
@@ -93,7 +93,7 @@ export default function RetirosClient({ solicitudes, hoy }: { solicitudes: Solic
                   value={hora}
                   onChange={(e) => setHora(e.target.value)}
                   required
-                  className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
+                  className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
                 />
               </div>
             </div>
@@ -107,7 +107,7 @@ export default function RetirosClient({ solicitudes, hoy }: { solicitudes: Solic
                 rows={3}
                 required
                 placeholder="Describí el motivo del retiro anticipado..."
-                className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2 text-sm text-white placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition resize-none"
+                className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-white placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition resize-none"
               />
               <p className={`text-[10px] mt-1 ${motivo.length < 20 ? "text-secondary/50" : "text-accent"}`}>
                 {motivo.length}/20 caracteres mínimos
@@ -125,7 +125,7 @@ export default function RetirosClient({ solicitudes, hoy }: { solicitudes: Solic
               <button
                 type="submit"
                 disabled={isPending || motivo.length < 20}
-                className="flex items-center gap-2 bg-accent hover:bg-accent/90 disabled:opacity-50 text-base text-sm font-semibold px-5 py-2 rounded-lg transition-colors"
+                className="flex items-center gap-2 bg-accent hover:bg-accent/90 disabled:opacity-50 text-sm font-semibold px-5 py-2 rounded-lg transition-colors"
               >
                 {isPending ? <Loader2 size={14} className="animate-spin" /> : <CheckCircle2 size={14} />}
                 Enviar solicitud
@@ -136,8 +136,8 @@ export default function RetirosClient({ solicitudes, hoy }: { solicitudes: Solic
       )}
 
       {/* Historial */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-        <div className="flex items-center gap-2 px-5 py-4 border-b border-[#1A2235]">
+      <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
           <Clock size={15} className="text-accent" />
           <h2 className="text-sm font-semibold">Historial</h2>
           <span className="ml-auto text-[10px] text-secondary/50">{solicitudes.length} solicitud{solicitudes.length !== 1 ? "es" : ""}</span>
@@ -147,11 +147,11 @@ export default function RetirosClient({ solicitudes, hoy }: { solicitudes: Solic
             <p className="text-sm text-secondary/60">No hay retiros registrados.</p>
           </div>
         ) : (
-          <ul className="divide-y divide-[#1A2235]">
+          <ul className="divide-y divide-border">
             {solicitudes.map((s) => {
               const estado = ESTADO_CONFIG[s.estado] ?? ESTADO_CONFIG.pendiente;
               return (
-                <li key={s.id} className="px-5 py-4 hover:bg-white/[0.02] transition-colors">
+                <li key={s.id} className="px-5 py-4 hover:bg-border/20 transition-colors">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 mb-1">

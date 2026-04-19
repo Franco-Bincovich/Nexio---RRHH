@@ -53,12 +53,12 @@ export default function VacacionesRrhhClient({
 
   return (
     <div className="space-y-4">
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-4 flex flex-wrap items-center gap-3">
+      <div className="bg-surface rounded-xl border border-border shadow-sm p-4 flex flex-wrap items-center gap-3">
         <label className="text-xs text-secondary/80">Área:</label>
         <select
           value={areaSel}
           onChange={(e) => setAreaSel(e.target.value)}
-          className="bg-base border border-[#1A2235] rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-accent/50"
+          className="bg-base border border-border rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-accent/50"
         >
           <option value="">Todas las áreas</option>
           {areas.map((a) => (
@@ -70,7 +70,7 @@ export default function VacacionesRrhhClient({
         <select
           value={cargoSel}
           onChange={(e) => setCargoSel(e.target.value)}
-          className="bg-base border border-[#1A2235] rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-accent/50"
+          className="bg-base border border-border rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-accent/50"
         >
           {CARGOS.map((c) => (
             <option key={c.value} value={c.value}>{c.label}</option>

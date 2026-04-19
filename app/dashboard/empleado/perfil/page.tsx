@@ -62,7 +62,7 @@ export default async function PerfilPage() {
       <p className="text-secondary text-sm mb-6">Tu información en Nexio</p>
 
       {/* Datos de solo lectura */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] divide-y divide-[#1A2235] mb-6">
+      <div className="bg-surface rounded-xl border border-border shadow-sm divide-y divide-border mb-6">
         <div className="flex items-center gap-4 px-5 py-3.5">
           <span className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-medium ${empleado.activo ? "bg-accent/10 text-accent" : "bg-red-500/10 text-red-400"}`}>
             <CheckCircle2 size={11} />

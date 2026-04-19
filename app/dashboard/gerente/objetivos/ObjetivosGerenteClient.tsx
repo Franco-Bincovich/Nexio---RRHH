@@ -75,7 +75,7 @@ export default function ObjetivosGerenteClient({ objetivos, areas, areaEmpMap }:
     <div>
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-        <div className="lg:col-span-2 bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4 flex items-center gap-4">
+        <div className="lg:col-span-2 bg-surface rounded-xl border border-border shadow-sm px-5 py-4 flex items-center gap-4">
           <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
             <Target size={20} className="text-accent" />
           </div>
@@ -96,7 +96,7 @@ export default function ObjetivosGerenteClient({ objetivos, areas, areaEmpMap }:
         <select
           value={filtroArea}
           onChange={(e) => setFiltroArea(e.target.value)}
-          className="bg-surface border border-[#1A2235] rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-accent/50 transition-colors"
+          className="bg-surface border border-border rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-accent/50 transition-colors"
         >
           <option value="todas">Todas las áreas</option>
           {areas.map((a) => <option key={a.id} value={a.id}>{a.nombre}</option>)}
@@ -105,7 +105,7 @@ export default function ObjetivosGerenteClient({ objetivos, areas, areaEmpMap }:
 
       {/* Secciones por área */}
       {Object.keys(byArea).length === 0 ? (
-        <div className="bg-surface rounded-xl border border-[#1A2235] py-16 text-center">
+        <div className="bg-surface rounded-xl border border-border py-16 text-center">
           <Target size={28} className="text-secondary/25 mx-auto mb-3" />
           <p className="text-sm text-secondary/60">No hay objetivos para mostrar.</p>
         </div>
@@ -117,10 +117,10 @@ export default function ObjetivosGerenteClient({ objetivos, areas, areaEmpMap }:
             const areaCompletados = objs.filter((o) => o.estado === "completado").length;
             const areaPct = objs.length > 0 ? Math.round(areaCompletados / objs.length * 100) : 0;
             return (
-              <div key={areaId} className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
+              <div key={areaId} className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleArea(areaId)}
-                  className="w-full flex items-center justify-between px-5 py-4 hover:bg-white/[0.02] transition-colors"
+                  className="w-full flex items-center justify-between px-5 py-4 hover:bg-border/20 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <span className="font-semibold text-sm">{areaNombre}</span>
@@ -136,12 +136,12 @@ export default function ObjetivosGerenteClient({ objetivos, areas, areaEmpMap }:
                 </button>
 
                 {open && (
-                  <div className="border-t border-[#1A2235] divide-y divide-[#1A2235]">
+                  <div className="border-t border-border divide-y divide-border">
                     {objs.map((o) => {
                       const est = ESTADO_CONFIG[o.estado] ?? ESTADO_CONFIG.pendiente;
       const EstIcon = est.icon;
                       return (
-                        <div key={o.id} className="px-5 py-3.5 hover:bg-white/[0.02] transition-colors">
+                        <div key={o.id} className="px-5 py-3.5 hover:bg-border/20 transition-colors">
                           <div className="flex items-start justify-between gap-3 mb-2">
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium truncate">{o.titulo}</p>
@@ -177,7 +177,7 @@ export default function ObjetivosGerenteClient({ objetivos, areas, areaEmpMap }:
 
 function KpiCard({ label, value, color }: { label: string; value: number; color: string }) {
   return (
-    <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+    <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
       <p className="text-[10px] uppercase tracking-[0.7px] text-secondary/60 mb-1">{label}</p>
       <p className={`text-[22px] font-extrabold ${color}`}>{value}</p>
     </div>

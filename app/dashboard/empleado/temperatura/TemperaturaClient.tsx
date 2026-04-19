@@ -57,8 +57,8 @@ export default function TemperaturaClient({ historial }: Props) {
   return (
     <div className="space-y-6 max-w-2xl">
       {/* Formulario */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-        <div className="flex items-center gap-2 px-5 py-4 border-b border-[#1A2235]">
+      <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
           <Thermometer size={15} className="text-accent" />
           <h2 className="text-sm font-semibold">¿Cómo te sentiste esta semana?</h2>
         </div>
@@ -78,7 +78,7 @@ export default function TemperaturaClient({ historial }: Props) {
                     className={`h-10 rounded-lg border-2 font-bold text-sm transition-all ${
                       active
                         ? `${cfg.bg} ${cfg.color} scale-110 shadow-lg`
-                        : "bg-white/[0.03] border-[#1A2235] text-secondary hover:border-white/20 hover:text-white"
+                        : "bg-white/[0.03] border-border text-secondary hover:border-white/20 hover:text-white"
                     }`}
                   >
                     {n}
@@ -103,7 +103,7 @@ export default function TemperaturaClient({ historial }: Props) {
               rows={3}
               maxLength={500}
               placeholder="¿Algo que quieras compartir sobre esta semana?"
-              className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2 text-sm text-white placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition resize-none"
+              className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-white placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition resize-none"
             />
             <p className="text-[10px] text-secondary/40 mt-1 text-right">{comentario.length}/500</p>
           </div>
@@ -123,7 +123,7 @@ export default function TemperaturaClient({ historial }: Props) {
           <button
             type="submit"
             disabled={isPending || score === 0}
-            className="flex items-center gap-2 bg-accent hover:bg-accent/90 disabled:opacity-50 text-base text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-accent hover:bg-accent/90 disabled:opacity-50 text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors"
           >
             {isPending ? <Loader2 size={15} className="animate-spin" /> : <Send size={15} />}
             Enviar respuesta
@@ -132,8 +132,8 @@ export default function TemperaturaClient({ historial }: Props) {
       </div>
 
       {/* Historial */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-        <div className="flex items-center gap-2 px-5 py-4 border-b border-[#1A2235]">
+      <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
           <History size={15} className="text-accent" />
           <h2 className="text-sm font-semibold">Mi historial</h2>
           <span className="ml-auto text-[10px] text-secondary/50">{historial.length} respuesta{historial.length !== 1 ? "s" : ""}</span>
@@ -144,7 +144,7 @@ export default function TemperaturaClient({ historial }: Props) {
             <p className="text-sm text-secondary/60">Todavía no enviaste ninguna respuesta.</p>
           </div>
         ) : (
-          <ul className="divide-y divide-[#1A2235]">
+          <ul className="divide-y divide-border">
             {historial.map((r) => {
               const cfg = SCORE_CONFIG[r.puntuacion];
               const fecha = new Date(r.created_at).toLocaleDateString("es-AR", {
@@ -155,7 +155,7 @@ export default function TemperaturaClient({ historial }: Props) {
                 minute: "2-digit",
               });
               return (
-                <li key={r.id} className="px-5 py-4 flex items-center gap-4 hover:bg-white/[0.02] transition-colors">
+                <li key={r.id} className="px-5 py-4 flex items-center gap-4 hover:bg-border/20 transition-colors">
                   <div className={`w-10 h-10 rounded-xl border-2 flex items-center justify-center text-base font-extrabold flex-shrink-0 ${cfg?.bg ?? "bg-accent/10 border-accent/20"} ${cfg?.color ?? "text-accent"}`}>
                     {r.puntuacion}
                   </div>

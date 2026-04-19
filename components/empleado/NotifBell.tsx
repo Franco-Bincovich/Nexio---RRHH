@@ -61,7 +61,7 @@ export default function NotifBell({ notifs: initial }: { notifs: Notif[] }) {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="relative w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 border border-[#1A2235] flex items-center justify-center transition-colors"
+        className="relative w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 border border-border flex items-center justify-center transition-colors"
         aria-label="Notificaciones"
       >
         <Bell size={16} className={noLeidas > 0 ? "text-accent" : "text-secondary"} />
@@ -73,9 +73,9 @@ export default function NotifBell({ notifs: initial }: { notifs: Notif[] }) {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-11 w-80 bg-[#131920] border border-[#1A2235] rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] z-50 overflow-hidden">
+        <div className="absolute right-0 top-11 w-80 bg-[#131920] border border-border rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] z-50 overflow-hidden">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-[#1A2235]">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border">
             <span className="text-sm font-semibold">Notificaciones</span>
             <div className="flex items-center gap-2">
               {noLeidas > 0 && (
@@ -102,11 +102,11 @@ export default function NotifBell({ notifs: initial }: { notifs: Notif[] }) {
                 <p className="text-xs text-secondary/60">Sin notificaciones</p>
               </div>
             ) : (
-              <ul className="divide-y divide-[#1A2235]">
+              <ul className="divide-y divide-border">
                 {notifs.map((n) => (
                   <li
                     key={n.id}
-                    className={`px-4 py-3 flex gap-3 hover:bg-white/[0.02] transition-colors cursor-pointer ${!n.leida ? "bg-accent/[0.03]" : ""}`}
+                    className={`px-4 py-3 flex gap-3 hover:bg-border/20 transition-colors cursor-pointer ${!n.leida ? "bg-accent/[0.03]" : ""}`}
                     onClick={() => !n.leida && handleMarcarUna(n.id)}
                   >
                     {!n.leida && (

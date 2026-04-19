@@ -114,7 +114,7 @@ export default function ForoLiderClient({ mensajesGerencia, mensajesRrhh, mensaj
   return (
     <div className="flex flex-col h-[calc(100vh-180px)] min-h-[500px]">
       {/* Tabs */}
-      <div className="flex gap-1 mb-4 bg-surface border border-[#1A2235] rounded-xl p-1 w-fit">
+      <div className="flex gap-1 mb-4 bg-surface border border-border rounded-xl p-1 w-fit">
         {(["area", "gerencia", "rrhh"] as ForoTipo[]).map((t) => {
           const c = TAB_CONFIG[t];
           return (
@@ -130,7 +130,7 @@ export default function ForoLiderClient({ mensajesGerencia, mensajesRrhh, mensaj
       </div>
 
       {/* Lista de mensajes */}
-      <div className="flex-1 bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-y-auto mb-3 flex flex-col">
+      <div className="flex-1 bg-surface rounded-xl border border-border shadow-sm overflow-y-auto mb-3 flex flex-col">
         {mensajes.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center py-16 px-5 text-center">
             <MessageSquare size={28} className="text-secondary/25 mb-3" />
@@ -164,7 +164,7 @@ export default function ForoLiderClient({ mensajesGerencia, mensajesRrhh, mensaj
                       )}
                       <span className="text-[10px] text-secondary/40 ml-auto">{tiempoRelativo(m.created_at)}</span>
                     </div>
-                    <div className="bg-white/[0.03] border border-[#1A2235] rounded-xl rounded-tl-sm px-3.5 py-2.5">
+                    <div className="bg-white/[0.03] border border-border rounded-xl rounded-tl-sm px-3.5 py-2.5">
                       <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">{m.mensaje}</p>
                     </div>
                   </div>
@@ -176,7 +176,7 @@ export default function ForoLiderClient({ mensajesGerencia, mensajesRrhh, mensaj
       </div>
 
       {/* Input */}
-      <form onSubmit={handleSubmit} className="bg-surface border border-[#1A2235] rounded-xl shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-3 flex gap-3 items-end">
+      <form onSubmit={handleSubmit} className="bg-surface border border-border rounded-xl shadow-sm p-3 flex gap-3 items-end">
         <div className="w-7 h-7 rounded-full bg-purple-500/15 border border-purple-500/25 flex items-center justify-center text-xs font-bold text-purple-400 flex-shrink-0 mb-0.5">
           {initials(liderNombre)}
         </div>

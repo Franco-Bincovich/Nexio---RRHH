@@ -63,7 +63,7 @@ function SolicitudCard({
   const EstIcon = estadoCfg.icon;
   const TipoIcon = TIPO_ICON[sol.tipo];
   return (
-    <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5">
+    <div className="bg-surface rounded-xl border border-border shadow-sm p-5">
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex items-center gap-2 flex-wrap">
           <TipoIcon size={14} className="text-secondary flex-shrink-0" />
@@ -77,7 +77,7 @@ function SolicitudCard({
           <EstIcon size={10} />{estadoCfg.label}
         </span>
       </div>
-      <div className="bg-white/[0.02] border border-[#1A2235] rounded-lg px-4 py-3 space-y-1.5 mb-3 text-xs">
+      <div className="bg-white/[0.02] border border-border rounded-lg px-4 py-3 space-y-1.5 mb-3 text-xs">
         {sol.tipo === "ausencia" && (<><DetailRow label="Fecha" value={fmtFecha(sol.fecha!)} /><DetailRow label="Tipo" value={sol.subtipo ?? "—"} /><DetailRow label="Motivo" value={sol.motivo ?? "—"} /></>)}
         {sol.tipo === "retiro" && (<><DetailRow label="Fecha" value={fmtFecha(sol.fecha!)} /><DetailRow label="Hora" value={sol.hora_retiro?.slice(0,5) ?? "—"} /><DetailRow label="Motivo" value={sol.motivo ?? "—"} /></>)}
         {sol.tipo === "vacaciones" && (<><DetailRow label="Desde" value={fmtFecha(sol.fecha_desde!)} /><DetailRow label="Hasta" value={fmtFecha(sol.fecha_hasta!)} /><DetailRow label="Días" value={`${sol.dias}`} />{sol.comentario && <DetailRow label="Comentario" value={sol.comentario} />}</>)}
@@ -175,7 +175,7 @@ export default function SolicitudesGerenteClient({ solicitudes }: Props) {
         </div>
 
         {/* Main tabs */}
-        <div className="flex gap-1 mb-5 bg-surface border border-[#1A2235] rounded-xl p-1 w-fit">
+        <div className="flex gap-1 mb-5 bg-surface border border-border rounded-xl p-1 w-fit">
           <button
             onClick={() => setMainTab("lideres")}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${mainTab === "lideres" ? "bg-accent/15 text-accent border border-accent/20" : "text-secondary hover:text-white"}`}
@@ -194,7 +194,7 @@ export default function SolicitudesGerenteClient({ solicitudes }: Props) {
         </div>
 
         {/* Sub tabs */}
-        <div className="flex gap-1 mb-6 bg-surface border border-[#1A2235] rounded-xl p-1 w-fit">
+        <div className="flex gap-1 mb-6 bg-surface border border-border rounded-xl p-1 w-fit">
           {subtabs.map((t) => (
             <button key={t.value} onClick={() => setSubTab(t.value)}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${subTab === t.value ? "bg-accent/15 text-accent border border-accent/20" : "text-secondary hover:text-white"}`}>
@@ -210,7 +210,7 @@ export default function SolicitudesGerenteClient({ solicitudes }: Props) {
         )}
 
         {current.length === 0 ? (
-          <div className="bg-surface rounded-xl border border-[#1A2235] py-16 text-center">
+          <div className="bg-surface rounded-xl border border-border py-16 text-center">
             <FileText size={28} className="text-secondary/25 mx-auto mb-3" />
             <p className="text-sm text-secondary/60">No hay solicitudes{subTab !== "todas" ? " en esta categoría" : ""}.</p>
           </div>
@@ -234,7 +234,7 @@ export default function SolicitudesGerenteClient({ solicitudes }: Props) {
       {rechazando && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setRechazando(null)} />
-          <div className="relative bg-surface border border-[#1A2235] rounded-xl w-full max-w-sm p-6 shadow-[0_1px_4px_rgba(0,0,0,0.4)]">
+          <div className="relative bg-surface border border-border rounded-xl w-full max-w-sm p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-sm font-semibold">Rechazar solicitud</h2>
               <button onClick={() => setRechazando(null)} className="text-secondary hover:text-white transition-colors"><X size={18} /></button>
@@ -247,12 +247,12 @@ export default function SolicitudesGerenteClient({ solicitudes }: Props) {
               onChange={(e) => setMotivoRec(e.target.value)}
               rows={4}
               placeholder="Indicá el motivo del rechazo..."
-              className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/40 focus:outline-none focus:border-accent/50 transition-colors resize-none mb-1"
+              className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/40 focus:outline-none focus:border-accent/50 transition-colors resize-none mb-1"
             />
             <p className="text-[10px] text-secondary/40 mb-4 text-right">{motivoRec.length} caracteres</p>
             {actionError && <p className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-3 py-2 mb-3">{actionError}</p>}
             <div className="flex gap-3">
-              <button onClick={() => setRechazando(null)} className="flex-1 px-4 py-2.5 rounded-lg border border-[#1A2235] text-sm text-secondary hover:text-white hover:border-white/20 transition-colors">Cancelar</button>
+              <button onClick={() => setRechazando(null)} className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors">Cancelar</button>
               <button onClick={handleConfirmarRechazo} disabled={isPending || !motivoRec.trim()} className="flex-1 px-4 py-2.5 rounded-lg bg-red-500/80 hover:bg-red-500 text-white text-sm font-medium transition-colors disabled:opacity-60 flex items-center justify-center gap-2">
                 {isPending && <Loader2 size={14} className="animate-spin" />}Rechazar
               </button>

@@ -76,7 +76,7 @@ export default function MisAusenciasClient({ ausencias }: Props) {
       </div>
 
       {mostrarForm && (
-        <form onSubmit={handleSubmit} className="bg-surface border border-[#1A2235] rounded-xl p-5 mb-6 shadow-[0_1px_4px_rgba(0,0,0,0.4)]">
+        <form onSubmit={handleSubmit} className="bg-surface border border-border rounded-xl p-5 mb-6 shadow-sm">
           <h2 className="text-sm font-semibold mb-4">Nueva inasistencia</h2>
           <div className="space-y-3">
             <div>
@@ -86,7 +86,7 @@ export default function MisAusenciasClient({ ausencias }: Props) {
                 value={fecha}
                 onChange={(e) => setFecha(e.target.value)}
                 required
-                className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50 transition-colors"
+                className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50 transition-colors"
               />
             </div>
             <div>
@@ -94,7 +94,7 @@ export default function MisAusenciasClient({ ausencias }: Props) {
               <select
                 value={subtipo}
                 onChange={(e) => setSubtipo(e.target.value)}
-                className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50 transition-colors"
+                className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50 transition-colors"
               >
                 {SUBTIPOS.map((s) => <option key={s} value={s}>{s}</option>)}
               </select>
@@ -107,7 +107,7 @@ export default function MisAusenciasClient({ ausencias }: Props) {
                 rows={3}
                 required
                 placeholder="Describí el motivo..."
-                className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/40 focus:outline-none focus:border-accent/50 transition-colors resize-none"
+                className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/40 focus:outline-none focus:border-accent/50 transition-colors resize-none"
               />
             </div>
           </div>
@@ -127,7 +127,7 @@ export default function MisAusenciasClient({ ausencias }: Props) {
             <button
               type="button"
               onClick={() => setMostrarForm(false)}
-              className="flex-1 px-4 py-2.5 rounded-lg border border-[#1A2235] text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
             >
               Cancelar
             </button>
@@ -144,7 +144,7 @@ export default function MisAusenciasClient({ ausencias }: Props) {
       )}
 
       {ausencias.length === 0 ? (
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-16 text-center">
+        <div className="bg-surface rounded-xl border border-border shadow-sm py-16 text-center">
           <UserX size={28} className="text-secondary/25 mx-auto mb-3" />
           <p className="text-sm text-secondary/60">No tenés solicitudes de inasistencia.</p>
         </div>
@@ -154,7 +154,7 @@ export default function MisAusenciasClient({ ausencias }: Props) {
             const cfg = ESTADO_CONFIG[a.estado];
             const EstadoIcon = cfg.icon;
             return (
-              <div key={a.id} className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-4">
+              <div key={a.id} className="bg-surface rounded-xl border border-border shadow-sm p-4">
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div>
                     <p className="text-sm font-semibold">{fmtFecha(a.fecha)}</p>

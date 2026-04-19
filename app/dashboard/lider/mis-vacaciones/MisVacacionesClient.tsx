@@ -2,8 +2,9 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Clock, CheckCircle2, XCircle, AlertCircle, Loader2, Plus, Umbrella } from "lucide-react";
+import { CheckCircle2, AlertCircle, Loader2, Plus, Umbrella } from "lucide-react";
 import { solicitarVacacionesLider } from "./actions";
+import { Badge, EmptyState } from "@/components/ui";
 
 type EstadoSol = "pendiente" | "aprobada" | "rechazada";
 
@@ -17,12 +18,6 @@ export type VacacionesRow = {
   created_at:       string;
   aprobador_nombre: string | null;
   motivo_rechazo:   string | null;
-};
-
-const ESTADO_CONFIG: Record<EstadoSol, { label: string; color: string; bg: string; icon: React.ElementType }> = {
-  pendiente: { label: "Pendiente", color: "text-yellow-400", bg: "bg-yellow-400/10 border-yellow-400/20", icon: Clock },
-  aprobada:  { label: "Aprobada",  color: "text-accent",     bg: "bg-accent/10 border-accent/20",         icon: CheckCircle2 },
-  rechazada: { label: "Rechazada", color: "text-red-400",    bg: "bg-red-400/10 border-red-400/20",       icon: XCircle },
 };
 
 function fmtFecha(s: string) {
@@ -89,7 +84,7 @@ export default function MisVacacionesClient({ vacaciones }: Props) {
       </div>
 
       {mostrarForm && (
-        <form onSubmit={handleSubmit} className="bg-surface border border-[#1A2235] rounded-xl p-5 mb-6 shadow-[0_1px_4px_rgba(0,0,0,0.4)]">
+        <form onSubmit={handleSubmit} className="bg-surface border border-border rounded-xl p-5 mb-6 shadow-sm">
           <h2 className="text-sm font-semibold mb-4">Solicitar vacaciones</h2>
           <div className="space-y-3">
             <div className="grid grid-cols-2 gap-3">
@@ -100,7 +95,7 @@ export default function MisVacacionesClient({ vacaciones }: Props) {
                   value={desde}
                   onChange={(e) => setDesde(e.target.value)}
                   required
-                  className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50 transition-colors"
+                  className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50 transition-colors"
                 />
               </div>
               <div>
@@ -111,7 +106,7 @@ export default function MisVacacionesClient({ vacaciones }: Props) {
                   onChange={(e) => setHasta(e.target.value)}
                   required
                   min={desde}
-                  className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50 transition-colors"
+                  className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent/50 transition-colors"
                 />
               </div>
             </div>
@@ -129,7 +124,7 @@ export default function MisVacacionesClient({ vacaciones }: Props) {
                 onChange={(e) => setComentario(e.target.value)}
                 rows={2}
                 placeholder="Alguna aclaración adicional..."
-                className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/40 focus:outline-none focus:border-accent/50 transition-colors resize-none"
+                className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/40 focus:outline-none focus:border-accent/50 transition-colors resize-none"
               />
             </div>
           </div>
@@ -149,7 +144,7 @@ export default function MisVacacionesClient({ vacaciones }: Props) {
             <button
               type="button"
               onClick={() => setMostrarForm(false)}
-              className="flex-1 px-4 py-2.5 rounded-lg border border-[#1A2235] text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
             >
               Cancelar
             </button>
@@ -166,17 +161,16 @@ export default function MisVacacionesClient({ vacaciones }: Props) {
       )}
 
       {vacaciones.length === 0 ? (
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-16 text-center">
-          <Umbrella size={28} className="text-secondary/25 mx-auto mb-3" />
-          <p className="text-sm text-secondary/60">No tenés solicitudes de vacaciones.</p>
-        </div>
+        <EmptyState
+          icon={Umbrella}
+          titulo="No tenés solicitudes de vacaciones"
+          descripcion="Cuando envíes una solicitud, la vas a ver acá con su estado."
+        />
       ) : (
         <div className="space-y-3">
           {vacaciones.map((v) => {
-            const cfg = ESTADO_CONFIG[v.estado];
-            const EstadoIcon = cfg.icon;
             return (
-              <div key={v.id} className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-4">
+              <div key={v.id} className="bg-surface rounded-xl border border-border shadow-sm p-4">
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div>
                     <p className="text-sm font-semibold">
@@ -187,10 +181,7 @@ export default function MisVacacionesClient({ vacaciones }: Props) {
                       {v.comentario ? ` · ${v.comentario}` : ""}
                     </p>
                   </div>
-                  <span className={`flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.5px] px-2.5 py-1 rounded-full border flex-shrink-0 ${cfg.bg} ${cfg.color}`}>
-                    <EstadoIcon size={10} />
-                    {cfg.label}
-                  </span>
+                  <Badge estado={v.estado} className="flex-shrink-0" />
                 </div>
                 {(v.aprobador_nombre || v.motivo_rechazo) && (
                   <p className="text-[11px] text-secondary/50">

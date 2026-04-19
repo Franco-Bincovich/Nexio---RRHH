@@ -88,7 +88,7 @@ export default function GruposClient({ grupos, empleados }: Props) {
     <>
       <div className="p-4 md:p-8 max-w-4xl">
         {/* Header */}
-        <div className="flex items-start justify-between mb-8">
+        <div className="flex flex-wrap items-start justify-between gap-3 mb-8">
           <div>
             {grupoActual ? (
               <>
@@ -113,7 +113,7 @@ export default function GruposClient({ grupos, empleados }: Props) {
           {!grupoActual && (
             <button
               onClick={() => setShowNuevo(true)}
-              className="flex items-center gap-2 bg-accent text-base text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-accent/90 transition-colors"
+              className="flex items-center gap-2 bg-accent text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-accent/90 transition-colors"
             >
               <Plus size={16} />
               Nuevo grupo
@@ -125,8 +125,8 @@ export default function GruposClient({ grupos, empleados }: Props) {
         {grupoActual ? (
           <div className="space-y-5">
             {/* Miembros actuales */}
-            <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-              <div className="flex items-center gap-2 px-5 py-4 border-b border-[#1A2235]">
+            <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+              <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
                 <UsersRound size={14} className="text-accent" />
                 <h2 className="text-sm font-semibold">Miembros</h2>
                 <span className="ml-auto text-[10px] text-secondary/50">{grupoActual.miembros.length} miembro{grupoActual.miembros.length !== 1 ? "s" : ""}</span>
@@ -137,7 +137,7 @@ export default function GruposClient({ grupos, empleados }: Props) {
                   <p className="text-sm text-secondary/60">Sin miembros todavía. Agregá empleados del área.</p>
                 </div>
               ) : (
-                <ul className="divide-y divide-[#1A2235]">
+                <ul className="divide-y divide-border">
                   {grupoActual.miembros.map((m) => (
                     <li key={m.id} className="flex items-center gap-3 px-5 py-3">
                       <div className="w-7 h-7 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center text-xs font-bold text-accent flex-shrink-0">
@@ -160,13 +160,13 @@ export default function GruposClient({ grupos, empleados }: Props) {
 
             {/* Agregar miembro */}
             {empleadosDisponibles.length > 0 && (
-              <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5">
+              <div className="bg-surface rounded-xl border border-border shadow-sm p-5">
                 <h2 className="text-sm font-semibold mb-3">Agregar empleado</h2>
                 <div className="flex gap-2">
                   <select
                     value={addEmpleadoId}
                     onChange={(e) => setAddEmpleadoId(e.target.value)}
-                    className="flex-1 bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent/50 transition-colors"
+                    className="flex-1 bg-base border border-border rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent/50 transition-colors"
                   >
                     <option value="">Seleccioná un empleado</option>
                     {empleadosDisponibles.map((e) => (
@@ -176,7 +176,7 @@ export default function GruposClient({ grupos, empleados }: Props) {
                   <button
                     onClick={handleAgregarMiembro}
                     disabled={!addEmpleadoId || isPending}
-                    className="flex items-center gap-2 bg-accent hover:bg-accent/90 text-base text-sm font-medium px-4 py-2.5 rounded-lg transition-colors disabled:opacity-50"
+                    className="flex items-center gap-2 bg-accent hover:bg-accent/90 text-sm font-medium px-4 py-2.5 rounded-lg transition-colors disabled:opacity-50"
                   >
                     {isPending ? <Loader2 size={14} className="animate-spin" /> : <UserPlus size={14} />}
                     Agregar
@@ -205,7 +205,7 @@ export default function GruposClient({ grupos, empleados }: Props) {
         ) : (
           /* Lista de grupos */
           grupos.length === 0 ? (
-            <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-16 text-center">
+            <div className="bg-surface rounded-xl border border-border shadow-sm py-16 text-center">
               <UsersRound size={32} className="text-secondary/30 mx-auto mb-3" />
               <p className="text-secondary text-sm">No hay grupos creados todavía.</p>
               <p className="text-secondary/60 text-xs mt-1">Usá "Nuevo grupo" para crear el primero.</p>
@@ -213,7 +213,7 @@ export default function GruposClient({ grupos, empleados }: Props) {
           ) : (
             <div className="grid gap-4 sm:grid-cols-2">
               {grupos.map((g) => (
-                <div key={g.id} className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5">
+                <div key={g.id} className="bg-surface rounded-xl border border-border shadow-sm p-5">
                   <div className="flex items-start justify-between gap-3 mb-2">
                     <div className="flex-1 min-w-0">
                       <h3 className="text-sm font-semibold truncate">{g.nombre}</h3>
@@ -261,7 +261,7 @@ export default function GruposClient({ grupos, empleados }: Props) {
       {confirmDelGrupo && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setConfirmDelGrupo(null)} />
-          <div className="relative bg-surface border border-[#1A2235] rounded-xl w-full max-w-sm p-6 shadow-[0_1px_4px_rgba(0,0,0,0.4)]">
+          <div className="relative bg-surface border border-border rounded-xl w-full max-w-sm p-6 shadow-sm">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-9 h-9 rounded-full bg-red-400/10 flex items-center justify-center flex-shrink-0">
                 <AlertCircle size={16} className="text-red-400" />
@@ -277,7 +277,7 @@ export default function GruposClient({ grupos, empleados }: Props) {
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirmDelGrupo(null)}
-                className="flex-1 px-4 py-2.5 rounded-lg border border-[#1A2235] text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
               >
                 Cancelar
               </button>
@@ -339,7 +339,7 @@ function NuevoGrupoModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-surface border border-[#1A2235] rounded-xl w-full max-w-sm p-6 shadow-[0_1px_4px_rgba(0,0,0,0.4)] max-h-[90vh] overflow-y-auto">
+      <div className="relative bg-surface border border-border rounded-xl w-full max-w-sm p-6 shadow-sm max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-base font-semibold">Nuevo grupo</h2>
           <button onClick={onClose} className="text-secondary hover:text-white transition-colors">
@@ -356,7 +356,7 @@ function NuevoGrupoModal({
               type="text"
               required
               placeholder="Ej: Proyecto Alpha"
-              className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors"
+              className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors"
             />
           </div>
           <div>
@@ -365,7 +365,7 @@ function NuevoGrupoModal({
               name="descripcion"
               rows={3}
               placeholder="Descripción opcional del grupo..."
-              className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors resize-none"
+              className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors resize-none"
             />
           </div>
 
@@ -378,7 +378,7 @@ function NuevoGrupoModal({
                   (opcional · {seleccionados.size} seleccionado{seleccionados.size !== 1 ? "s" : ""})
                 </span>
               </label>
-              <div className="bg-base border border-[#1A2235] rounded-lg divide-y divide-[#1A2235] max-h-40 overflow-y-auto">
+              <div className="bg-base border border-border rounded-lg divide-y divide-border max-h-40 overflow-y-auto">
                 {empleados.map((emp) => (
                   <label
                     key={emp.id}
@@ -406,14 +406,14 @@ function NuevoGrupoModal({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 rounded-lg border border-[#1A2235] text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={isPending}
-              className="flex-1 px-4 py-2.5 rounded-lg bg-accent text-base text-sm font-medium hover:bg-accent/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
+              className="flex-1 px-4 py-2.5 rounded-lg bg-accent text-sm font-medium hover:bg-accent/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
             >
               {isPending && <Loader2 size={14} className="animate-spin" />}
               {isPending ? "Creando..." : "Crear grupo"}

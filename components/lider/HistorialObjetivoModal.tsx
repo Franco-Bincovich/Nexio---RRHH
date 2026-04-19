@@ -55,9 +55,9 @@ export default function HistorialObjetivoModal({ objetivoId, objetivoTitulo, onC
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-surface border border-[#1A2235] rounded-xl w-full max-w-lg shadow-[0_1px_4px_rgba(0,0,0,0.4)] max-h-[85vh] flex flex-col">
+      <div className="relative bg-surface border border-border rounded-xl w-full max-w-lg shadow-sm max-h-[85vh] flex flex-col">
         {/* Header */}
-        <div className="flex items-start justify-between px-5 py-4 border-b border-[#1A2235] flex-shrink-0">
+        <div className="flex items-start justify-between px-5 py-4 border-b border-border flex-shrink-0">
           <div>
             <div className="flex items-center gap-2">
               <History size={14} className="text-accent" />
@@ -92,7 +92,7 @@ export default function HistorialObjetivoModal({ objetivoId, objetivoTitulo, onC
           )}
 
           {!isPending && historial && historial.length > 0 && (
-            <ul className="divide-y divide-[#1A2235]">
+            <ul className="divide-y divide-border">
               {historial.map((entry) => (
                 <li key={entry.id} className="px-5 py-4">
                   <div className="flex items-start justify-between gap-3 mb-1.5">
@@ -109,7 +109,7 @@ export default function HistorialObjetivoModal({ objetivoId, objetivoTitulo, onC
                     <p className="text-xs text-red-400">Objetivo eliminado por {entry.lider_nombre}</p>
                   ) : (
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-xs text-secondary/70 bg-white/[0.04] border border-[#1A2235] rounded px-2 py-0.5 line-clamp-1 max-w-[180px]">
+                      <span className="text-xs text-secondary/70 bg-white/[0.04] border border-border rounded px-2 py-0.5 line-clamp-1 max-w-[180px]">
                         {entry.valor_anterior ?? "(vacío)"}
                       </span>
                       <ArrowRight size={11} className="text-secondary/40 flex-shrink-0" />
@@ -127,10 +127,10 @@ export default function HistorialObjetivoModal({ objetivoId, objetivoTitulo, onC
         </div>
 
         {/* Footer */}
-        <div className="px-5 py-3 border-t border-[#1A2235] flex-shrink-0">
+        <div className="px-5 py-3 border-t border-border flex-shrink-0">
           <button
             onClick={onClose}
-            className="w-full px-4 py-2 rounded-lg border border-[#1A2235] text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+            className="w-full px-4 py-2 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
           >
             Cerrar
           </button>

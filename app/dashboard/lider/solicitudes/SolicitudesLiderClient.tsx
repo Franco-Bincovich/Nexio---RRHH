@@ -130,7 +130,7 @@ export default function SolicitudesLiderClient({ solicitudes }: Props) {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 mb-6 bg-surface border border-[#1A2235] rounded-xl p-1 w-fit">
+        <div className="flex gap-1 mb-6 bg-surface border border-border rounded-xl p-1 w-fit">
           {tabs.map((t) => (
             <button
               key={t.value}
@@ -153,7 +153,7 @@ export default function SolicitudesLiderClient({ solicitudes }: Props) {
         )}
 
         {filtradas.length === 0 ? (
-          <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-16 text-center">
+          <div className="bg-surface rounded-xl border border-border shadow-sm py-16 text-center">
             <FileText size={28} className="text-secondary/25 mx-auto mb-3" />
             <p className="text-sm text-secondary/60">No hay solicitudes{tab !== "todas" ? " en esta categoría" : ""}.</p>
           </div>
@@ -166,7 +166,7 @@ export default function SolicitudesLiderClient({ solicitudes }: Props) {
               return (
                 <div
                   key={`${sol.tipo}-${sol.id}`}
-                  className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5"
+                  className="bg-surface rounded-xl border border-border shadow-sm p-5"
                 >
                   {/* Header */}
                   <div className="flex items-start justify-between gap-3 mb-3">
@@ -187,7 +187,7 @@ export default function SolicitudesLiderClient({ solicitudes }: Props) {
                   </div>
 
                   {/* Detalles */}
-                  <div className="bg-white/[0.02] border border-[#1A2235] rounded-lg px-4 py-3 space-y-1.5 mb-3">
+                  <div className="bg-white/[0.02] border border-border rounded-lg px-4 py-3 space-y-1.5 mb-3">
                     {sol.tipo === "ausencia" && (
                       <>
                         <DetailRow label="Fecha"  value={fmtFecha(sol.fecha!)} />
@@ -250,7 +250,7 @@ export default function SolicitudesLiderClient({ solicitudes }: Props) {
       {rechazando && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setRechazando(null)} />
-          <div className="relative bg-surface border border-[#1A2235] rounded-xl w-full max-w-sm p-6 shadow-[0_1px_4px_rgba(0,0,0,0.4)]">
+          <div className="relative bg-surface border border-border rounded-xl w-full max-w-sm p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-sm font-semibold">Rechazar solicitud</h2>
               <button onClick={() => setRechazando(null)} className="text-secondary hover:text-white transition-colors">
@@ -266,7 +266,7 @@ export default function SolicitudesLiderClient({ solicitudes }: Props) {
               onChange={(e) => setMotivoRechazo(e.target.value)}
               rows={4}
               placeholder="Indicá el motivo del rechazo..."
-              className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/40 focus:outline-none focus:border-accent/50 transition-colors resize-none mb-1"
+              className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/40 focus:outline-none focus:border-accent/50 transition-colors resize-none mb-1"
             />
             <p className="text-[10px] text-secondary/40 mb-4 text-right">{motivoRechazo.length} caracteres</p>
             {actionError && (
@@ -277,7 +277,7 @@ export default function SolicitudesLiderClient({ solicitudes }: Props) {
             <div className="flex gap-3">
               <button
                 onClick={() => setRechazando(null)}
-                className="flex-1 px-4 py-2.5 rounded-lg border border-[#1A2235] text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
               >
                 Cancelar
               </button>

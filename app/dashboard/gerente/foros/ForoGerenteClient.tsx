@@ -66,7 +66,7 @@ export default function ForoGerenteClient({ mensajesGerencia, mensajesRrhh, gere
       <p className="text-secondary text-sm mb-6">Canales de comunicación de la empresa</p>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-6 bg-surface border border-[#1A2235] rounded-xl p-1 w-fit">
+      <div className="flex gap-1 mb-6 bg-surface border border-border rounded-xl p-1 w-fit">
         {(Object.entries(TAB_CONFIG) as [TabForo, typeof TAB_CONFIG[TabForo]][]).map(([key, cfg]) => {
           const Icon = cfg.icon;
           return (
@@ -85,14 +85,14 @@ export default function ForoGerenteClient({ mensajesGerencia, mensajesRrhh, gere
       </div>
 
       {/* Mensajes */}
-      <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden mb-4">
+      <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden mb-4">
         {mensajes.length === 0 ? (
           <div className="py-16 text-center">
             <MessageSquare size={24} className="text-secondary/25 mx-auto mb-2" />
             <p className="text-sm text-secondary/60">No hay mensajes todavía. Sé el primero en escribir.</p>
           </div>
         ) : (
-          <div className="divide-y divide-[#1A2235] max-h-[420px] overflow-y-auto">
+          <div className="divide-y divide-border max-h-[420px] overflow-y-auto">
             {mensajes.map((m) => {
               const esPropio = m.autor_id === gerenteId;
               return (
@@ -121,7 +121,7 @@ export default function ForoGerenteClient({ mensajesGerencia, mensajesRrhh, gere
           value={texto}
           onChange={(e) => setTexto(e.target.value)}
           placeholder={`Escribir en ${TAB_CONFIG[tab].label}...`}
-          className="flex-1 bg-surface border border-[#1A2235] focus:border-accent/40 rounded-xl px-4 py-3 text-sm placeholder:text-secondary/40 focus:outline-none transition-colors"
+          className="flex-1 bg-surface border border-border focus:border-accent/40 rounded-xl px-4 py-3 text-sm placeholder:text-secondary/40 focus:outline-none transition-colors"
         />
         <button
           type="submit"

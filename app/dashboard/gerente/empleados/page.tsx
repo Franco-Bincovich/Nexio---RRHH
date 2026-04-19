@@ -68,14 +68,14 @@ export default async function EmpleadosPage() {
       </div>
 
       {!empleados || empleados.length === 0 ? (
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] py-16 text-center">
+        <div className="bg-surface rounded-xl border border-border shadow-sm py-16 text-center">
           <p className="text-secondary text-sm">No hay empleados registrados todavía.</p>
         </div>
       ) : (
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
+        <div className="bg-surface rounded-xl border border-border shadow-sm overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-[#1A2235] text-[10px] uppercase tracking-[0.7px] text-secondary">
+              <tr className="border-b border-border text-[10px] uppercase tracking-[0.7px] text-secondary">
                 <th className="text-left px-5 py-3 font-medium">Empleado</th>
                 <th className="text-left px-5 py-3 font-medium">Área</th>
                 <th className="text-left px-5 py-3 font-medium">Rol</th>
@@ -95,7 +95,7 @@ export default async function EmpleadosPage() {
                 return (
                   <tr
                     key={emp.id}
-                    className="border-b border-[#1A2235] last:border-0 hover:bg-white/[0.02] transition-colors"
+                    className="border-b border-border last:border-0 hover:bg-border/20 transition-colors"
                   >
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-3">

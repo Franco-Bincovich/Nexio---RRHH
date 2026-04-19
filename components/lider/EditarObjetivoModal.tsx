@@ -2,8 +2,9 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { X, Loader2, Save } from "lucide-react";
+import { Loader2, Save } from "lucide-react";
 import { editarObjetivo } from "@/app/dashboard/lider/objetivos/actions";
+import { Modal } from "@/components/ui";
 
 type ObjetivoEstado = "pendiente" | "en_progreso" | "completado" | "cancelado";
 
@@ -81,16 +82,7 @@ export default function EditarObjetivoModal({ objetivo, onClose }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-surface border border-[#1A2235] rounded-xl w-full max-w-md p-6 shadow-[0_1px_4px_rgba(0,0,0,0.4)] max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between mb-5">
-          <h2 className="text-base font-semibold">Editar objetivo</h2>
-          <button onClick={onClose} className="text-secondary hover:text-white transition-colors">
-            <X size={18} />
-          </button>
-        </div>
-
+    <Modal open onClose={onClose} titulo="Editar objetivo" maxWidth="md">
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Título */}
           <div>
@@ -102,7 +94,7 @@ export default function EditarObjetivoModal({ objetivo, onClose }: Props) {
               onChange={(e) => setTitulo(e.target.value)}
               type="text"
               required
-              className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors"
+              className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors"
             />
           </div>
 
@@ -113,7 +105,7 @@ export default function EditarObjetivoModal({ objetivo, onClose }: Props) {
               value={descripcion}
               onChange={(e) => setDescripcion(e.target.value)}
               rows={3}
-              className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors resize-none"
+              className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors resize-none"
             />
           </div>
 
@@ -145,7 +137,7 @@ export default function EditarObjetivoModal({ objetivo, onClose }: Props) {
             <select
               value={estado}
               onChange={(e) => setEstado(e.target.value as ObjetivoEstado)}
-              className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent/50 transition-colors"
+              className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent/50 transition-colors"
             >
               {ESTADOS.map((s) => (
                 <option key={s.value} value={s.value}>{s.label}</option>
@@ -162,7 +154,7 @@ export default function EditarObjetivoModal({ objetivo, onClose }: Props) {
                 onChange={(e) => setCategoria(e.target.value)}
                 type="text"
                 placeholder="Ej: Desempeño"
-                className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors"
+                className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm placeholder:text-secondary/50 focus:outline-none focus:border-accent/50 transition-colors"
               />
             </div>
 
@@ -173,7 +165,7 @@ export default function EditarObjetivoModal({ objetivo, onClose }: Props) {
                 value={vencimiento}
                 onChange={(e) => setVencimiento(e.target.value)}
                 type="date"
-                className="w-full bg-base border border-[#1A2235] rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent/50 transition-colors [color-scheme:dark]"
+                className="w-full bg-base border border-border rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent/50 transition-colors [color-scheme:dark]"
               />
             </div>
           </div>
@@ -194,21 +186,20 @@ export default function EditarObjetivoModal({ objetivo, onClose }: Props) {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 rounded-lg border border-[#1A2235] text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={isPending || ok}
-              className="flex-1 px-4 py-2.5 rounded-lg bg-accent text-base text-sm font-medium hover:bg-accent/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
+              className="flex-1 px-4 py-2.5 rounded-lg bg-accent text-sm font-medium hover:bg-accent/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
             >
               {isPending ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
               {isPending ? "Guardando..." : "Guardar"}
             </button>
           </div>
         </form>
-      </div>
-    </div>
+    </Modal>
   );
 }

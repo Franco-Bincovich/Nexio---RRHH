@@ -184,7 +184,7 @@ export default function ReportesGerenteClient({ empresaId, areas }: Props) {
           return (
             <div
               key={rep.key}
-              className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-5"
+              className="bg-surface rounded-xl border border-border shadow-sm p-5"
             >
               <div className="flex items-start gap-3 mb-3">
                 <div className={`w-10 h-10 rounded-lg ${rep.bg} flex items-center justify-center flex-shrink-0`}>
@@ -706,7 +706,7 @@ function ReporteDetail({
 
       {/* Preview table */}
       {loaded && (
-        <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
+        <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
           <div className="flex items-center justify-between px-5 py-4 border-b border-border">
             <div className="flex items-center gap-2">
               <Icon size={15} className={meta.color} />

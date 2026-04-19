@@ -43,7 +43,7 @@ export default function VacacionesGerenteClient({
 
   return (
     <div className="space-y-4">
-      <div className="flex gap-1 border-b border-[#1A2235]">
+      <div className="flex gap-1 border-b border-border">
         <TabButton activa={tab === "lideres"} onClick={() => setTab("lideres")} icon={Crown}>
           Mapa de líderes
         </TabButton>
@@ -67,7 +67,7 @@ export default function VacacionesGerenteClient({
             <select
               value={areaSel}
               onChange={(e) => setAreaSel(e.target.value)}
-              className="bg-base border border-[#1A2235] rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-accent/50"
+              className="bg-base border border-border rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-accent/50"
             >
               {areas.length === 0 && <option value="">— sin áreas —</option>}
               {areas.map((a) => (

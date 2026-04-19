@@ -110,7 +110,7 @@ export default async function TemperaturaGerentePage() {
 
       {/* KPIs */}
       <div className="grid grid-cols-3 gap-4 mb-8">
-        <div className="col-span-1 bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4 flex items-center gap-4">
+        <div className="col-span-1 bg-surface rounded-xl border border-border shadow-sm px-5 py-4 flex items-center gap-4">
           <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
             <Thermometer size={20} className="text-accent" />
           </div>
@@ -122,11 +122,11 @@ export default async function TemperaturaGerentePage() {
             <p className="text-[10px] text-secondary/50 mt-0.5">sobre 10</p>
           </div>
         </div>
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+        <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
           <p className="text-[10px] uppercase tracking-[0.7px] text-secondary/60 mb-1">Participantes únicos</p>
           <p className="text-[22px] font-extrabold text-accent">{participantes}</p>
         </div>
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+        <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
           <p className="text-[10px] uppercase tracking-[0.7px] text-secondary/60 mb-1">Respuestas totales</p>
           <p className="text-[22px] font-extrabold text-white">{totalResp}</p>
         </div>
@@ -134,15 +134,15 @@ export default async function TemperaturaGerentePage() {
 
       <div className="grid md:grid-cols-2 gap-6 mb-6">
         {/* Desglose por área */}
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-4 border-b border-[#1A2235]">
+        <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
             <Users size={15} className="text-accent" />
             <h2 className="text-sm font-semibold">Promedio por área</h2>
           </div>
           {desgloseAreas.length === 0 ? (
             <div className="px-5 py-8 text-center text-sm text-secondary/60">Sin respuestas aún.</div>
           ) : (
-            <div className="divide-y divide-[#1A2235]">
+            <div className="divide-y divide-border">
               {desgloseAreas.map((area) => (
                 <div key={area.nombre} className="flex items-center justify-between px-5 py-3">
                   <div>
@@ -167,15 +167,15 @@ export default async function TemperaturaGerentePage() {
         </div>
 
         {/* Evolución últimas 4 semanas */}
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-4 border-b border-[#1A2235]">
+        <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
             <TrendingUp size={15} className="text-accent" />
             <h2 className="text-sm font-semibold">Evolución (últimas 4 semanas)</h2>
           </div>
           {evolucion.length === 0 ? (
             <div className="px-5 py-8 text-center text-sm text-secondary/60">Sin datos de semanas.</div>
           ) : (
-            <div className="divide-y divide-[#1A2235]">
+            <div className="divide-y divide-border">
               {evolucion.map((ev, i) => (
                 <div key={ev.semana} className="flex items-center justify-between px-5 py-3">
                   <div>
@@ -201,12 +201,12 @@ export default async function TemperaturaGerentePage() {
 
       {/* Comentarios anónimos */}
       {comentarios.length > 0 && (
-        <div className="bg-surface rounded-xl border border-[#1A2235] shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
-          <div className="px-5 py-4 border-b border-[#1A2235]">
+        <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+          <div className="px-5 py-4 border-b border-border">
             <h2 className="text-sm font-semibold">Comentarios recientes</h2>
             <p className="text-[10px] text-secondary/50 mt-0.5">Anónimos — sin identificación de empleado</p>
           </div>
-          <div className="divide-y divide-[#1A2235]">
+          <div className="divide-y divide-border">
             {comentarios.map((c, i) => (
               <div key={i} className="px-5 py-3">
                 <p className="text-sm text-secondary leading-relaxed">"{c.texto}"</p>

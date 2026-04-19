@@ -96,7 +96,7 @@ export default async function RrhhDashboardPage() {
       </div>
 
       {/* Últimas altas */}
-      <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
+      <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
         <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
           <UserPlus size={15} className="text-accent" />
           <h2 className="text-sm font-semibold">Últimas incorporaciones</h2>
@@ -149,7 +149,7 @@ export default async function RrhhDashboardPage() {
 
 function StatCard({ label, value, icon: Icon, color }: { label: string; value: number; icon: React.ElementType; color: string }) {
   return (
-    <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] px-5 py-4">
+    <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
       <div className="flex items-center gap-2 mb-2">
         <Icon size={14} className={color} />
         <p className="text-[10px] uppercase tracking-[0.7px] text-secondary">{label}</p>

@@ -24,7 +24,7 @@ export default function VacacionesTabs({
 
   return (
     <div className="space-y-4">
-      <div className="flex gap-1 border-b border-[#1A2235]">
+      <div className="flex gap-1 border-b border-border">
         <TabButton activa={tab === "mias"} onClick={() => setTab("mias")} icon={Umbrella}>
           Mis solicitudes
         </TabButton>

@@ -179,7 +179,7 @@ export default async function TemperaturaRRHHPage() {
       </div>
 
       {/* Score global */}
-      <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] p-6 mb-6">
+      <div className="bg-surface rounded-xl border border-border shadow-sm p-6 mb-6">
         {totalResp === 0 ? (
           <p className="text-sm text-secondary/60 text-center py-2">
             Aún no hay respuestas de temperatura. Las encuestas se responden
@@ -200,7 +200,7 @@ export default async function TemperaturaRRHHPage() {
               </span>
               <p className="text-xs text-secondary mt-1">/ 10</p>
             </div>
-            <div className="h-16 w-px bg-[#1A2235]" />
+            <div className="h-16 w-px bg-border/40" />
             <div className="flex-1 grid grid-cols-2 gap-4 text-center">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.7px] text-secondary mb-1">
@@ -227,7 +227,7 @@ export default async function TemperaturaRRHHPage() {
         <>
           <div className="grid lg:grid-cols-2 gap-6 mb-6">
             {/* Por área */}
-            <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
+            <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
               <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
                 <Thermometer size={15} className="text-accent" />
                 <h2 className="text-sm font-semibold">Por área</h2>
@@ -237,7 +237,7 @@ export default async function TemperaturaRRHHPage() {
                   Sin desglose por área disponible.
                 </div>
               ) : (
-                <div className="divide-y divide-[#1A2235]">
+                <div className="divide-y divide-border">
                   {desgloseAreas.map((a) => {
                     const TrendIcon =
                       a.tendencia === "up"
@@ -284,7 +284,7 @@ export default async function TemperaturaRRHHPage() {
             </div>
 
             {/* Evolución */}
-            <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
+            <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
               <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
                 <TrendingUp size={15} className="text-accent" />
                 <h2 className="text-sm font-semibold">
@@ -296,7 +296,7 @@ export default async function TemperaturaRRHHPage() {
                   Sin datos de semanas.
                 </div>
               ) : (
-                <div className="divide-y divide-[#1A2235]">
+                <div className="divide-y divide-border">
                   {evolucion.map((ev, i) => (
                     <div
                       key={ev.semana}
@@ -347,7 +347,7 @@ export default async function TemperaturaRRHHPage() {
 
           {/* Comentarios anónimos */}
           {comentarios.length > 0 && (
-            <div className="bg-surface rounded-xl border border-border shadow-[0_1px_4px_rgba(0,0,0,0.4)] overflow-hidden">
+            <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
               <div className="flex items-center gap-2 px-5 py-4 border-b border-border">
                 <MessageSquare size={15} className="text-secondary" />
                 <h2 className="text-sm font-semibold">
@@ -357,7 +357,7 @@ export default async function TemperaturaRRHHPage() {
                   Sin identificación de empleado
                 </p>
               </div>
-              <div className="divide-y divide-[#1A2235]">
+              <div className="divide-y divide-border">
                 {comentarios.map((c, i) => (
                   <div key={i} className="px-5 py-3">
                     <p className="text-sm text-secondary leading-relaxed">
