@@ -126,7 +126,7 @@ function NuevaCapacitacionModal({
       <div className="bg-surface border border-border rounded-2xl shadow-2xl w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-base font-semibold">Nueva capacitación</h2>
-          <button onClick={onClose} className="p-1 text-secondary hover:text-white transition-colors">
+          <button onClick={onClose} className="p-1 text-secondary hover:text-foreground transition-colors">
             <X size={18} />
           </button>
         </div>
@@ -199,7 +199,7 @@ function NuevaCapacitacionModal({
 
         {error && <p className="text-xs text-red-400 mt-3">{error}</p>}
         <div className="flex justify-end gap-2 mt-5">
-          <button onClick={onClose} className="px-4 py-2 text-sm text-secondary hover:text-white transition-colors">
+          <button onClick={onClose} className="px-4 py-2 text-sm text-secondary hover:text-foreground transition-colors">
             Cancelar
           </button>
           <button
@@ -287,7 +287,7 @@ function AsignarModal({
             <h2 className="text-base font-semibold">Asignar empleados</h2>
             <p className="text-xs text-secondary mt-0.5 truncate max-w-[260px]">{capacitacion.titulo}</p>
           </div>
-          <button onClick={onClose} className="p-1 text-secondary hover:text-white transition-colors">
+          <button onClick={onClose} className="p-1 text-secondary hover:text-foreground transition-colors">
             <X size={18} />
           </button>
         </div>
@@ -299,7 +299,7 @@ function AsignarModal({
               key={m}
               onClick={() => setModo(m)}
               className={`flex-1 text-xs py-1.5 rounded-md transition-colors ${
-                modo === m ? "bg-accent/15 text-accent font-medium" : "text-secondary hover:text-white"
+                modo === m ? "bg-accent/15 text-accent font-medium" : "text-secondary hover:text-foreground"
               }`}
             >
               {m === "individual" ? "Empleados" : "Por área completa"}
@@ -356,7 +356,7 @@ function AsignarModal({
 
         {error && <p className="text-xs text-red-400 mt-2">{error}</p>}
         <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-border">
-          <button onClick={onClose} className="px-4 py-2 text-sm text-secondary hover:text-white transition-colors">
+          <button onClick={onClose} className="px-4 py-2 text-sm text-secondary hover:text-foreground transition-colors">
             Cancelar
           </button>
           <button
@@ -488,7 +488,7 @@ function CapacitacionCard({
             )}
             <button
               onClick={() => setExpanded((v) => !v)}
-              className="p-1.5 text-secondary/60 hover:text-white hover:bg-border/20 rounded-lg transition-colors"
+              className="p-1.5 text-secondary/60 hover:text-foreground hover:bg-border/20 rounded-lg transition-colors"
               title={expanded ? "Colapsar" : "Ver progreso"}
             >
               {expanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
@@ -699,7 +699,7 @@ export default function CapacitacionesPage() {
               className={`text-xs px-3 py-1.5 rounded-full transition-colors ${
                 filterEstado === e
                   ? "bg-accent/15 text-accent font-medium"
-                  : "text-secondary hover:text-white hover:bg-border/20"
+                  : "text-secondary hover:text-foreground hover:bg-border/20"
               }`}
             >
               {e === "activa" ? `Activas (${capacitaciones.filter((c) => c.estado === "activa").length})`

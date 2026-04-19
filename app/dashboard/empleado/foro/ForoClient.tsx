@@ -168,7 +168,7 @@ export default function ForoClient({ mensajesArea, mensajesRrhh, areaNombre, are
           rows={1}
           maxLength={2000}
           placeholder={tab === "area" ? `Escribí algo en ${areaNombre ?? "tu área"}...` : "Escribí algo en el foro de RRHH..."}
-          className="flex-1 bg-transparent text-sm text-white placeholder-secondary/40 outline-none resize-none leading-relaxed"
+          className="flex-1 bg-transparent text-sm text-foreground placeholder-secondary/40 outline-none resize-none leading-relaxed"
         />
         <button
           type="submit"
@@ -200,7 +200,7 @@ function TabBtn({ active, onClick, icon, label }: { active: boolean; onClick: ()
       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
         active
           ? "bg-accent/15 text-accent border border-accent/20"
-          : "text-secondary hover:text-white"
+          : "text-secondary hover:text-foreground"
       }`}
     >
       {icon}

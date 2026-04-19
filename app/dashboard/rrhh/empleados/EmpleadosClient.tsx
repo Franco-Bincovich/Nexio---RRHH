@@ -196,7 +196,7 @@ export default function EmpleadosClient({ empleados, areas }: Props) {
                             <>
                               <button
                                 onClick={() => setEditando(emp)}
-                                className="flex items-center gap-1 text-xs text-secondary hover:text-white transition-colors px-2 py-1 rounded-lg hover:bg-white/5"
+                                className="flex items-center gap-1 text-xs text-secondary hover:text-foreground transition-colors px-2 py-1 rounded-lg hover:bg-white/5"
                               >
                                 <Pencil size={12} />
                                 Editar
@@ -226,7 +226,7 @@ export default function EmpleadosClient({ empleados, areas }: Props) {
                               </button>
                               <button
                                 onClick={() => setConfirmandoId(null)}
-                                className="text-xs text-secondary hover:text-white px-2 py-1 rounded-lg hover:bg-white/5 transition-colors"
+                                className="text-xs text-secondary hover:text-foreground px-2 py-1 rounded-lg hover:bg-white/5 transition-colors"
                               >
                                 Cancelar
                               </button>
@@ -440,7 +440,7 @@ function ModalWrapper({ title, onClose, children }: { title: string; onClose: ()
       <div className="relative bg-surface border border-border rounded-xl w-full max-w-md p-6 shadow-sm">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-base font-semibold">{title}</h2>
-          <button onClick={onClose} className="text-secondary hover:text-white transition-colors"><X size={18} /></button>
+          <button onClick={onClose} className="text-secondary hover:text-foreground transition-colors"><X size={18} /></button>
         </div>
         {children}
       </div>
@@ -464,7 +464,7 @@ function ModalFooter({ onClose, status, error, submitLabel }: { onClose: () => v
         <p className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-3 py-2">{error}</p>
       )}
       <div className="flex gap-3 pt-1">
-        <button type="button" onClick={onClose} className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors">
+        <button type="button" onClick={onClose} className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-foreground hover:border-white/20 transition-colors">
           Cancelar
         </button>
         <button

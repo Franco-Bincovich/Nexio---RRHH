@@ -128,7 +128,7 @@ export default async function TemperaturaGerentePage() {
         </div>
         <div className="bg-surface rounded-xl border border-border shadow-sm px-5 py-4">
           <p className="text-[10px] uppercase tracking-[0.7px] text-secondary/60 mb-1">Respuestas totales</p>
-          <p className="text-[22px] font-extrabold text-white">{totalResp}</p>
+          <p className="text-[22px] font-extrabold text-foreground">{totalResp}</p>
         </div>
       </div>
 

@@ -19,12 +19,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    // suppressHydrationWarning: el script anti-flash modifica <html data-theme>
+    // antes de que React hidrate. React espera que el DOM coincida con el SSR,
+    // pero este desfase es intencional (evita FOUC). Suprimirlo es la práctica
+    // recomendada de Next.js para theming con scripts pre-hidratación.
+    <html lang="es" suppressHydrationWarning>
       <head>
         {/* Anti-flash: apply stored theme before first paint */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('nexio-theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})()`,
+            __html: `(function(){try{var t=localStorage.getItem('nexio-theme');var d=document.documentElement;if(t==='light'){d.setAttribute('data-theme','light');}else{d.setAttribute('data-theme','dark');}}catch(e){}})()`,
           }}
         />
       </head>

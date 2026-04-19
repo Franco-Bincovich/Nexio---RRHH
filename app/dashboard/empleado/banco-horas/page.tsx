@@ -98,7 +98,7 @@ export default async function BancoHorasPage() {
           </div>
           <div>
             <p className="text-[10px] uppercase tracking-[0.7px] text-secondary/60 mb-0.5">Saldo actual</p>
-            <p className={`text-[28px] font-extrabold leading-none ${saldoTotal > 0 ? "text-accent" : saldoTotal < 0 ? "text-red-400" : "text-white"}`}>
+            <p className={`text-[28px] font-extrabold leading-none ${saldoTotal > 0 ? "text-accent" : saldoTotal < 0 ? "text-red-400" : "text-foreground"}`}>
               {minutosAHorasStr(saldoTotal)}
             </p>
             {ajuste !== 0 && (

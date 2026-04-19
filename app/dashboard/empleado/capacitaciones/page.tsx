@@ -136,7 +136,7 @@ export default function CapacitacionesPage() {
                 </div>
                 <p className="text-xs text-secondary/70 line-clamp-1">{cap.descripcion}</p>
                 <div className="flex items-center gap-2 mt-2">
-                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${CATEGORIA_COLOR[cap.categoria] ?? "bg-white/5 text-gray-400"}`}>
+                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${CATEGORIA_COLOR[cap.categoria] ?? "bg-white/5 text-secondary"}`}>
                     {cap.categoria}
                   </span>
                   <span className="flex items-center gap-1 text-[10px] text-secondary/50">
@@ -198,7 +198,7 @@ function CapCard({ cap }: { cap: typeof misCapacitaciones[0] }) {
           />
         </div>
       </div>
-      <span className={`inline-block text-xs px-2.5 py-1 rounded-full font-medium ${CATEGORIA_COLOR[cap.categoria] ?? "bg-white/5 text-gray-400"}`}>
+      <span className={`inline-block text-xs px-2.5 py-1 rounded-full font-medium ${CATEGORIA_COLOR[cap.categoria] ?? "bg-white/5 text-secondary"}`}>
         {cap.categoria}
       </span>
     </div>

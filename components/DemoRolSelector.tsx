@@ -37,7 +37,7 @@ export default function DemoRolSelector({ esDemo, rolActivo }: Props) {
     <div className="fixed bottom-4 right-4 z-[9999] font-sans">
       {open && (
         <div className="mb-2 bg-surface border border-border rounded-xl shadow-2xl w-56 overflow-hidden">
-          <div className="px-3 py-2 border-b border-border text-[10px] uppercase tracking-wide text-gray-400">
+          <div className="px-3 py-2 border-b border-border text-[10px] uppercase tracking-wide text-secondary">
             Demo — ver como
           </div>
           <ul>

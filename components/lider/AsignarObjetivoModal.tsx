@@ -182,7 +182,7 @@ export default function AsignarObjetivoModal({ empleados, empresaId, liderEmplea
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-foreground hover:border-white/20 transition-colors"
             >
               Cancelar
             </button>

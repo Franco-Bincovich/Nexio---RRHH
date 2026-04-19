@@ -47,7 +47,7 @@ export default async function MiBancoHorasGerentePage() {
           </div>
           <div>
             <p className="text-[10px] uppercase tracking-[0.7px] text-secondary/60 mb-0.5">Saldo actual</p>
-            <p className={`text-[28px] font-extrabold leading-none ${saldo > 0 ? "text-accent" : saldo < 0 ? "text-red-400" : "text-white"}`}>{min2str(saldo)}</p>
+            <p className={`text-[28px] font-extrabold leading-none ${saldo > 0 ? "text-accent" : saldo < 0 ? "text-red-400" : "text-foreground"}`}>{min2str(saldo)}</p>
             {ajuste !== 0 && <p className="text-[10px] text-secondary/50 mt-1">Incl. ajuste: {min2str(ajuste)}</p>}
           </div>
         </div>

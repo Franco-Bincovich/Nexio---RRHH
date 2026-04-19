@@ -338,7 +338,7 @@ function Field({
         placeholder={placeholder}
         required={required}
         disabled={disabled}
-        className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-white placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-foreground placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition disabled:opacity-50 disabled:cursor-not-allowed"
       />
     </div>
   );

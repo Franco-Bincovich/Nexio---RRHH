@@ -8,8 +8,8 @@
   --color-surface:    19  25  32;          /* #131920 */
   --color-sidebar:    10  14  21;          /* #0A0E15 */
   --color-border:     26  34  53;          /* #1A2235 */
-  --color-secondary:  155 170 192;         /* #9BAAC0 */
-  --color-foreground: 232 237 245;         /* #E8EDF5 */
+  --color-secondary:  203 213 225;         /* #CBD5E1 */
+  --color-foreground: 255 255 255;         /* #FFFFFF */
 }
 
 [data-theme="light"] {
@@ -17,7 +17,7 @@
   --color-surface:    255 255 255;         /* #FFFFFF */
   --color-sidebar:    248 250 252;         /* #F8FAFC */
   --color-border:     226 232 240;         /* #E2E8F0 */
-  --color-secondary:  100 116 139;         /* #64748B */
+  --color-secondary:  71  85  105;         /* #475569 */
   --color-foreground: 15  23  42;          /* #0F172A */
 }
 

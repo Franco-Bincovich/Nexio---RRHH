@@ -78,7 +78,7 @@ export default function TemperaturaClient({ historial }: Props) {
                     className={`h-10 rounded-lg border-2 font-bold text-sm transition-all ${
                       active
                         ? `${cfg.bg} ${cfg.color} scale-110 shadow-lg`
-                        : "bg-white/[0.03] border-border text-secondary hover:border-white/20 hover:text-white"
+                        : "bg-white/[0.03] border-border text-secondary hover:border-white/20 hover:text-foreground"
                     }`}
                   >
                     {n}
@@ -103,7 +103,7 @@ export default function TemperaturaClient({ historial }: Props) {
               rows={3}
               maxLength={500}
               placeholder="¿Algo que quieras compartir sobre esta semana?"
-              className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-white placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition resize-none"
+              className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-foreground placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition resize-none"
             />
             <p className="text-[10px] text-secondary/40 mt-1 text-right">{comentario.length}/500</p>
           </div>

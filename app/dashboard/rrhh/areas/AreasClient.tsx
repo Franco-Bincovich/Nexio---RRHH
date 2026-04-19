@@ -87,7 +87,7 @@ export default function AreasClient({ areas, lideres }: Props) {
                     </span>
                   </div>
 
-                  <h3 className="font-bold text-base mb-3">{area.nombre}</h3>
+                  <h3 className="font-bold text-base mb-3 text-foreground">{area.nombre}</h3>
 
                   <div className="border-t border-border pt-3 mb-4">
                     {area.liderNombre ? (
@@ -95,11 +95,11 @@ export default function AreasClient({ areas, lideres }: Props) {
                         <div className="w-6 h-6 rounded-full bg-blue-400/15 border border-blue-400/25 flex items-center justify-center text-[10px] font-bold text-blue-400">
                           {initials}
                         </div>
-                        <p className="text-xs text-secondary truncate">{area.liderNombre}</p>
+                        <p className="text-xs truncate text-foreground">{area.liderNombre}</p>
                         <UserCheck size={12} className="text-accent ml-auto flex-shrink-0" />
                       </div>
                     ) : (
-                      <p className="text-xs text-secondary/50 italic">Sin líder asignado</p>
+                      <p className="text-xs italic text-secondary">Sin líder asignado</p>
                     )}
                   </div>
 
@@ -107,7 +107,7 @@ export default function AreasClient({ areas, lideres }: Props) {
                     <div className="flex gap-2">
                       <button
                         onClick={() => setEditando(area)}
-                        className="flex-1 flex items-center justify-center gap-1.5 text-xs text-secondary hover:text-white border border-border hover:border-white/20 rounded-lg py-1.5 transition-colors"
+                        className="flex-1 flex items-center justify-center gap-1.5 text-xs text-secondary hover:text-foreground border border-border hover:border-white/20 rounded-lg py-1.5 transition-colors"
                       >
                         <Pencil size={12} />
                         Editar
@@ -135,7 +135,7 @@ export default function AreasClient({ areas, lideres }: Props) {
                         </button>
                         <button
                           onClick={() => setEliminandoId(null)}
-                          className="flex-1 text-xs text-secondary hover:text-white border border-border rounded-lg py-1.5 transition-colors"
+                          className="flex-1 text-xs text-secondary hover:text-foreground border border-border rounded-lg py-1.5 transition-colors"
                         >
                           Cancelar
                         </button>
@@ -246,7 +246,7 @@ function ModalWrapper({ title, onClose, children }: { title: string; onClose: ()
       <div className="relative bg-surface border border-border rounded-xl w-full max-w-md p-6 shadow-sm">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-base font-semibold">{title}</h2>
-          <button onClick={onClose} className="text-secondary hover:text-white transition-colors"><X size={18} /></button>
+          <button onClick={onClose} className="text-secondary hover:text-foreground transition-colors"><X size={18} /></button>
         </div>
         {children}
       </div>
@@ -261,7 +261,7 @@ function ModalFooter({ onClose, status, error, submitLabel }: { onClose: () => v
         <p className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-3 py-2">{error}</p>
       )}
       <div className="flex gap-3 pt-1">
-        <button type="button" onClick={onClose} className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors">
+        <button type="button" onClick={onClose} className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-foreground hover:border-white/20 transition-colors">
           Cancelar
         </button>
         <button

@@ -70,7 +70,7 @@ export default function RetirosClient({ solicitudes, hoy }: { solicitudes: Solic
         <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
           <div className="flex items-center justify-between px-5 py-4 border-b border-border">
             <h2 className="text-sm font-semibold">Nuevo retiro anticipado</h2>
-            <button onClick={() => setShowForm(false)} className="text-secondary hover:text-white transition-colors">
+            <button onClick={() => setShowForm(false)} className="text-secondary hover:text-foreground transition-colors">
               <X size={16} />
             </button>
           </div>
@@ -83,7 +83,7 @@ export default function RetirosClient({ solicitudes, hoy }: { solicitudes: Solic
                   value={fecha}
                   onChange={(e) => setFecha(e.target.value)}
                   required
-                  className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
+                  className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-foreground outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
                 />
               </div>
               <div>
@@ -93,7 +93,7 @@ export default function RetirosClient({ solicitudes, hoy }: { solicitudes: Solic
                   value={hora}
                   onChange={(e) => setHora(e.target.value)}
                   required
-                  className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
+                  className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-foreground outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition"
                 />
               </div>
             </div>
@@ -107,7 +107,7 @@ export default function RetirosClient({ solicitudes, hoy }: { solicitudes: Solic
                 rows={3}
                 required
                 placeholder="Describí el motivo del retiro anticipado..."
-                className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-white placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition resize-none"
+                className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-foreground placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition resize-none"
               />
               <p className={`text-[10px] mt-1 ${motivo.length < 20 ? "text-secondary/50" : "text-accent"}`}>
                 {motivo.length}/20 caracteres mínimos
@@ -119,7 +119,7 @@ export default function RetirosClient({ solicitudes, hoy }: { solicitudes: Solic
               </div>
             )}
             <div className="flex justify-end gap-3 pt-1">
-              <button type="button" onClick={() => setShowForm(false)} className="text-sm text-secondary hover:text-white transition-colors px-4 py-2">
+              <button type="button" onClick={() => setShowForm(false)} className="text-sm text-secondary hover:text-foreground transition-colors px-4 py-2">
                 Cancelar
               </button>
               <button

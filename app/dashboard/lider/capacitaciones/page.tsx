@@ -123,7 +123,7 @@ export default function CapacitacionesPage() {
             <div>
               <span
                 className={`text-xs px-2.5 py-1 rounded-full font-medium ${
-                  CATEGORIA_COLOR[cap.categoria] ?? "bg-white/5 text-gray-400"
+                  CATEGORIA_COLOR[cap.categoria] ?? "bg-white/5 text-secondary"
                 }`}
               >
                 {cap.categoria}

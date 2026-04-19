@@ -74,7 +74,7 @@ export default function ForoGerenteClient({ mensajesGerencia, mensajesRrhh, gere
               key={key}
               onClick={() => setTab(key)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                tab === key ? "bg-accent/15 text-accent border border-accent/20" : "text-secondary hover:text-white"
+                tab === key ? "bg-accent/15 text-accent border border-accent/20" : "text-secondary hover:text-foreground"
               }`}
             >
               <Icon size={13} />

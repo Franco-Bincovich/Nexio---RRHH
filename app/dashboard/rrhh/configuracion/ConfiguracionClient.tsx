@@ -560,7 +560,7 @@ export default function ConfiguracionClient({
               </p>
               <button
                 onClick={handleCancelImport}
-                className="text-xs text-secondary hover:text-white transition-colors flex items-center gap-1"
+                className="text-xs text-secondary hover:text-foreground transition-colors flex items-center gap-1"
               >
                 <X size={13} />
                 Cancelar
@@ -641,7 +641,7 @@ export default function ConfiguracionClient({
             )}
             <button
               onClick={handleCancelImport}
-              className="text-xs text-secondary hover:text-white transition-colors flex items-center gap-1"
+              className="text-xs text-secondary hover:text-foreground transition-colors flex items-center gap-1"
             >
               <Upload size={13} />
               Importar otro archivo

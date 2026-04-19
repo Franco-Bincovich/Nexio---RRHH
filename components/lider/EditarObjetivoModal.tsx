@@ -112,7 +112,7 @@ export default function EditarObjetivoModal({ objetivo, onClose }: Props) {
           {/* Progreso */}
           <div>
             <label className="text-xs text-secondary block mb-1.5">
-              Progreso — <span className="text-white font-medium">{progreso}%</span>
+              Progreso — <span className="text-foreground font-medium">{progreso}%</span>
             </label>
             <input
               type="range"
@@ -186,7 +186,7 @@ export default function EditarObjetivoModal({ objetivo, onClose }: Props) {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-foreground hover:border-white/20 transition-colors"
             >
               Cancelar
             </button>

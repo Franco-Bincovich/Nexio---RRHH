@@ -178,7 +178,7 @@ export default function SolicitudesGerenteClient({ solicitudes }: Props) {
         <div className="flex gap-1 mb-5 bg-surface border border-border rounded-xl p-1 w-fit">
           <button
             onClick={() => setMainTab("lideres")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${mainTab === "lideres" ? "bg-accent/15 text-accent border border-accent/20" : "text-secondary hover:text-white"}`}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${mainTab === "lideres" ? "bg-accent/15 text-accent border border-accent/20" : "text-secondary hover:text-foreground"}`}
           >
             <Users size={13} />Líderes
             {pending > 0 && (
@@ -187,7 +187,7 @@ export default function SolicitudesGerenteClient({ solicitudes }: Props) {
           </button>
           <button
             onClick={() => setMainTab("empleados")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${mainTab === "empleados" ? "bg-accent/15 text-accent border border-accent/20" : "text-secondary hover:text-white"}`}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${mainTab === "empleados" ? "bg-accent/15 text-accent border border-accent/20" : "text-secondary hover:text-foreground"}`}
           >
             <User size={13} />Empleados
           </button>
@@ -197,7 +197,7 @@ export default function SolicitudesGerenteClient({ solicitudes }: Props) {
         <div className="flex gap-1 mb-6 bg-surface border border-border rounded-xl p-1 w-fit">
           {subtabs.map((t) => (
             <button key={t.value} onClick={() => setSubTab(t.value)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${subTab === t.value ? "bg-accent/15 text-accent border border-accent/20" : "text-secondary hover:text-white"}`}>
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${subTab === t.value ? "bg-accent/15 text-accent border border-accent/20" : "text-secondary hover:text-foreground"}`}>
               {t.label}
             </button>
           ))}
@@ -237,10 +237,10 @@ export default function SolicitudesGerenteClient({ solicitudes }: Props) {
           <div className="relative bg-surface border border-border rounded-xl w-full max-w-sm p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-sm font-semibold">Rechazar solicitud</h2>
-              <button onClick={() => setRechazando(null)} className="text-secondary hover:text-white transition-colors"><X size={18} /></button>
+              <button onClick={() => setRechazando(null)} className="text-secondary hover:text-foreground transition-colors"><X size={18} /></button>
             </div>
             <p className="text-xs text-secondary mb-3">
-              Rechazando solicitud de <span className="text-white font-medium">{rechazando.empleado_nombre}</span>. El motivo se enviará como notificación.
+              Rechazando solicitud de <span className="text-foreground font-medium">{rechazando.empleado_nombre}</span>. El motivo se enviará como notificación.
             </p>
             <textarea
               value={motivoRec}
@@ -252,8 +252,8 @@ export default function SolicitudesGerenteClient({ solicitudes }: Props) {
             <p className="text-[10px] text-secondary/40 mb-4 text-right">{motivoRec.length} caracteres</p>
             {actionError && <p className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-3 py-2 mb-3">{actionError}</p>}
             <div className="flex gap-3">
-              <button onClick={() => setRechazando(null)} className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors">Cancelar</button>
-              <button onClick={handleConfirmarRechazo} disabled={isPending || !motivoRec.trim()} className="flex-1 px-4 py-2.5 rounded-lg bg-red-500/80 hover:bg-red-500 text-white text-sm font-medium transition-colors disabled:opacity-60 flex items-center justify-center gap-2">
+              <button onClick={() => setRechazando(null)} className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-foreground hover:border-white/20 transition-colors">Cancelar</button>
+              <button onClick={handleConfirmarRechazo} disabled={isPending || !motivoRec.trim()} className="flex-1 px-4 py-2.5 rounded-lg bg-red-500/80 hover:bg-red-500 text-foreground text-sm font-medium transition-colors disabled:opacity-60 flex items-center justify-center gap-2">
                 {isPending && <Loader2 size={14} className="animate-spin" />}Rechazar
               </button>
             </div>

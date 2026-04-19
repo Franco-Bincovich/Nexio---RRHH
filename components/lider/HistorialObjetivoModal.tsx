@@ -65,7 +65,7 @@ export default function HistorialObjetivoModal({ objetivoId, objetivoTitulo, onC
             </div>
             <p className="text-[11px] text-secondary/60 mt-0.5 line-clamp-1">{objetivoTitulo}</p>
           </div>
-          <button onClick={onClose} className="text-secondary hover:text-white transition-colors mt-0.5">
+          <button onClick={onClose} className="text-secondary hover:text-foreground transition-colors mt-0.5">
             <X size={18} />
           </button>
         </div>
@@ -113,7 +113,7 @@ export default function HistorialObjetivoModal({ objetivoId, objetivoTitulo, onC
                         {entry.valor_anterior ?? "(vacío)"}
                       </span>
                       <ArrowRight size={11} className="text-secondary/40 flex-shrink-0" />
-                      <span className="text-xs text-white bg-accent/10 border border-accent/20 rounded px-2 py-0.5 line-clamp-1 max-w-[180px]">
+                      <span className="text-xs text-foreground bg-accent/10 border border-accent/20 rounded px-2 py-0.5 line-clamp-1 max-w-[180px]">
                         {entry.valor_nuevo ?? "(vacío)"}
                       </span>
                     </div>
@@ -130,7 +130,7 @@ export default function HistorialObjetivoModal({ objetivoId, objetivoTitulo, onC
         <div className="px-5 py-3 border-t border-border flex-shrink-0">
           <button
             onClick={onClose}
-            className="w-full px-4 py-2 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+            className="w-full px-4 py-2 rounded-lg border border-border text-sm text-secondary hover:text-foreground hover:border-white/20 transition-colors"
           >
             Cerrar
           </button>

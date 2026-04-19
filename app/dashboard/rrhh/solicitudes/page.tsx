@@ -439,7 +439,7 @@ export default function SolicitudesPage() {
             className={`text-xs px-3 py-1.5 rounded-full transition-colors ${
               filterEstado === e
                 ? "bg-accent/15 text-accent font-medium"
-                : "text-secondary hover:text-white hover:bg-border/20"
+                : "text-secondary hover:text-foreground hover:bg-border/20"
             }`}
           >
             {e === "all"
@@ -588,7 +588,7 @@ export default function SolicitudesPage() {
                   setRejectModal(null);
                   setRejectMotivo("");
                 }}
-                className="p-1 text-secondary hover:text-white transition-colors"
+                className="p-1 text-secondary hover:text-foreground transition-colors"
               >
                 <X size={18} />
               </button>
@@ -610,14 +610,14 @@ export default function SolicitudesPage() {
                   setRejectModal(null);
                   setRejectMotivo("");
                 }}
-                className="px-4 py-2 text-sm text-secondary hover:text-white transition-colors"
+                className="px-4 py-2 text-sm text-secondary hover:text-foreground transition-colors"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleReject}
                 disabled={actionId !== null}
-                className="flex items-center gap-2 px-4 py-2 text-sm bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-colors disabled:opacity-40"
+                className="flex items-center gap-2 px-4 py-2 text-sm bg-red-500 text-foreground font-semibold rounded-lg hover:bg-red-600 transition-colors disabled:opacity-40"
               >
                 {actionId !== null ? (
                   <Loader2 size={14} className="animate-spin" />

@@ -21,7 +21,10 @@
       "Bash(xargs -0 perl -i -pe 's/flex items-start justify-between mb-8\"/flex flex-wrap items-start justify-between gap-3 mb-8\"/g; s/flex items-start justify-between mb-6\"/flex flex-wrap items-start justify-between gap-3 mb-6\"/g')",
       "Bash(xargs -0 perl -i -pe 's/text-base text-sm/text-sm/g; s/text-sm text-base/text-sm/g')",
       "Bash(awk -F: '{print NR\": \"$0}')",
-      "Bash(awk '{print $2,$3,$4,$5,$6,$7}')"
+      "Bash(awk '{print $2,$3,$4,$5,$6,$7}')",
+      "Bash(grep -r --include=\"*.tsx\" --include=\"*.ts\" -o -E \"text-\\\\[#[0-9A-Fa-f]{3,8}\\\\]\" app components)",
+      "Bash(awk -F: '{print $2}')",
+      "Bash(grep -rn --include=\"*.tsx\" --include=\"*.ts\" -E \"text-\\\\[#[0-9A-Fa-f]{3,8}\\\\]\" app components)"
     ]
   }
 }

@@ -88,7 +88,7 @@ export default function NotifBell({ notifs: initial }: { notifs: Notif[] }) {
                   Marcar todas
                 </button>
               )}
-              <button onClick={() => setOpen(false)} className="text-secondary hover:text-white transition-colors">
+              <button onClick={() => setOpen(false)} className="text-secondary hover:text-foreground transition-colors">
                 <X size={15} />
               </button>
             </div>

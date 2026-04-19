@@ -94,7 +94,7 @@ export default function GruposClient({ grupos, empleados }: Props) {
               <>
                 <button
                   onClick={() => { setVistaGrupo(null); setActionError(""); }}
-                  className="flex items-center gap-1.5 text-xs text-secondary hover:text-white mb-2 transition-colors"
+                  className="flex items-center gap-1.5 text-xs text-secondary hover:text-foreground mb-2 transition-colors"
                 >
                   <ChevronLeft size={14} /> Volver a grupos
                 </button>
@@ -272,19 +272,19 @@ export default function GruposClient({ grupos, empleados }: Props) {
               </div>
             </div>
             <p className="text-sm text-secondary mb-5">
-              ¿Eliminar <span className="text-white font-medium">"{confirmDelGrupo.nombre}"</span>?
+              ¿Eliminar <span className="text-foreground font-medium">"{confirmDelGrupo.nombre}"</span>?
             </p>
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirmDelGrupo(null)}
-                className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-foreground hover:border-white/20 transition-colors"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleEliminarGrupo}
                 disabled={isPending}
-                className="flex-1 px-4 py-2.5 rounded-lg bg-red-500/80 hover:bg-red-500 text-white text-sm font-medium transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2.5 rounded-lg bg-red-500/80 hover:bg-red-500 text-foreground text-sm font-medium transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
               >
                 {isPending && <Loader2 size={14} className="animate-spin" />}
                 Eliminar
@@ -342,7 +342,7 @@ function NuevoGrupoModal({
       <div className="relative bg-surface border border-border rounded-xl w-full max-w-sm p-6 shadow-sm max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-base font-semibold">Nuevo grupo</h2>
-          <button onClick={onClose} className="text-secondary hover:text-white transition-colors">
+          <button onClick={onClose} className="text-secondary hover:text-foreground transition-colors">
             <X size={18} />
           </button>
         </div>
@@ -406,7 +406,7 @@ function NuevoGrupoModal({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-foreground hover:border-white/20 transition-colors"
             >
               Cancelar
             </button>

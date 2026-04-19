@@ -67,7 +67,7 @@ export default async function MiAsistenciaLiderPage() {
       <div className="grid grid-cols-3 gap-4 mb-8">
         <StatCard label="Entradas registradas" value={totalEntradas}   color="text-accent" />
         <StatCard label="Salidas registradas"  value={totalSalidas}    color="text-orange-400" />
-        <StatCard label="Último registro"      value={ultimoRegistro ? formatFecha(ultimoRegistro.fecha) : "—"} color="text-white" />
+        <StatCard label="Último registro"      value={ultimoRegistro ? formatFecha(ultimoRegistro.fecha) : "—"} color="text-foreground" />
       </div>
 
       {/* Tabla */}

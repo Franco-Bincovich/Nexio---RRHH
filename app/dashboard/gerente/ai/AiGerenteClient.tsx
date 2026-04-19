@@ -97,7 +97,7 @@ export default function AiGerenteClient({ empresaId, empresaNombre }: Props) {
                 <button
                   key={s}
                   onClick={() => sendMessage(s)}
-                  className="text-left text-sm text-secondary hover:text-white bg-surface border border-border hover:border-accent/30 rounded-xl px-4 py-3 transition-colors"
+                  className="text-left text-sm text-secondary hover:text-foreground bg-surface border border-border hover:border-accent/30 rounded-xl px-4 py-3 transition-colors"
                 >
                   {s}
                 </button>
@@ -117,7 +117,7 @@ export default function AiGerenteClient({ empresaId, empresaNombre }: Props) {
             )}
             <div className={`rounded-2xl px-4 py-3 text-sm leading-relaxed max-w-[80%] whitespace-pre-wrap ${
               msg.role === "user"
-                ? "bg-accent/10 border border-accent/20 text-white rounded-tr-sm"
+                ? "bg-accent/10 border border-accent/20 text-foreground rounded-tr-sm"
                 : "bg-surface border border-border text-secondary rounded-tl-sm"
             }`}>
               {msg.content}

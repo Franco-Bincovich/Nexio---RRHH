@@ -169,7 +169,7 @@ function Field({ label, name, type = "text", defaultValue, placeholder, required
   return (
     <div>
       <label className="block text-[11px] uppercase tracking-[0.6px] text-secondary/70 mb-1.5">{label}</label>
-      <input type={type} name={name} defaultValue={defaultValue} placeholder={placeholder} required={required} disabled={disabled} className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-white placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition disabled:opacity-50 disabled:cursor-not-allowed" />
+      <input type={type} name={name} defaultValue={defaultValue} placeholder={placeholder} required={required} disabled={disabled} className="w-full bg-base border border-border rounded-lg px-3 py-2 text-sm text-foreground placeholder-secondary/40 outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition disabled:opacity-50 disabled:cursor-not-allowed" />
     </div>
   );
 }

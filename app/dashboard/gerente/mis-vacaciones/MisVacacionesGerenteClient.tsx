@@ -149,7 +149,7 @@ export default function MisVacacionesGerenteClient({ vacaciones }: Props) {
             <button
               type="button"
               onClick={() => setMostrarForm(false)}
-              className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-foreground hover:border-white/20 transition-colors"
             >
               Cancelar
             </button>

@@ -138,7 +138,7 @@ export default function SolicitudesLiderClient({ solicitudes }: Props) {
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                 tab === t.value
                   ? "bg-accent/15 text-accent border border-accent/20"
-                  : "text-secondary hover:text-white"
+                  : "text-secondary hover:text-foreground"
               }`}
             >
               {t.label}
@@ -253,12 +253,12 @@ export default function SolicitudesLiderClient({ solicitudes }: Props) {
           <div className="relative bg-surface border border-border rounded-xl w-full max-w-sm p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-sm font-semibold">Rechazar solicitud</h2>
-              <button onClick={() => setRechazando(null)} className="text-secondary hover:text-white transition-colors">
+              <button onClick={() => setRechazando(null)} className="text-secondary hover:text-foreground transition-colors">
                 <X size={18} />
               </button>
             </div>
             <p className="text-xs text-secondary mb-3">
-              Rechazando solicitud de <span className="text-white font-medium">{rechazando.empleado_nombre}</span>.
+              Rechazando solicitud de <span className="text-foreground font-medium">{rechazando.empleado_nombre}</span>.
               El motivo se enviará como notificación al empleado.
             </p>
             <textarea
@@ -277,14 +277,14 @@ export default function SolicitudesLiderClient({ solicitudes }: Props) {
             <div className="flex gap-3">
               <button
                 onClick={() => setRechazando(null)}
-                className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-foreground hover:border-white/20 transition-colors"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleConfirmarRechazo}
                 disabled={isPending || !motivoRechazo.trim()}
-                className="flex-1 px-4 py-2.5 rounded-lg bg-red-500/80 hover:bg-red-500 text-white text-sm font-medium transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2.5 rounded-lg bg-red-500/80 hover:bg-red-500 text-foreground text-sm font-medium transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
               >
                 {isPending && <Loader2 size={14} className="animate-spin" />}
                 Rechazar

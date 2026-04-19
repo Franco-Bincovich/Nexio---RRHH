@@ -36,7 +36,7 @@ export default async function MiAsistenciaGerentePage() {
       <div className="grid grid-cols-3 gap-4 mb-8">
         <StatCard label="Entradas registradas" value={totalEntradas}   color="text-accent" />
         <StatCard label="Salidas registradas"  value={totalSalidas}    color="text-orange-400" />
-        <StatCard label="Último registro"      value={registros?.[0] ? fmt(registros[0].fecha) : "—"} color="text-white" />
+        <StatCard label="Último registro"      value={registros?.[0] ? fmt(registros[0].fecha) : "—"} color="text-foreground" />
       </div>
       {!registros || registros.length === 0 ? (
         <div className="bg-surface rounded-2xl border border-border py-16 text-center"><p className="text-secondary text-sm">No hay registros todavía.</p></div>

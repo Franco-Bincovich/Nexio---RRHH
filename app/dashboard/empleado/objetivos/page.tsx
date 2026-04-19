@@ -34,7 +34,7 @@ export default async function ObjetivosPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4 mb-8">
-        <MiniStat label="Total"       value={lista.length} color="text-white" />
+        <MiniStat label="Total"       value={lista.length} color="text-foreground" />
         <MiniStat label="En progreso" value={enProgreso}   color="text-yellow-400" />
         <MiniStat label="Completados" value={completados}  color="text-accent" />
       </div>

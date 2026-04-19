@@ -214,7 +214,7 @@ export default async function TemperaturaRRHHPage() {
                 <p className="text-[10px] uppercase tracking-[0.7px] text-secondary mb-1">
                   Respuestas totales
                 </p>
-                <p className="text-[22px] font-extrabold text-white">
+                <p className="text-[22px] font-extrabold text-foreground">
                   {totalResp}
                 </p>
               </div>

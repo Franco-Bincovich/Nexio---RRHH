@@ -19,14 +19,20 @@ export function useTheme() {
 }
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
+  // Lazy init: en cliente leemos localStorage para que el state coincida con el
+  // valor que el script anti-flash en app/layout.tsx ya aplicó al <html>.
+  // En servidor devolvemos "dark" como default estable.
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === "undefined") return "dark";
+    const stored = localStorage.getItem("nexio-theme");
+    return stored === "light" ? "light" : "dark";
+  });
 
+  // Garantiza que el atributo data-theme del <html> quede sincronizado con el state
+  // aun si el script anti-flash no corrió (p.ej. toggle durante la sesión).
   useEffect(() => {
-    const stored = localStorage.getItem("nexio-theme") as Theme | null;
-    const initial = stored === "light" ? "light" : "dark";
-    setTheme(initial);
-    document.documentElement.setAttribute("data-theme", initial);
-  }, []);
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
 
   const toggle = useCallback(() => {
     setTheme((prev) => {

@@ -58,7 +58,7 @@ function TabBtn({ active, onClick, icon: Icon, label }: { active: boolean; onCli
     <button
       onClick={onClick}
       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-        active ? "bg-accent/15 text-accent border border-accent/20" : "text-secondary hover:text-white"
+        active ? "bg-accent/15 text-accent border border-accent/20" : "text-secondary hover:text-foreground"
       }`}
     >
       <Icon size={13} />
@@ -190,7 +190,7 @@ export default function ForoLiderClient({ mensajesGerencia, mensajesRrhh, mensaj
           rows={1}
           maxLength={2000}
           placeholder={cfg.placeholder}
-          className="flex-1 bg-transparent text-sm text-white placeholder-secondary/40 outline-none resize-none leading-relaxed"
+          className="flex-1 bg-transparent text-sm text-foreground placeholder-secondary/40 outline-none resize-none leading-relaxed"
         />
         <button
           type="submit"

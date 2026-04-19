@@ -68,7 +68,7 @@ export default function LoginPage() {
           <h1 className="text-3xl font-bold tracking-tight">
             <span className="text-accent">Nexio</span>
           </h1>
-          <p className="mt-2 text-gray-400 text-sm">
+          <p className="mt-2 text-secondary text-sm">
             Gestión de capital humano
           </p>
         </div>
@@ -81,7 +81,7 @@ export default function LoginPage() {
             <div className="space-y-1.5">
               <label
                 htmlFor="email"
-                className="block text-sm text-gray-400"
+                className="block text-sm text-secondary"
               >
                 Email
               </label>
@@ -92,7 +92,7 @@ export default function LoginPage() {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-base border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none focus:border-accent focus:ring-1 focus:ring-accent transition"
+                className="w-full bg-base border border-white/10 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-gray-600 outline-none focus:border-accent focus:ring-1 focus:ring-accent transition"
                 placeholder="tu@empresa.com"
               />
             </div>
@@ -100,7 +100,7 @@ export default function LoginPage() {
             <div className="space-y-1.5">
               <label
                 htmlFor="password"
-                className="block text-sm text-gray-400"
+                className="block text-sm text-secondary"
               >
                 Contraseña
               </label>
@@ -111,7 +111,7 @@ export default function LoginPage() {
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-base border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-600 outline-none focus:border-accent focus:ring-1 focus:ring-accent transition"
+                className="w-full bg-base border border-white/10 rounded-lg px-4 py-2.5 text-sm text-foreground placeholder-gray-600 outline-none focus:border-accent focus:ring-1 focus:ring-accent transition"
                 placeholder="••••••••"
               />
             </div>

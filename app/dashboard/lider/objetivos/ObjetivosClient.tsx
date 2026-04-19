@@ -206,14 +206,14 @@ export default function ObjetivosClient({ objetivos, empleados, empresaId, lider
                   <div className="flex items-center gap-2 pt-1 border-t border-border">
                     <button
                       onClick={() => setEditingObj(obj)}
-                      className="flex items-center gap-1.5 text-xs text-secondary hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/[0.05] transition-colors"
+                      className="flex items-center gap-1.5 text-xs text-secondary hover:text-foreground px-2.5 py-1.5 rounded-lg hover:bg-white/[0.05] transition-colors"
                     >
                       <Pencil size={12} />
                       Editar
                     </button>
                     <button
                       onClick={() => setHistorialObj({ id: obj.id, titulo: obj.titulo })}
-                      className="flex items-center gap-1.5 text-xs text-secondary hover:text-white px-2.5 py-1.5 rounded-lg hover:bg-white/[0.05] transition-colors"
+                      className="flex items-center gap-1.5 text-xs text-secondary hover:text-foreground px-2.5 py-1.5 rounded-lg hover:bg-white/[0.05] transition-colors"
                     >
                       <History size={12} />
                       Ver historial
@@ -302,7 +302,7 @@ export default function ObjetivosClient({ objetivos, empleados, empresaId, lider
               </div>
             </div>
             <p className="text-sm text-secondary mb-4">
-              ¿Eliminar <span className="text-white font-medium">"{confirmDelete.titulo}"</span>?
+              ¿Eliminar <span className="text-foreground font-medium">"{confirmDelete.titulo}"</span>?
             </p>
 
             {deleteError && (
@@ -314,14 +314,14 @@ export default function ObjetivosClient({ objetivos, empleados, empresaId, lider
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirmDelete(null)}
-                className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-white hover:border-white/20 transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-lg border border-border text-sm text-secondary hover:text-foreground hover:border-white/20 transition-colors"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleDelete}
                 disabled={isPendingDel}
-                className="flex-1 px-4 py-2.5 rounded-lg bg-red-500/80 hover:bg-red-500 text-white text-sm font-medium transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2.5 rounded-lg bg-red-500/80 hover:bg-red-500 text-foreground text-sm font-medium transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
               >
                 {isPendingDel && <Loader2 size={14} className="animate-spin" />}
                 Eliminar
@@ -367,7 +367,7 @@ function HistorialRow({ entry, objetivoTitulo }: { entry: { id: string; lider_no
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap mb-0.5">
-          <span className="text-xs font-medium text-white">{entry.lider_nombre}</span>
+          <span className="text-xs font-medium text-foreground">{entry.lider_nombre}</span>
           <span className="text-[10px] text-secondary/50">·</span>
           <span className="text-[11px] text-secondary/70 truncate max-w-[160px]">{objetivoTitulo}</span>
         </div>
@@ -393,7 +393,7 @@ function HistorialRow({ entry, objetivoTitulo }: { entry: { id: string; lider_no
                   {entry.valor_anterior ?? "(vacío)"}
                 </span>
                 <ArrowRight size={10} className="text-secondary/40" />
-                <span className={`text-[11px] rounded px-1.5 py-0.5 max-w-[120px] truncate ${esProgreso ? "text-accent bg-accent/10 border border-accent/20" : "text-white bg-accent/10 border border-accent/20"}`}>
+                <span className={`text-[11px] rounded px-1.5 py-0.5 max-w-[120px] truncate ${esProgreso ? "text-accent bg-accent/10 border border-accent/20" : "text-foreground bg-accent/10 border border-accent/20"}`}>
                   {entry.valor_nuevo ?? "(vacío)"}
                   {esProgreso ? "%" : ""}
                 </span>

@@ -24,15 +24,26 @@ export default function ProximamenteView({ titulo, descripcion, icon: Icon, acci
           <div className="w-16 h-16 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-4">
             <Icon size={28} className="text-accent" />
           </div>
-          <h2 className="text-base font-semibold mb-1.5">Próximamente en Nexio</h2>
-          <p className="text-sm text-secondary/70 max-w-md mx-auto leading-relaxed">
+          <h2
+            className="text-base font-semibold mb-1.5"
+            style={{ color: "rgb(var(--color-foreground))" }}
+          >
+            Próximamente en Nexio
+          </h2>
+          <p
+            className="text-sm max-w-md mx-auto leading-relaxed"
+            style={{ color: "rgb(var(--color-foreground))" }}
+          >
             Este módulo está en desarrollo. Vas a poder acceder a la funcionalidad completa en la próxima versión.
           </p>
         </div>
 
         {accionesMock && accionesMock.length > 0 && (
           <div className="px-6 py-5">
-            <p className="text-[10px] uppercase tracking-[0.7px] text-secondary/60 mb-3">
+            <p
+              className="text-[10px] uppercase tracking-[0.7px] mb-3"
+              style={{ color: "rgb(var(--color-secondary))" }}
+            >
               Acciones previstas
             </p>
             <div className="flex flex-wrap gap-2">

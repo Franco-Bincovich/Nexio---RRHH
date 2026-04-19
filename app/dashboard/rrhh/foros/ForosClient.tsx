@@ -173,7 +173,7 @@ export default function ForosClient({
             className={`text-xs px-3 py-1.5 rounded-full transition-colors ${
               filterArea === opt.value
                 ? "bg-accent/15 text-accent font-medium"
-                : "text-secondary hover:text-white hover:bg-border/20"
+                : "text-secondary hover:text-foreground hover:bg-border/20"
             }`}
           >
             {opt.label}
@@ -277,7 +277,7 @@ export default function ForosClient({
               </div>
               <button
                 onClick={() => setShowModal(false)}
-                className="p-1 text-secondary hover:text-white transition-colors"
+                className="p-1 text-secondary hover:text-foreground transition-colors"
               >
                 <X size={18} />
               </button>
@@ -328,7 +328,7 @@ export default function ForosClient({
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setShowModal(false)}
-                className="px-4 py-2 text-sm text-secondary hover:text-white transition-colors"
+                className="px-4 py-2 text-sm text-secondary hover:text-foreground transition-colors"
               >
                 Cancelar
               </button>

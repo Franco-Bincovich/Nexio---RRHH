@@ -86,7 +86,7 @@ export default async function AsistenciaPage() {
               ? formatFecha(ultimoRegistro.fecha)
               : "—"
           }
-          color="text-white"
+          color="text-foreground"
         />
       </div>
 
